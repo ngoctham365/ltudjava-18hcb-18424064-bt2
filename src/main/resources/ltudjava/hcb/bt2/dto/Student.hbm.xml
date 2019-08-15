@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 15, 2019 10:19:45 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ltudjava.hcb.bt2.dto.Student" table="student" catalog="scoremanagement" optimistic-lock="version">
+        <id name="studentCode" type="string">
+            <column name="student_code" length="8" />
+            <generator class="assigned" />
+        </id>
+        <property name="fullname" type="string">
+            <column name="fullname" length="128" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="4" />
+        </property>
+        <property name="personCode" type="string">
+            <column name="person_code" length="12" />
+        </property>
+        <property name="grade" type="java.lang.Integer">
+            <column name="grade" />
+        </property>
+        <set name="scores" table="score" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="student_id" length="8" not-null="true" />
+            </key>
+            <one-to-many class="ltudjava.hcb.bt2.dto.Score" />
+        </set>
+        <one-to-one name="user" class="ltudjava.hcb.bt2.dto.User"></one-to-one>
+    </class>
+</hibernate-mapping>
