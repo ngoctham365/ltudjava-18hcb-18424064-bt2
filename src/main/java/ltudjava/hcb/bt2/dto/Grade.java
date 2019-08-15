@@ -1,5 +1,5 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 15, 2019 10:19:42 PM by Hibernate Tools 4.3.1
+// Generated Aug 15, 2019 11:16:22 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class Grade  implements java.io.Serializable {
      private Integer id;
      private String name;
      private Set<TimeTable> timeTables = new HashSet<TimeTable>(0);
+     private Set<Student> students = new HashSet<Student>(0);
 
     public Grade() {
     }
@@ -36,9 +37,10 @@ public class Grade  implements java.io.Serializable {
     public Grade(String name) {
         this.name = name;
     }
-    public Grade(String name, Set<TimeTable> timeTables) {
+    public Grade(String name, Set<TimeTable> timeTables, Set<Student> students) {
        this.name = name;
        this.timeTables = timeTables;
+       this.students = students;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -70,6 +72,15 @@ public class Grade  implements java.io.Serializable {
     
     public void setTimeTables(Set<TimeTable> timeTables) {
         this.timeTables = timeTables;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="grade")
+    public Set<Student> getStudents() {
+        return this.students;
+    }
+    
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
 

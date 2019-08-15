@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 14, 2019 at 05:59 PM
+-- Generation Time: Aug 15, 2019 at 04:45 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -87,7 +87,8 @@ CREATE TABLE IF NOT EXISTS `student` (
   `sex` varchar(4) COLLATE utf8_unicode_ci DEFAULT 'Nữ',
   `person_code` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   `grade` int(11) DEFAULT NULL,
-  PRIMARY KEY (`student_code`)
+  PRIMARY KEY (`student_code`),
+  KEY `grade` (`grade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -148,6 +149,12 @@ ALTER TABLE `remarking`
 ALTER TABLE `score`
   ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_code`),
   ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`grade_id`,`subject_id`) REFERENCES `time_table` (`grade`, `subject_code`);
+
+--
+-- Constraints for table `student`
+--
+ALTER TABLE `student`
+  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`grade`) REFERENCES `grade` (`id`);
 
 --
 -- Constraints for table `time_table`
