@@ -7,7 +7,7 @@ package ltudjava.hcb.bt2.dao;
 
 /**
  *
- * @author Jossion
+ * @author 
  */
 public class SubjectDAO {
     
