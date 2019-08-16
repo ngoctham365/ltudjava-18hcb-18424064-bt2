@@ -40,6 +40,7 @@ public class LogInFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng nhập");
+        setResizable(false);
 
         btnDangNhap.setLabel("Đăng nhập");
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
