@@ -1,5 +1,5 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 15, 2019 11:16:22 PM by Hibernate Tools 4.3.1
+// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -27,6 +27,7 @@ public class User  implements java.io.Serializable {
      private Student student;
      private String pass;
      private String nameshow;
+     private String role;
 
     public User() {
     }
@@ -36,10 +37,11 @@ public class User  implements java.io.Serializable {
         this.student = student;
         this.pass = pass;
     }
-    public User(Student student, String pass, String nameshow) {
+    public User(Student student, String pass, String nameshow, String role) {
        this.student = student;
        this.pass = pass;
        this.nameshow = nameshow;
+       this.role = role;
     }
    
      @GenericGenerator(name="generator", strategy="foreign", parameters=@Parameter(name="property", value="student"))@Id @GeneratedValue(generator="generator")
@@ -81,6 +83,16 @@ public class User  implements java.io.Serializable {
     
     public void setNameshow(String nameshow) {
         this.nameshow = nameshow;
+    }
+
+    
+    @Column(name="role", length=32)
+    public String getRole() {
+        return this.role;
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
     }
 
 

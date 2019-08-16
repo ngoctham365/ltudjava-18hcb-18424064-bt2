@@ -1,5 +1,5 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 15, 2019 11:16:22 PM by Hibernate Tools 4.3.1
+// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
