@@ -48,7 +48,9 @@ public class GradeDAO {
             
             Grade q=(Grade) session.get(Grade.class, p.getId());
             
-            q.setName(q.getName());
+            q.setName(p.getName());
+            q.setStudents(p.getStudents());
+            q.setTimeTables(p.getTimeTables());
             
             session.update(q);
             tst.commit();

@@ -53,6 +53,7 @@ public class RemarkingDAO {
             q.setScoreOld(p.getScoreOld());
             q.setScoreType(p.getScoreType());
             q.setStatus(p.getStatus());
+            q.setScore(p.getScore());
             
             session.update(q);
             tst.commit();
