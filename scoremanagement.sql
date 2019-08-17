@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 15, 2019 at 04:45 PM
+-- Generation Time: Aug 17, 2019 at 08:41 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -91,6 +91,24 @@ CREATE TABLE IF NOT EXISTS `student` (
   KEY `grade` (`grade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_code`, `fullname`, `sex`, `person_code`, `grade`) VALUES
+('172041', 'Trần Ngọc', 'nam', '34165987', NULL),
+('1760041', 'Nguyen Kim Khánh', 'Nữ', '7145698', NULL),
+('giaovu', 'Giáo vụ', 'Nữ', '12345798', NULL);
+
+--
+-- Triggers `student`
+--
+DROP TRIGGER IF EXISTS `addStudent`;
+DELIMITER $$
+CREATE TRIGGER `addStudent` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO `user`(`name`, `pass`, `nameshow`, `role`) VALUES (new.student_code,MD5(SHA1(new.student_code)),new.student_code,"SINHVIEN")
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -130,8 +148,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `pass` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `nameshow` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`name`, `pass`, `nameshow`, `role`) VALUES
+('1760041', '49c22d5d130a1957540a31eb857d443e', '1760041', 'SINHVIEN');
 
 --
 -- Constraints for dumped tables
