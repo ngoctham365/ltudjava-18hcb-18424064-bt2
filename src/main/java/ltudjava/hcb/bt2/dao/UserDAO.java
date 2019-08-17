@@ -137,4 +137,26 @@ public class UserDAO {
 
         return list.size() == 0 ? null : list.get(0);
     }
+
+    public User getByStudentCode(String studentCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("where u.name like :name "));
+            q.setParameter("name", studentCode);
+
+            list = (List<User>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list.size() == 0 ? null : list.get(0);
+    }
 }

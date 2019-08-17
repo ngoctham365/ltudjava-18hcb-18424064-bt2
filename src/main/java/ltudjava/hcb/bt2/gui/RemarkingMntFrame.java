@@ -10,8 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.bus.*;
-import ltudjava.hcb.bt2.dto.Subject;
+import ltudjava.hcb.bt2.dto.*;
 
 /**
  *
@@ -27,11 +28,11 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
      */
     public RemarkingMntFrame() {
         initComponents();
-        
+
         initialDataComboBox(SubjectBUS.getAll());
-        
+
         table.setModel(RemarkingBUS.getData());
-        
+
         addComboBoxToChangeStatus();
     }
 
@@ -44,7 +45,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         txtFullName.setText(StudentBUS.getFullNameByCode(studentCode));
         txtFullName.setEditable(false);
-        
+
         initialDataComboBox(SubjectBUS.getListAccordingToStudent(studentCode));
     }
 
@@ -128,6 +129,11 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtReason);
 
         btnCreate.setText("TẠO");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,6 +225,15 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         showed = false;
     }//GEN-LAST:event_formWindowClosed
 
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        Student s = StudentBUS.getByCode(txtCode.getText());
+        if (null != s) {
+            if (JOptionPane.showConfirmDialog(rootPane, "Sai thông tin họ tên của sinh viên. \n Đúng tên của SV là: " + s.getFullname() + "\nCó muốn tiếp tục?") == JOptionPane.YES_OPTION) {
+                ádfghjhgfdfgh
+            }
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,7 +296,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         for (Subject i : listSubject) {
             cbbSubject.addItem(i.getCode() + HelperBUS.iconMoveRightHasSpace() + i.getName());
         }
-        
+
         cbbTypeScore.removeAllItems();
         cbbTypeScore.addItem("Điểm giữa kỳ");
         cbbTypeScore.addItem("Điểm cuối kỳ");
@@ -290,15 +305,15 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
     }
 
     private void addComboBoxToChangeStatus() {
-        String[] ses={"Đã cập nhật điểm","Không cập nhật điểm","Chưa xem"};
-        
-        JComboBox jComboBox=new JComboBox(ses);
+        String[] ses = {"Đã cập nhật điểm", "Không cập nhật điểm", "Chưa xem"};
+
+        JComboBox jComboBox = new JComboBox(ses);
         jComboBox.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox comboBox=(JComboBox) e.getSource();
-                String s=comboBox.getSelectedItem().toString();
+                JComboBox comboBox = (JComboBox) e.getSource();
+                String s = comboBox.getSelectedItem().toString();
             }
         });
         table.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox));

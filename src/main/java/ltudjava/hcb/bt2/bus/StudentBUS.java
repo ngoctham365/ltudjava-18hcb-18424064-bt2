@@ -6,6 +6,7 @@
 package ltudjava.hcb.bt2.bus;
 
 import ltudjava.hcb.bt2.dao.StudentDAO;
+import ltudjava.hcb.bt2.dto.Student;
 
 /**
  *
@@ -15,6 +16,10 @@ public class StudentBUS {
 
     public static String getFullNameByCode(String studentCode) {
         return new StudentDAO().getByCode(studentCode).getFullname();
+    }
+
+    public static Student getByCode(String studentCode) {
+        return new StudentDAO().getByCode(studentCode);
     }
     
 }
