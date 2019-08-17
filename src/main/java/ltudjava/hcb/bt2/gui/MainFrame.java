@@ -24,6 +24,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     MainFrame(User nd) {
         initComponents();
+        user = nd;
+        if (nd.getRole().equals("GIAOVU")) {
+            btnSeeScore.setEnabled(false);
+            btnCourseRegister.setEnabled(false);
+        } else {
+            btnScore.setEnabled(false);
+            btnStudent.setEnabled(false);
+            btnGrade.setEnabled(false);
+            btnSubject.setEnabled(false);
+            btnListGradeAccordingToSource.setEnabled(false);
+            btnReport.setEnabled(false);
+        }
     }
 
     /**
@@ -57,7 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        btnModifyPass.setText("ĐỔI MẬT KHẨU");
+        btnModifyPass.setText("THÔNG TIN CÁ NHÂN");
         btnModifyPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModifyPassActionPerformed(evt);
@@ -203,113 +215,139 @@ public class MainFrame extends javax.swing.JFrame {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnStudentActionPerformed
 
     private void btnTimeTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeTableActionPerformed
         if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame frame;
+            if (user.getRole().equals("GIAO VU")) {
+                frame = new TimeTableFrame();
+            } else {
+                frame = new TimeTableFrame(user.getName());
+            }
+
             TimeTableFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnTimeTableActionPerformed
 
     private void btnRemarkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemarkingActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
+        if (this.user != null && !RemarkingMntFrame.showed) {
+            RemarkingMntFrame frame;
+            if (user.getRole().equals("GIAOVU")) {
+                frame = new RemarkingMntFrame();
+            } else {
+                frame = new RemarkingMntFrame(user.getName());
+            }
             TimeTableFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnRemarkingActionPerformed
 
     private void btnCourseRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseRegisterActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
-            TimeTableFrame.showed = true;
+        if (this.user != null && !RegisterSubjectMngFrame.showed) {
+            RegisterSubjectMngFrame frame;
+            if (user.getRole().equals("GIAOVU")) {
+                frame = new RegisterSubjectMngFrame();
+            } else {
+                frame = new RegisterSubjectMngFrame(user.getName());
+            }
+            RegisterSubjectMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnCourseRegisterActionPerformed
 
     private void btnModifyPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPassActionPerformed
         if (this.user != null && !ModifyPassFrame.showed) {
+            ModifyPassFrame frame = new ModifyPassFrame(user);
             ModifyPassFrame.showed = true;
-            ModifyPassFrame frame = new ModifyPassFrame(user.getName(), user.getPass());
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnModifyPassActionPerformed
 
     private void btnScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScoreActionPerformed
-        if (this.user != null && this.user.getRole().equals("GIAOVU") && !ScoreMngFrame.showed) {
+        if (this.user != null && !ScoreMngFrame.showed) {
+            ScoreMngFrame frame;
+            if (this.user.getRole().equals("GIAOVU")) {
+                frame = new ScoreMngFrame();
+            } else {
+                frame = new ScoreMngFrame(user.getName());
+            }
             ScoreMngFrame.showed = true;
-            ScoreMngFrame frame = new ScoreMngFrame();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnScoreActionPerformed
 
     private void btnGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGradeActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
-            TimeTableFrame.showed = true;
+        if (this.user != null && !GradeMngFrame.showed) {
+            GradeMngFrame frame = new GradeMngFrame();
+            GradeMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnGradeActionPerformed
 
     private void btnSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjectActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
-            TimeTableFrame.showed = true;
+        if (this.user != null && !SubjectMngFrame.showed) {
+            SubjectMngFrame frame = new SubjectMngFrame();
+            SubjectMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnSubjectActionPerformed
 
     private void btnListGradeAccordingToSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListGradeAccordingToSourceActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
+        if (this.user != null && !RegisterSubjectMngFrame.showed) {
+            RegisterSubjectMngFrame frame;
+            if (user.getRole().equals("GIAOVU")) {
+                frame = new RegisterSubjectMngFrame();
+            } else {
+                frame = new RegisterSubjectMngFrame(user.getName());
+            }
             TimeTableFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnListGradeAccordingToSourceActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
+        if (this.user != null && !ReportFrame.showed && user.getRole().equals("GIAOVU")) {
+            ReportFrame frame = new ReportFrame();
             TimeTableFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
-            this.setVisible(false);
+            // this.setVisible(false);
         }
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnSeeScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeScoreActionPerformed
-        if (this.user != null && !TimeTableFrame.showed) {
-            TimeTableFrame frame = new TimeTableFrame();
-            TimeTableFrame.showed = true;
+        if (this.user != null && !ScoreMngFrame.showed && !user.getRole().equals("GIAOVU")) {
+            ScoreMngFrame frame = new ScoreMngFrame(user.getName());
+            ScoreMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);

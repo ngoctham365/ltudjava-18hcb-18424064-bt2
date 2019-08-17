@@ -12,12 +12,18 @@ package ltudjava.hcb.bt2.gui;
 public class TimeTableFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
+    private String studentName = null;
 
     /**
      * Creates new form TimeTableFrame
      */
     public TimeTableFrame() {
         initComponents();
+    }
+
+    TimeTableFrame(String name) {
+        initComponents();
+        this.studentName = name;
     }
 
     /**
@@ -53,6 +59,11 @@ public class TimeTableFrame extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -220,6 +231,10 @@ public class TimeTableFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        showed = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

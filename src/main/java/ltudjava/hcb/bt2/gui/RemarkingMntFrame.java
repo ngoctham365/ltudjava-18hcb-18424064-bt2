@@ -5,17 +5,47 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import ltudjava.hcb.bt2.bus.*;
+import ltudjava.hcb.bt2.dto.Subject;
+
 /**
  *
  * @author Jossion
  */
 public class RemarkingMntFrame extends javax.swing.JFrame {
 
+    static boolean showed = false;
+    private String studentCode = null;
+
     /**
      * Creates new form RemarkingFrame
      */
     public RemarkingMntFrame() {
         initComponents();
+        
+        initialDataComboBox(SubjectBUS.getAll());
+        
+        table.setModel(RemarkingBUS.getData());
+        
+        addComboBoxToChangeStatus();
+    }
+
+    RemarkingMntFrame(String name) {
+        this.studentCode = name;
+        initComponents();
+
+        txtCode.setText(name);
+        txtCode.setEnabled(false);
+
+        txtFullName.setText(StudentBUS.getFullNameByCode(studentCode));
+        txtFullName.setEditable(false);
+        
+        initialDataComboBox(SubjectBUS.getListAccordingToStudent(studentCode));
     }
 
     /**
@@ -47,6 +77,11 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         btnCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -180,6 +215,10 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        showed = false;
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -236,4 +275,32 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea txtReason;
     private javax.swing.JTextField txtScoreWish;
     // End of variables declaration//GEN-END:variables
+
+    private void initialDataComboBox(List<Subject> listSubject) {
+        cbbSubject.removeAllItems();
+        for (Subject i : listSubject) {
+            cbbSubject.addItem(i.getCode() + HelperBUS.iconMoveRightHasSpace() + i.getName());
+        }
+        
+        cbbTypeScore.removeAllItems();
+        cbbTypeScore.addItem("Điểm giữa kỳ");
+        cbbTypeScore.addItem("Điểm cuối kỳ");
+        cbbTypeScore.addItem("Điểm khác");
+        cbbTypeScore.addItem("Điểm tổng");
+    }
+
+    private void addComboBoxToChangeStatus() {
+        String[] ses={"Đã cập nhật điểm","Không cập nhật điểm","Chưa xem"};
+        
+        JComboBox jComboBox=new JComboBox(ses);
+        jComboBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox comboBox=(JComboBox) e.getSource();
+                String s=comboBox.getSelectedItem().toString();
+            }
+        });
+        table.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox));
+    }
 }

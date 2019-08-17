@@ -14,66 +14,67 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author 
+ * @author
  */
 public class StudentDAO {
-        private  Session session=null;
-        private Transaction tst=null;
-        private List<Student> list;
-        
-    public String insert(Student p){
-        String result=null;
-        
+
+    private Session session = null;
+    private Transaction tst = null;
+    private List<Student> list;
+
+    public String insert(Student p) {
+        String result = null;
+
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            result=(String)session.save(p);
-            
+            tst = session.beginTransaction();
+
+            result = (String) session.save(p);
+
             tst.commit();
         } catch (Exception e) {
-            if (tst!=null) {
+            if (tst != null) {
                 tst.rollback();
             }
-        result=null;
+            result = null;
             e.printStackTrace();
         }
         return result;
     }
-    
-    public boolean update(Student p){
-        Boolean result=false;
+
+    public boolean update(Student p) {
+        Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Student q=(Student) session.get(Student.class, p.getStudentCode());
-            
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Student q = (Student) session.get(Student.class, p.getStudentCode());
+
             q.setFullname(p.getFullname());
             q.setPersonCode(p.getPersonCode());
             q.setSex(p.getSex());
             q.setGrade(p.getGrade());
             q.setScores(p.getScores());
             q.setUser(p.getUser());
-            
+
             session.update(q);
             tst.commit();
-            
-            result=true;
+
+            result = true;
         } catch (Exception e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
-        
+
         return result;
     }
-    
-    public boolean delete(String studentCode){
+
+    public boolean delete(String studentCode) {
         Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             Student q = (Student) session.get(Student.class, studentCode);
             session.delete(q);
@@ -87,8 +88,8 @@ public class StudentDAO {
         }
         return result;
     }
-    
-    private String getTable(String where){
+
+    private String getTable(String where) {
         return "select distinct s "
                 + "from Student as s "
                 + "left join fetch s.grade g "
@@ -96,16 +97,16 @@ public class StudentDAO {
                 + "left join fetch s.user u "
                 + where;
     }
-    
-    public List<Student> getAll(){
-        list=new ArrayList<>();
+
+    public List<Student> getAll() {
+        list = new ArrayList<>();
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Query q=session.createQuery(getTable(""));
-            list = (List<Student>)q.list();
-            
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable(""));
+            list = (List<Student>) q.list();
+
             tst.commit();
         } catch (Exception e) {
             if (tst != null) {
@@ -113,7 +114,28 @@ public class StudentDAO {
             }
             e.printStackTrace();
         }
-        
+
         return list;
+    }
+
+    public Student getByCode(String studentCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("where s.studentCode = :id"));
+            q.setParameter("id", studentCode);
+            list = (List<Student>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list.size() == 0 ? null : list.get(0);
     }
 }

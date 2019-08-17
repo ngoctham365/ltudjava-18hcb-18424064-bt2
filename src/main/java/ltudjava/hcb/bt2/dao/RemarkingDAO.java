@@ -14,65 +14,66 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author 
+ * @author
  */
 public class RemarkingDAO {
-        private  Session session=null;
-        private Transaction tst=null;
-        private List<Remarking> list;
-        
-    public Integer insert(Remarking p){
-        Integer result=-1;
-        
+
+    private Session session = null;
+    private Transaction tst = null;
+    private List<Remarking> list;
+
+    public Integer insert(Remarking p) {
+        Integer result = -1;
+
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            result=(Integer)session.save(p);
-            
+            tst = session.beginTransaction();
+
+            result = (Integer) session.save(p);
+
             tst.commit();
-        } catch (Exception e) {
-            if (tst!=null) {
-                tst.rollback();
-            }
-            e.printStackTrace();
-        }
-        return result;
-    }
-    
-    public boolean update(Remarking p){
-        Boolean result=false;
-        try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Remarking q=(Remarking) session.get(Remarking.class, p.getScoreId());
-            
-            q.setReason(p.getReason());
-            q.setScoreDesired(p.getScoreDesired());
-            q.setScoreOld(p.getScoreOld());
-            q.setScoreType(p.getScoreType());
-            q.setStatus(p.getStatus());
-            q.setScore(p.getScore());
-            
-            session.update(q);
-            tst.commit();
-            
-            result=true;
         } catch (Exception e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
-        
         return result;
     }
-    
-    public boolean delete(int id){
+
+    public boolean update(Remarking p) {
         Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Remarking q = (Remarking) session.get(Remarking.class, p.getScoreId());
+
+            q.setReason(p.getReason());
+            q.setScoreDesired(p.getScoreDesired());
+            q.setScoreOld(p.getScoreOld());
+            q.setScoreType(p.getScoreType());
+            q.setStatus(p.getStatus());
+            q.setScore(p.getScore());
+
+            session.update(q);
+            tst.commit();
+
+            result = true;
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public boolean delete(int id) {
+        Boolean result = false;
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             Remarking q = (Remarking) session.get(Remarking.class, id);
             session.delete(q);
@@ -86,23 +87,26 @@ public class RemarkingDAO {
         }
         return result;
     }
-    
-    private String getTable(String where){
+
+    private String getTable(String where) {
         return "select distinct r "
                 + "from Remarking as r "
                 + "left join fetch g.score s "
+                + "left join fetch s.student sd "
+                + "left join fetch s.timeTable tt "
+                + "left join fetch tt.subject sj "
                 + where;
     }
-    
-    public List<Remarking> getAll(){
-        list=new ArrayList<>();
+
+    public List<Remarking> getAll() {
+        list = new ArrayList<>();
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Query q=session.createQuery(getTable(""));
-            list = (List<Remarking>)q.list();
-            
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable(""));
+            list = (List<Remarking>) q.list();
+
             tst.commit();
         } catch (Exception e) {
             if (tst != null) {
@@ -110,14 +114,14 @@ public class RemarkingDAO {
             }
             e.printStackTrace();
         }
-        
+
         return list;
     }
-    
-    public Remarking getById(int id){
+
+    public Remarking getById(int id) {
         Remarking n = null;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             Query q = session.createQuery(getTable("where r.scoreId = :id"));
             q.setParameter("id", id);
@@ -131,15 +135,15 @@ public class RemarkingDAO {
         }
         return n;
     }
-    
-    public List<Remarking> getByScoreType(String scoreType){
-        list=new ArrayList<>();
+
+    public List<Remarking> getByScoreType(String scoreType) {
+        list = new ArrayList<>();
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             Query q = session.createQuery(getTable("where r.scoreType = :name"));
             q.setParameter("name", scoreType);
-            list = (List<Remarking>)q.list();
+            list = (List<Remarking>) q.list();
             tst.commit();
         } catch (Exception e) {
             if (tst != null) {
@@ -149,5 +153,5 @@ public class RemarkingDAO {
         }
         return list;
     }
-    
+
 }

@@ -90,7 +90,7 @@ public class UserDAO {
     private String getTable(String where) {
         return "select distinct u "
                 + "from User as u "
-                + "left join fetch u.Student sd "
+                + "left join fetch u.student sd "
                 + where;
     }
 

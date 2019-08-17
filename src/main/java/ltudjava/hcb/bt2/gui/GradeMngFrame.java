@@ -10,6 +10,7 @@ package ltudjava.hcb.bt2.gui;
  * @author Jossion
  */
 public class GradeMngFrame extends javax.swing.JFrame {
+    static boolean showed=false;
 
     /**
      * Creates new form GradeMngFrame
@@ -52,6 +53,11 @@ public class GradeMngFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(300, 305));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,6 +156,10 @@ public class GradeMngFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        this.showed = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

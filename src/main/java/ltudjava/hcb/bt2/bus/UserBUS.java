@@ -15,7 +15,7 @@ import ltudjava.hcb.bt2.dto.User;
 public class UserBUS {
 
     public User LogIn(String userName, String passWord) {
-        return new UserDAO().getByNameAndPassword(userName,passWord);
+        return new UserDAO().getByNameAndPassword(userName,HelperBUS.encryptPassword(passWord));
     }
     
 }
