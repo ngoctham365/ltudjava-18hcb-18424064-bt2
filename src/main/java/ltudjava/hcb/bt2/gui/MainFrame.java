@@ -197,53 +197,124 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        if(this.user!=null && this.user.getRole().equals("GIAOVU")){
-            new StudentMngFrame().show();
+        if (this.user != null && this.user.getRole().equals("GIAOVU")) {
+            StudentMngFrame frame = new StudentMngFrame();
+            StudentMngFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnStudentActionPerformed
 
     private void btnTimeTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeTableActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnTimeTableActionPerformed
 
     private void btnRemarkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemarkingActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnRemarkingActionPerformed
 
     private void btnCourseRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseRegisterActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnCourseRegisterActionPerformed
 
     private void btnModifyPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPassActionPerformed
-        if(this.user!=null){
-            new ModifyPassFrame(user.getName(), user.getPass()).show();
+        if (this.user != null && !ModifyPassFrame.showed) {
+            ModifyPassFrame.showed = true;
+            ModifyPassFrame frame = new ModifyPassFrame(user.getName(), user.getPass());
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnModifyPassActionPerformed
 
     private void btnScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScoreActionPerformed
-        if(this.user!=null && this.user.getRole().equals("GIAOVU")){
-            new ScoreMngFrame().show();
+        if (this.user != null && this.user.getRole().equals("GIAOVU") && !ScoreMngFrame.showed) {
+            ScoreMngFrame.showed = true;
+            ScoreMngFrame frame = new ScoreMngFrame();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnScoreActionPerformed
 
     private void btnGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGradeActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnGradeActionPerformed
 
     private void btnSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjectActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnSubjectActionPerformed
 
     private void btnListGradeAccordingToSourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListGradeAccordingToSourceActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnListGradeAccordingToSourceActionPerformed
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnSeeScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeScoreActionPerformed
-        // TODO add your handling code here:
+        if (this.user != null && !TimeTableFrame.showed) {
+            TimeTableFrame frame = new TimeTableFrame();
+            TimeTableFrame.showed = true;
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnSeeScoreActionPerformed
 
     /**

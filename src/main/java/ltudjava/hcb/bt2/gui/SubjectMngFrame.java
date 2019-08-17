@@ -36,14 +36,14 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtGrade = new javax.swing.JTextField();
-        txtGrade1 = new javax.swing.JTextField();
-        btnView1 = new javax.swing.JButton();
-        btnView2 = new javax.swing.JButton();
-        btnView3 = new javax.swing.JButton();
+        txtReplateName = new javax.swing.JTextField();
+        txtAddCode = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        btnReplate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtGrade2 = new javax.swing.JTextField();
+        txtAddName = new javax.swing.JTextField();
 
         txtCode.setText("jTextField1");
 
@@ -80,21 +80,15 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("XÓA MÔN HỌC");
 
-        txtGrade.setText("jTextField1");
+        btnAdd.setText("TẠO");
 
-        txtGrade1.setText("jTextField1");
+        btnReplate.setText("SỬA");
 
-        btnView1.setText("TẠO");
-
-        btnView2.setText("SỬA");
-
-        btnView3.setText("XÓA");
+        btnDelete.setText("XÓA");
 
         jLabel2.setText("Nhập mã môn học:");
 
         jLabel3.setText("Nhập tên môn học:");
-
-        txtGrade2.setText("jTextField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,8 +109,8 @@ public class SubjectMngFrame extends javax.swing.JFrame {
                                     .addGap(10, 10, 10)
                                     .addComponent(jLabel3))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtGrade2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtGrade1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtAddName, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAddCode, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -128,16 +122,16 @@ public class SubjectMngFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(btnView1))
+                                .addComponent(btnAdd))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(txtGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtReplateName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
-                                .addComponent(btnView2))
+                                .addComponent(btnReplate))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(48, 48, 48)
-                                .addComponent(btnView3)))
+                                .addComponent(btnDelete)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,23 +149,23 @@ public class SubjectMngFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addGap(3, 3, 3)
-                        .addComponent(txtGrade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAddCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
-                        .addComponent(txtGrade2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAddName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView1)
+                        .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtReplateName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView2)
+                        .addComponent(btnReplate)
                         .addGap(16, 16, 16)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView3)
+                        .addComponent(btnDelete)
                         .addGap(20, 20, 20))))
         );
 
@@ -215,10 +209,10 @@ public class SubjectMngFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReplate;
     private javax.swing.JButton btnView;
-    private javax.swing.JButton btnView1;
-    private javax.swing.JButton btnView2;
-    private javax.swing.JButton btnView3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -228,9 +222,9 @@ public class SubjectMngFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtAddCode;
+    private javax.swing.JTextField txtAddName;
     private javax.swing.JTextField txtCode;
-    private javax.swing.JTextField txtGrade;
-    private javax.swing.JTextField txtGrade1;
-    private javax.swing.JTextField txtGrade2;
+    private javax.swing.JTextField txtReplateName;
     // End of variables declaration//GEN-END:variables
 }

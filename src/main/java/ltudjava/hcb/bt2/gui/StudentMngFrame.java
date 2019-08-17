@@ -10,6 +10,7 @@ package ltudjava.hcb.bt2.gui;
  * @author Jossion
  */
 public class StudentMngFrame extends javax.swing.JFrame {
+    static boolean showed;
 
     /**
      * Creates new form StudentMngFrame
@@ -29,7 +30,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         cbbViewGrade = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
@@ -45,7 +46,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         cbbAddGrade = new javax.swing.JComboBox();
         btnAdd = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         btnAdd1 = new javax.swing.JButton();
 
@@ -57,7 +58,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -68,12 +69,10 @@ public class StudentMngFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Chọn lớp:");
-
-        cbbViewGrade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -88,22 +87,14 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("MSSV:");
 
-        txtCode.setText("jTextField1");
-
-        txtFullName.setText("jTextField1");
-
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Họ tên:");
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("CMND:");
 
-        txtPersonCode.setText("jTextField1");
-
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Chọn lớp:");
-
-        cbbAddGrade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnAdd.setText("THÊM");
 
@@ -111,9 +102,9 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("THÊM SINH VIÊN");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("thông tin chung");
+        lblInfo.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        lblInfo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblInfo.setText("thông tin chung");
 
         btnDelete.setText("XÓA");
 
@@ -126,7 +117,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +177,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addComponent(lblInfo)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -275,7 +266,6 @@ public class StudentMngFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox cbbAddGrade;
     private javax.swing.JComboBox cbbViewGrade;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -285,7 +275,8 @@ public class StudentMngFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblInfo;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtPersonCode;

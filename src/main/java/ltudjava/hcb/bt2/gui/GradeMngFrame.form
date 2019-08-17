@@ -54,22 +54,22 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="txtGrade1" max="32767" attributes="0"/>
+                                          <Component id="txtAdd" max="32767" attributes="0"/>
                                           <Component id="jLabel10" alignment="0" pref="141" max="32767" attributes="0"/>
                                           <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                      <Component id="btnView1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                      <Component id="btnView2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnReplate" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                                      <Component id="btnView3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -83,7 +83,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtGrade" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="txtReplate" min="-2" pref="142" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="jScrollPane1" min="-2" pref="135" max="-2" attributes="0"/>
@@ -102,19 +102,19 @@
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtGrade1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAdd" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnView1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtGrade" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtReplate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnView2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReplate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnView3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
@@ -142,7 +142,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jList1">
+        <Component class="javax.swing.JList" name="list">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="5">
@@ -184,27 +184,21 @@
         <Property name="text" type="java.lang.String" value="X&#xd3;A L&#x1eda;P"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtGrade">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txtReplate">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtGrade1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txtAdd">
     </Component>
-    <Component class="javax.swing.JButton" name="btnView1">
+    <Component class="javax.swing.JButton" name="btnCreate">
       <Properties>
         <Property name="text" type="java.lang.String" value="T&#x1ea0;O"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnView2">
+    <Component class="javax.swing.JButton" name="btnReplate">
       <Properties>
         <Property name="text" type="java.lang.String" value="S&#x1eec;A"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnView3">
+    <Component class="javax.swing.JButton" name="btnDelete">
       <Properties>
         <Property name="text" type="java.lang.String" value="X&#xd3;A"/>
       </Properties>

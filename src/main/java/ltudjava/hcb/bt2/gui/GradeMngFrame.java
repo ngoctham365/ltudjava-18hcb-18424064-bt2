@@ -32,15 +32,15 @@ public class GradeMngFrame extends javax.swing.JFrame {
         btnView = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        list = new javax.swing.JList();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtGrade = new javax.swing.JTextField();
-        txtGrade1 = new javax.swing.JTextField();
-        btnView1 = new javax.swing.JButton();
-        btnView2 = new javax.swing.JButton();
-        btnView3 = new javax.swing.JButton();
+        txtReplate = new javax.swing.JTextField();
+        txtAdd = new javax.swing.JTextField();
+        btnCreate = new javax.swing.JButton();
+        btnReplate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         txtCode.setText("jTextField1");
 
@@ -59,12 +59,12 @@ public class GradeMngFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        list.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(list);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -78,15 +78,11 @@ public class GradeMngFrame extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("XÓA LỚP");
 
-        txtGrade.setText("jTextField1");
+        btnCreate.setText("TẠO");
 
-        txtGrade1.setText("jTextField1");
+        btnReplate.setText("SỬA");
 
-        btnView1.setText("TẠO");
-
-        btnView2.setText("SỬA");
-
-        btnView3.setText("XÓA");
+        btnDelete.setText("XÓA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,18 +97,18 @@ public class GradeMngFrame extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addContainerGap()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txtGrade1)
+                                            .addComponent(txtAdd)
                                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(53, 53, 53)
-                                        .addComponent(btnView1))
+                                        .addComponent(btnCreate))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(51, 51, 51)
-                                        .addComponent(btnView2))
+                                        .addComponent(btnReplate))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(52, 52, 52)
-                                        .addComponent(btnView3)))
+                                        .addComponent(btnDelete)))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 9, Short.MAX_VALUE)
@@ -120,7 +116,7 @@ public class GradeMngFrame extends javax.swing.JFrame {
                         .addGap(7, 7, 7))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(txtGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtReplate, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75))
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -135,19 +131,19 @@ public class GradeMngFrame extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGrade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView1)
+                        .addComponent(btnCreate)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtReplate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView2)
+                        .addComponent(btnReplate)
                         .addGap(17, 17, 17)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnView3)
+                        .addComponent(btnDelete)
                         .addContainerGap())
                     .addComponent(jScrollPane1)))
         );
@@ -191,19 +187,19 @@ public class GradeMngFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnReplate;
     private javax.swing.JButton btnView;
-    private javax.swing.JButton btnView1;
-    private javax.swing.JButton btnView2;
-    private javax.swing.JButton btnView3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList list;
+    private javax.swing.JTextField txtAdd;
     private javax.swing.JTextField txtCode;
-    private javax.swing.JTextField txtGrade;
-    private javax.swing.JTextField txtGrade1;
+    private javax.swing.JTextField txtReplate;
     // End of variables declaration//GEN-END:variables
 }
