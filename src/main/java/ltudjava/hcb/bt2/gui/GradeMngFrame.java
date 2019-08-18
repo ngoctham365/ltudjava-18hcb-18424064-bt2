@@ -5,18 +5,26 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.GradeBUS;
+import ltudjava.hcb.bt2.dto.Grade;
+
 /**
  *
  * @author Jossion
  */
 public class GradeMngFrame extends javax.swing.JFrame {
-    static boolean showed=false;
+
+    static boolean showed = false;
+    private String gradeOld = "";
 
     /**
      * Creates new form GradeMngFrame
      */
     public GradeMngFrame() {
         initComponents();
+        this.initialListGrade();
     }
 
     /**
@@ -28,9 +36,6 @@ public class GradeMngFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtCode = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        btnView = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList();
@@ -43,15 +48,7 @@ public class GradeMngFrame extends javax.swing.JFrame {
         btnReplate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        txtCode.setText("jTextField1");
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("MSSV:");
-
-        btnView.setText("XEM");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(300, 305));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -70,6 +67,11 @@ public class GradeMngFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(list);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -85,15 +87,31 @@ public class GradeMngFrame extends javax.swing.JFrame {
         jLabel11.setText("XÓA LỚP");
 
         btnCreate.setText("TẠO");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnReplate.setText("SỬA");
+        btnReplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReplateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("XÓA");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -123,9 +141,7 @@ public class GradeMngFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(txtReplate, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,6 +176,44 @@ public class GradeMngFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         this.showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        if (txtAdd.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Tên lớp không được bỏ trống.");
+        } else if (null != GradeBUS.getGrade(txtAdd.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Lớp " + txtAdd.getText().trim() + " đã tồn tại.");
+        } else if (-1 != GradeBUS.add(txtAdd.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Lớp " + txtAdd.getText().trim() + " đã thêm thành công.");
+        }
+        initialListGrade();
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listValueChanged
+        txtReplate.setText(list.getSelectedValue().toString());
+        this.gradeOld = list.getSelectedValue().toString();
+    }//GEN-LAST:event_listValueChanged
+
+    private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
+        if (txtReplate.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Tên lớp mới không được bỏ trống.");
+        } else if(list.getSelectedIndex()==-1){
+            JOptionPane.showMessageDialog(this, "Hãy chọn lớp muốn sửa tên.");
+        }else{
+            Grade g=GradeBUS.getByName(list.getSelectedValue().toString());
+            g.setName(txtReplate.getText().trim());
+            if (!GradeBUS.replateName(g)) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi thay đổi tên lớp.");
+            }
+            initialListGrade();
+        }
+    }//GEN-LAST:event_btnReplateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (list.getSelectedIndex()!=-1 && GradeBUS.remove(list.getSelectedValue().toString().trim())) {
+            
+            initialListGrade();
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,16 +254,17 @@ public class GradeMngFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnReplate;
-    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList list;
     private javax.swing.JTextField txtAdd;
-    private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtReplate;
     // End of variables declaration//GEN-END:variables
+
+    private void initialListGrade() {
+        list.setModel(GradeBUS.getListName());
+    }
 }
