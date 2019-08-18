@@ -133,4 +133,25 @@ public class StudentDAO {
 
         return list.size() == 0 ? null : list.get(0);
     }
+
+    public List<Student> getByGrade(Integer gradeId) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("where s.grade = :key"));
+            q.setParameter("key", gradeId);
+            list = (List<Student>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

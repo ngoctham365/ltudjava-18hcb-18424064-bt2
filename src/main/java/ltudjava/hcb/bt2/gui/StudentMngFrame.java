@@ -5,6 +5,11 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.HelperBUS;
+import ltudjava.hcb.bt2.bus.StudentBUS;
+
 /**
  *
  * @author Jossion
@@ -49,7 +54,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
-        btnAdd1 = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -114,7 +119,12 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
         btnDelete.setText("XÓA");
 
-        btnAdd1.setText("IMPORT .CSV");
+        btnImport.setText("IMPORT .CSV");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,7 +148,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
                                 .addComponent(btnAdd))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -215,7 +225,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdd1)
+                        .addComponent(btnImport)
                         .addGap(23, 23, 23)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -232,6 +242,13 @@ public class StudentMngFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+      Integer countAdded=  StudentBUS.saveInfoListStudentFromFileCSV(this);
+      if(countAdded!=-1){
+          JOptionPane.showMessageDialog(this, "Đã thêm "+countAdded+" sinh viên vào danh sách.");
+      }
+    }//GEN-LAST:event_btnImportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,8 +287,8 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAdd1;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnView;
     private javax.swing.JComboBox cbbAddGrade;
     private javax.swing.JComboBox cbbViewGrade;
