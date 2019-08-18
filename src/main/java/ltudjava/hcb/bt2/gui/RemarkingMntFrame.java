@@ -228,10 +228,11 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         Student s = StudentBUS.getByCode(txtCode.getText());
         if (null != s) {
-            if (JOptionPane.showConfirmDialog(rootPane, "Sai thông tin họ tên của sinh viên. \n Đúng tên của SV là: " + s.getFullname() + "\nCó muốn tiếp tục?") == JOptionPane.YES_OPTION) {
-                ádfghjhgfdfgh
+            if (s.getFullname().equals(txtFullName.getText()) && JOptionPane.showConfirmDialog(rootPane, "Sai thông tin họ tên của sinh viên. \n Đúng tên của SV là: " + s.getFullname() + "\nCó muốn tiếp tục?") == JOptionPane.YES_OPTION) {
+                
             }
-        }
+        }else  
+            JOptionPane.showMessageDialog(rootPane, "Không tồn tại sinh viên có mã "+txtCode.getText());
     }//GEN-LAST:event_btnCreateActionPerformed
 
     /**

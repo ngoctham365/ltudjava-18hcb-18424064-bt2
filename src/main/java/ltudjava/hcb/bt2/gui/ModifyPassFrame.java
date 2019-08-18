@@ -5,7 +5,8 @@
  */
 package ltudjava.hcb.bt2.gui;
 
-import ltudjava.hcb.bt2.dto.User;
+import ltudjava.hcb.bt2.dto.*;
+import ltudjava.hcb.bt2.bus.*;
 
 /**
  *
@@ -26,6 +27,9 @@ public class ModifyPassFrame extends javax.swing.JFrame {
     ModifyPassFrame(User u) {
         user = u;
         initComponents();
+        Student s = StudentBUS.getByCode(u.getName());
+        txtFullName.setText(s.getFullname());
+        txtGrade.setText(GradeBUS.getGrade(s.getGrade()));
     }
 
     /**
@@ -50,8 +54,8 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         txtShowName = new javax.swing.JTextField();
         rbMale = new javax.swing.JRadioButton();
         rbFemale = new javax.swing.JRadioButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtPersonCode = new javax.swing.JTextField();
+        txtGrade = new javax.swing.JTextField();
         btnChange = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -101,7 +105,7 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         btnGroupSex.add(rbFemale);
         rbFemale.setText("Nữ");
 
-        jTextField4.setEditable(false);
+        txtGrade.setEditable(false);
 
         btnChange.setText("SỬA THÔNG TIN");
 
@@ -146,7 +150,7 @@ public class ModifyPassFrame extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtGrade, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(rbFemale)
@@ -155,7 +159,7 @@ public class ModifyPassFrame extends javax.swing.JFrame {
                                 .addGap(0, 55, Short.MAX_VALUE))
                             .addComponent(txtFullName)
                             .addComponent(txtShowName)
-                            .addComponent(jTextField3))
+                            .addComponent(txtPersonCode))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnChange)
@@ -182,11 +186,11 @@ public class ModifyPassFrame extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPersonCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnChange)
@@ -265,13 +269,13 @@ public class ModifyPassFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JRadioButton rbFemale;
     private javax.swing.JRadioButton rbMale;
     private javax.swing.JTextField txtFullName;
+    private javax.swing.JTextField txtGrade;
     private javax.swing.JPasswordField txtNew;
     private javax.swing.JPasswordField txtOld;
+    private javax.swing.JTextField txtPersonCode;
     private javax.swing.JTextField txtShowName;
     // End of variables declaration//GEN-END:variables
 }
