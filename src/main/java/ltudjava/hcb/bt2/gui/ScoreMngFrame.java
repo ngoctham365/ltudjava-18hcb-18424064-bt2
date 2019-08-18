@@ -5,6 +5,9 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.*;
+
 /**
  *
  * @author Jossion
@@ -80,6 +83,11 @@ public class ScoreMngFrame extends javax.swing.JFrame {
         btnInputScore.setText("NHẬP ĐIỂM");
 
         btnImport.setText("IMPORT .CSV");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,6 +143,13 @@ public class ScoreMngFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        Integer countAdded=ScoreBUS.saveInfoListScoreFromFileCSV(this);
+        if(countAdded!=-1){
+            JOptionPane.showMessageDialog(this, "Đã cập nhật điểm cho "+countAdded+" sinh viên.");
+        }
+    }//GEN-LAST:event_btnImportActionPerformed
 
     /**
      * @param args the command line arguments

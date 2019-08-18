@@ -133,7 +133,7 @@ public class ScoreDAO {
             e.printStackTrace();
         }
 
-        return list.size()==0?null:list.get(0);
+        return list.size() == 0 ? null : list.get(0);
     }
 
     public List<Score> getByStudent(String studentCode) {
@@ -142,7 +142,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("s.studentCode = :key"));
+            Query q = session.createQuery(getTable("s.studentId = :key"));
             q.setParameter("key", studentCode);
             list = (List<Score>) q.list();
 
@@ -155,5 +155,30 @@ public class ScoreDAO {
         }
 
         return list;
+    }
+
+    public Score getByGradeSubjectStudent(Integer gradeId, String subjectCode, String studentCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("s.studentId = :stu "
+                    + "and s.gradeId = :gra "
+                    + "and s.subjectId = :sub"));
+            q.setParameter("stu", studentCode);
+            q.setParameter("gra", gradeId);
+            q.setParameter("sub", subjectCode);
+            list = (List<Score>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list.size() == 0 ? null : list.get(0);
     }
 }
