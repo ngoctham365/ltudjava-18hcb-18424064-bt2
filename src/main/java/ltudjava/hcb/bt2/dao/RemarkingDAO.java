@@ -47,14 +47,12 @@ public class RemarkingDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Remarking q = (Remarking) session.get(Remarking.class, p.getScoreId());
+            Remarking q = (Remarking) session.get(Remarking.class, p.getId());
 
             q.setReason(p.getReason());
             q.setScoreDesired(p.getScoreDesired());
             q.setScoreOld(p.getScoreOld());
-            q.setScoreType(p.getScoreType());
             q.setStatus(p.getStatus());
-            q.setScore(p.getScore());
 
             session.update(q);
             tst.commit();
@@ -91,10 +89,6 @@ public class RemarkingDAO {
     private String getTable(String where) {
         return "select distinct r "
                 + "from Remarking as r "
-                + "left join fetch g.score s "
-                + "left join fetch s.student sd "
-                + "left join fetch s.timeTable tt "
-                + "left join fetch tt.subject sj "
                 + where;
     }
 

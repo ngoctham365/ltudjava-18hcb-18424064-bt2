@@ -51,7 +51,6 @@ public class SubjectDAO {
             Subject q = (Subject) session.get(Subject.class, p.getCode());
 
             q.setName(p.getName());
-            q.setTimeTables(p.getTimeTables());
 
             session.update(q);
             tst.commit();
@@ -88,9 +87,6 @@ public class SubjectDAO {
     private String getTable(String where) {
         return "select distinct s "
                 + "from Subject as s "
-                + "left join fetch s.timeTables tt "
-                + "left join fetch tt.scores sr "
-                + "left join fetch sr.student sd "
                 + where;
     }
 
@@ -114,14 +110,14 @@ public class SubjectDAO {
         return list;
     }
 
-    public List<Subject> getByStudent(String studentCode) {
+    public Subject getById(String subjectId) {
         list = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("where sd.studentCode = :id "));
-            q.setParameter("id", studentCode);
+            Query q = session.createQuery(getTable("where s.code = :key"));
+            q.setParameter("key", subjectId);
             list = (List<Subject>) q.list();
 
             tst.commit();
@@ -132,6 +128,6 @@ public class SubjectDAO {
             e.printStackTrace();
         }
 
-        return list;
+        return list.size() == 0 ? null : list.get(0);
     }
 }

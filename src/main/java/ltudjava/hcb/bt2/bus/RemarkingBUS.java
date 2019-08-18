@@ -20,11 +20,11 @@ public class RemarkingBUS {
         Object[][] data=new Object[listRemarking.size()][7];
         for (Remarking iRemarking : listRemarking) {
             String[] ses=new String[7];
-            
-            ses[0]=iRemarking.getScore().getStudent().getStudentCode();
-            ses[1]=iRemarking.getScore().getStudent().getFullname();
-            ses[2]=HelperBUS.concatWithIconMoveRight(iRemarking.getScore().getTimeTable().getSubject().getCode(), iRemarking.getScore().getTimeTable().getSubject().getName());
-            ses[3]=iRemarking.getScoreType();
+            ScoreBUS.getByID(iRemarking.getId().getScoreId()).getStudentId();
+            ses[0]=ScoreBUS.getByID(iRemarking.getId().getScoreId()).getStudentId();
+            ses[1]=StudentBUS.getFullNameByCode(ses[0]);
+            ses[2]=HelperBUS.concatWithIconMoveRight(ScoreBUS.getByID(iRemarking.getId().getScoreId()).getSubjectId(), SubjectBUS.getNameById(ScoreBUS.getByID(iRemarking.getId().getScoreId()).getSubjectId()));
+            ses[3]=iRemarking.getId().getScoreType();
             ses[4]=iRemarking.getScoreDesired().toString();
             ses[5]=iRemarking.getReason();
             ses[6]=iRemarking.getStatus();

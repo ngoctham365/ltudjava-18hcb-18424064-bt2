@@ -49,8 +49,6 @@ public class GradeDAO {
             Grade q=(Grade) session.get(Grade.class, p.getId());
             
             q.setName(p.getName());
-            q.setStudents(p.getStudents());
-            q.setTimeTables(p.getTimeTables());
             
             session.update(q);
             tst.commit();
@@ -87,8 +85,6 @@ public class GradeDAO {
     private String getTable(String where){
         return "select distinct g "
                 + "from Grade as g "
-                + "left join fetch g.timeTables tt "
-                + "left join fetch g.students s "
                 + where
                 + " order by g.name";
     }

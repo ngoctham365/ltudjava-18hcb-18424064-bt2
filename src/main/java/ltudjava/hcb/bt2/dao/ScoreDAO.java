@@ -14,67 +14,67 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author 
+ * @author
  */
 public class ScoreDAO {
-    
-        private  Session session=null;
-        private Transaction tst=null;
-        private List<Score> list;
-        
-    public Integer insert(Score p){
-        Integer result=-1;
-        
+
+    private Session session = null;
+    private Transaction tst = null;
+    private List<Score> list;
+
+    public Integer insert(Score p) {
+        Integer result = -1;
+
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            result=(Integer)session.save(p);
-            
+            tst = session.beginTransaction();
+
+            result = (Integer) session.save(p);
+
             tst.commit();
-        } catch (Exception e) {
-            if (tst!=null) {
-                tst.rollback();
-            }
-            e.printStackTrace();
-        }
-        return result;
-    }
-    
-    public boolean update(Score p){
-        Boolean result=false;
-        try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Score q=(Score) session.get(Score.class, p.getId());
-            
-            q.setScodeHaft(p.getScodeHaft());
-            q.setScoreAnother(p.getScoreAnother());
-            q.setScoreFull(p.getScoreFull());
-            q.setScoreSummary(p.getScoreSummary());
-            q.setRemarking(p.getRemarking());
-            q.setStudent(p.getStudent());
-            q.setTimeTable(p.getTimeTable());
-            
-            session.update(q);
-            tst.commit();
-            
-            result=true;
         } catch (Exception e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
-        
         return result;
     }
-    
-    public boolean delete(int id){
+
+    public boolean update(Score p) {
         Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Score q = (Score) session.get(Score.class, p.getId());
+
+            q.setGradeId(p.getGradeId());
+            q.setScodeHaft(p.getScodeHaft());
+            q.setScoreAnother(p.getScoreAnother());
+            q.setScoreFull(p.getScoreFull());
+            q.setScoreSummary(p.getScoreSummary());
+            q.setStudentId(p.getStudentId());
+            q.setSubjectId(p.getSubjectId());
+
+            session.update(q);
+            tst.commit();
+
+            result = true;
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public boolean delete(int id) {
+        Boolean result = false;
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             Score q = (Score) session.get(Score.class, id);
             session.delete(q);
@@ -88,25 +88,22 @@ public class ScoreDAO {
         }
         return result;
     }
-    
-    private String getTable(String where){
+
+    private String getTable(String where) {
         return "select distinct s "
                 + "from Score as s "
-                + "left join fetch s.student sd "
-                + "left join fetch s.timeTable t "
-                + "left join fetch s.remarking r "
                 + where;
     }
-    
-    public List<Score> getAll(){
-        list=new ArrayList<>();
+
+    public List<Score> getAll() {
+        list = new ArrayList<>();
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
-            
-            Query q=session.createQuery(getTable(""));
-            list = (List<Score>)q.list();
-            
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable(""));
+            list = (List<Score>) q.list();
+
             tst.commit();
         } catch (Exception e) {
             if (tst != null) {
@@ -114,7 +111,49 @@ public class ScoreDAO {
             }
             e.printStackTrace();
         }
-        
+
+        return list;
+    }
+
+    public Score getById(int scoreId) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("s.id = :key"));
+            q.setParameter("key", scoreId);
+            list = (List<Score>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list.size()==0?null:list.get(0);
+    }
+
+    public List<Score> getByStudent(String studentCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("s.studentCode = :key"));
+            q.setParameter("key", studentCode);
+            list = (List<Score>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
         return list;
     }
 }

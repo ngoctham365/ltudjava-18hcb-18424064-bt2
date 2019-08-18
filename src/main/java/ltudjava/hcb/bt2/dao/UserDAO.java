@@ -53,7 +53,6 @@ public class UserDAO {
             q.setNameshow(p.getNameshow());
             q.setPass(p.getPass());
             q.setRole(p.getRole());
-            q.setStudent(p.getStudent());
 
             session.update(q);
             tst.commit();
@@ -90,7 +89,6 @@ public class UserDAO {
     private String getTable(String where) {
         return "select distinct u "
                 + "from User as u "
-                + "left join fetch u.student sd "
                 + where;
     }
 

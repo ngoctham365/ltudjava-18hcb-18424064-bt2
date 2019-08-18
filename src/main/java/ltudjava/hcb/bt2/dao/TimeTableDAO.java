@@ -48,10 +48,7 @@ public class TimeTableDAO {
             
             TimeTable q=(TimeTable) session.get(TimeTable.class, p.getId());
             
-            q.setGrade(p.getGrade());
             q.setRoom(p.getRoom());
-            q.setSubject(p.getSubject());
-            q.setScores(p.getScores());
             
             session.update(q);
             tst.commit();
@@ -88,9 +85,6 @@ public class TimeTableDAO {
     private String getTable(String where){
         return "select distinct tt "
                 + "from TimeTable as tt "
-                + "left join fetch tt.grade g "
-                + "left join fetch tt.subject sj"
-                + "left join fetch tt.scores sr "
                 + where;
     }
     

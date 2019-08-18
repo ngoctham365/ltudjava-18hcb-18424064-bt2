@@ -15,7 +15,7 @@ import ltudjava.hcb.bt2.dto.Student;
 public class StudentBUS {
 
     public static String getFullNameByCode(String studentCode) {
-        return new StudentDAO().getByCode(studentCode).getFullname();
+        return getByCode(studentCode).getFullname();
     }
 
     public static Student getByCode(String studentCode) {

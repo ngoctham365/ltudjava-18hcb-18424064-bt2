@@ -54,8 +54,6 @@ public class StudentDAO {
             q.setPersonCode(p.getPersonCode());
             q.setSex(p.getSex());
             q.setGrade(p.getGrade());
-            q.setScores(p.getScores());
-            q.setUser(p.getUser());
 
             session.update(q);
             tst.commit();
@@ -92,9 +90,6 @@ public class StudentDAO {
     private String getTable(String where) {
         return "select distinct s "
                 + "from Student as s "
-                + "left join fetch s.grade g "
-                + "left join fetch s.scores sr "
-                + "left join fetch s.user u "
                 + where;
     }
 
