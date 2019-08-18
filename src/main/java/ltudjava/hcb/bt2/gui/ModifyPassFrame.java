@@ -5,6 +5,7 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.dto.*;
 import ltudjava.hcb.bt2.bus.*;
 
@@ -16,20 +17,22 @@ public class ModifyPassFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
     User user = null;
+    Student s = null;
 
     /**
      * Creates new form ModifyPassFrame
      */
     public ModifyPassFrame() {
         initComponents();
+        btnChange.setEnabled(false);
+        btnModify.setEnabled(false);
     }
 
     ModifyPassFrame(User u) {
         user = u;
         initComponents();
-        Student s = StudentBUS.getByCode(u.getName());
-        txtFullName.setText(s.getFullname());
-        txtGrade.setText(GradeBUS.getGrade(s.getGrade()));
+
+        initialInfo();
     }
 
     /**
@@ -108,6 +111,11 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         txtGrade.setEditable(false);
 
         btnChange.setText("SỬA THÔNG TIN");
+        btnChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Họ và tên:");
 
@@ -213,12 +221,35 @@ public class ModifyPassFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
-        // TODO add your handling code here:
+        if (txtOld.getText().trim().length() == 0 || txtNew.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Thiếu dữ liệu.");
+        } else if (null == UserBUS.logIn(user.getName(), HelperBUS.encryptPassword(txtOld.getText().trim()))) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu cũ không chính xác.");
+        } else {
+            user.setPass(HelperBUS.encryptPassword(txtNew.getText().trim()));
+            JOptionPane.showMessageDialog(this, UserBUS.update(user) ? "Đổi mật khẩu thành công." : "Có lỗi khi đổi mật khẩu ở hệ thống.");
+        }
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
+        s.setFullname(txtFullName.getText().trim().length() > 0 ? txtFullName.getText().trim() : s.getFullname());
+
+        s.setPersonCode(txtPersonCode.getText().trim().length() > 0 ? txtPersonCode.getText().trim() : s.getPersonCode());
+
+        s.setSex(rbMale.isSelected() ? "Nam" : "Nữ");
+
+        user.setNameshow(txtShowName.getText().trim().length() > 0 ? txtShowName.getText().trim() : user.getNameshow());
+
+        if (StudentBUS.changeInfo(s) || UserBUS.update(user)) {
+            initialInfo();
+        } else {
+            JOptionPane.showMessageDialog(this, "Lưu thông tin không thành công.");
+        }
+    }//GEN-LAST:event_btnChangeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,4 +309,18 @@ public class ModifyPassFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtPersonCode;
     private javax.swing.JTextField txtShowName;
     // End of variables declaration//GEN-END:variables
+
+    private void initialInfo() {
+        user = UserBUS.getByStudentCode(user.getName());
+        s = StudentBUS.getByCode(user.getName());
+        txtFullName.setText(s.getFullname());
+        txtShowName.setText(user.getNameshow());
+        txtGrade.setText(GradeBUS.getGrade(s.getGrade().toString()).getName());
+        txtPersonCode.setText(s.getPersonCode());
+        if (s.getSex().equals("Nam")) {
+            rbMale.setSelected(true);
+        } else {
+            rbFemale.setSelected(true);
+        }
+    }
 }

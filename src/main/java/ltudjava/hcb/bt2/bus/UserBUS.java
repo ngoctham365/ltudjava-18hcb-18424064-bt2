@@ -18,6 +18,14 @@ public class UserBUS {
         return new UserDAO().getByStudentCode(studentCode);
     }
 
+    public static boolean update(User user) {
+        return new UserDAO().update(user);
+    }
+
+    public static Object logIn(String name, String encryptPassword) {
+        return new UserDAO().getByNameAndPassword(name, encryptPassword);
+    }
+
     public User LogIn(String userName, String passWord) {
         return new UserDAO().getByNameAndPassword(userName,HelperBUS.encryptPassword(passWord));
     }

@@ -54,4 +54,8 @@ public class StudentBUS {
         return countStudentAdded;
     }
 
+    public static boolean changeInfo(Student s) {
+        return new StudentDAO().update(s);
+    }
+
 }

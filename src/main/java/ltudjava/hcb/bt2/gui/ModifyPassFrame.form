@@ -226,6 +226,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="S&#x1eec;A TH&#xd4;NG TIN"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChangeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
