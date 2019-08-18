@@ -1,5 +1,5 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;

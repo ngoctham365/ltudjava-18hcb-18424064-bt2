@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 16, 2019 10:26:50 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Aug 18, 2019 10:56:05 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="ltudjava.hcb.bt2.dto.TimeTable" table="time_table" catalog="scoremanagement" optimistic-lock="version">
         <composite-id name="id" class="ltudjava.hcb.bt2.dto.TimeTableId">
@@ -12,21 +12,8 @@
                 <column name="grade" />
             </key-property>
         </composite-id>
-        <many-to-one name="grade" class="ltudjava.hcb.bt2.dto.Grade" update="false" insert="false" fetch="select">
-            <column name="grade" not-null="true" />
-        </many-to-one>
-        <many-to-one name="subject" class="ltudjava.hcb.bt2.dto.Subject" update="false" insert="false" fetch="select">
-            <column name="subject_code" length="8" not-null="true" />
-        </many-to-one>
         <property name="room" type="string">
             <column name="room" length="8" />
         </property>
-        <set name="scores" table="score" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="grade_id" length="8" not-null="true" />
-                <column name="subject_id" not-null="true" />
-            </key>
-            <one-to-many class="ltudjava.hcb.bt2.dto.Score" />
-        </set>
     </class>
 </hibernate-mapping>

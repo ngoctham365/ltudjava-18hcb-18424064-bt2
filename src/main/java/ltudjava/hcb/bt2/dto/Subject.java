@@ -1,14 +1,10 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,20 +19,13 @@ public class Subject  implements java.io.Serializable {
 
      private String code;
      private String name;
-     private Set<TimeTable> timeTables = new HashSet<TimeTable>(0);
 
     public Subject() {
     }
 
-	
     public Subject(String code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-    public Subject(String code, String name, Set<TimeTable> timeTables) {
        this.code = code;
        this.name = name;
-       this.timeTables = timeTables;
     }
    
      @Id 
@@ -59,15 +48,6 @@ public class Subject  implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="subject")
-    public Set<TimeTable> getTimeTables() {
-        return this.timeTables;
-    }
-    
-    public void setTimeTables(Set<TimeTable> timeTables) {
-        this.timeTables = timeTables;
     }
 
 

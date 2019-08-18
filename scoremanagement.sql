@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 17, 2019 at 08:41 PM
+-- Generation Time: Aug 18, 2019 at 03:57 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -45,12 +45,12 @@ CREATE TABLE IF NOT EXISTS `grade` (
 DROP TABLE IF EXISTS `remarking`;
 CREATE TABLE IF NOT EXISTS `remarking` (
   `score_id` int(11) NOT NULL,
-  `score_type` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `score_type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `score_old` float DEFAULT NULL,
   `score_desired` float DEFAULT NULL,
   `reason` varchar(512) COLLATE utf8_unicode_ci DEFAULT '',
   `status` varchar(32) COLLATE utf8_unicode_ci DEFAULT 'Chưa xem',
-  PRIMARY KEY (`score_id`)
+  PRIMARY KEY (`score_id`,`score_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -158,42 +158,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`name`, `pass`, `nameshow`, `role`) VALUES
 ('1760041', '49c22d5d130a1957540a31eb857d443e', '1760041', 'SINHVIEN');
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `remarking`
---
-ALTER TABLE `remarking`
-  ADD CONSTRAINT `remarking_ibfk_1` FOREIGN KEY (`score_id`) REFERENCES `score` (`id`);
-
---
--- Constraints for table `score`
---
-ALTER TABLE `score`
-  ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_code`),
-  ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`grade_id`,`subject_id`) REFERENCES `time_table` (`grade`, `subject_code`);
-
---
--- Constraints for table `student`
---
-ALTER TABLE `student`
-  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`grade`) REFERENCES `grade` (`id`);
-
---
--- Constraints for table `time_table`
---
-ALTER TABLE `time_table`
-  ADD CONSTRAINT `time_table_ibfk_1` FOREIGN KEY (`subject_code`) REFERENCES `subject` (`code`),
-  ADD CONSTRAINT `time_table_ibfk_2` FOREIGN KEY (`grade`) REFERENCES `grade` (`id`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`name`) REFERENCES `student` (`student_code`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,17 +1,10 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,12 +18,10 @@ public class Student  implements java.io.Serializable {
 
 
      private String studentCode;
-     private Grade grade;
      private String fullname;
      private String sex;
      private String personCode;
-     private Set<Score> scores = new HashSet<Score>(0);
-     private User user;
+     private Integer grade;
 
     public Student() {
     }
@@ -39,14 +30,12 @@ public class Student  implements java.io.Serializable {
     public Student(String studentCode) {
         this.studentCode = studentCode;
     }
-    public Student(String studentCode, Grade grade, String fullname, String sex, String personCode, Set<Score> scores, User user) {
+    public Student(String studentCode, String fullname, String sex, String personCode, Integer grade) {
        this.studentCode = studentCode;
-       this.grade = grade;
        this.fullname = fullname;
        this.sex = sex;
        this.personCode = personCode;
-       this.scores = scores;
-       this.user = user;
+       this.grade = grade;
     }
    
      @Id 
@@ -59,16 +48,6 @@ public class Student  implements java.io.Serializable {
     
     public void setStudentCode(String studentCode) {
         this.studentCode = studentCode;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="grade")
-    public Grade getGrade() {
-        return this.grade;
-    }
-    
-    public void setGrade(Grade grade) {
-        this.grade = grade;
     }
 
     
@@ -101,22 +80,14 @@ public class Student  implements java.io.Serializable {
         this.personCode = personCode;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="student")
-    public Set<Score> getScores() {
-        return this.scores;
+    
+    @Column(name="grade")
+    public Integer getGrade() {
+        return this.grade;
     }
     
-    public void setScores(Set<Score> scores) {
-        this.scores = scores;
-    }
-
-@OneToOne(fetch=FetchType.LAZY, mappedBy="student")
-    public User getUser() {
-        return this.user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
 

@@ -1,20 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 16, 2019 10:26:50 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Aug 18, 2019 10:56:05 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="ltudjava.hcb.bt2.dto.Score" table="score" catalog="scoremanagement" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="student" class="ltudjava.hcb.bt2.dto.Student" fetch="select">
+        <property name="studentId" type="string">
             <column name="student_id" length="8" not-null="true" />
-        </many-to-one>
-        <many-to-one name="timeTable" class="ltudjava.hcb.bt2.dto.TimeTable" fetch="select">
-            <column name="grade_id" length="8" not-null="true" />
-            <column name="subject_id" not-null="true" />
-        </many-to-one>
+        </property>
+        <property name="subjectId" type="string">
+            <column name="subject_id" length="8" not-null="true" />
+        </property>
+        <property name="gradeId" type="int">
+            <column name="grade_id" not-null="true" />
+        </property>
         <property name="scodeHaft" type="java.lang.Float">
             <column name="scode_haft" precision="12" scale="0" />
         </property>
@@ -27,6 +29,5 @@
         <property name="scoreSummary" type="java.lang.Float">
             <column name="score_summary" precision="12" scale="0" />
         </property>
-        <one-to-one name="remarking" class="ltudjava.hcb.bt2.dto.Remarking"></one-to-one>
     </class>
 </hibernate-mapping>

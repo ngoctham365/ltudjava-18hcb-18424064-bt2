@@ -1,16 +1,12 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,20 +23,12 @@ public class Grade  implements java.io.Serializable {
 
      private Integer id;
      private String name;
-     private Set<TimeTable> timeTables = new HashSet<TimeTable>(0);
-     private Set<Student> students = new HashSet<Student>(0);
 
     public Grade() {
     }
 
-	
     public Grade(String name) {
-        this.name = name;
-    }
-    public Grade(String name, Set<TimeTable> timeTables, Set<Student> students) {
        this.name = name;
-       this.timeTables = timeTables;
-       this.students = students;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -63,24 +51,6 @@ public class Grade  implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="grade")
-    public Set<TimeTable> getTimeTables() {
-        return this.timeTables;
-    }
-    
-    public void setTimeTables(Set<TimeTable> timeTables) {
-        this.timeTables = timeTables;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="grade")
-    public Set<Student> getStudents() {
-        return this.students;
-    }
-    
-    public void setStudents(Set<Student> students) {
-        this.students = students;
     }
 
 

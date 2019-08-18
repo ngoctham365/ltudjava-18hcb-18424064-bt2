@@ -1,18 +1,12 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,26 +20,18 @@ public class TimeTable  implements java.io.Serializable {
 
 
      private TimeTableId id;
-     private Grade grade;
-     private Subject subject;
      private String room;
-     private Set<Score> scores = new HashSet<Score>(0);
 
     public TimeTable() {
     }
 
 	
-    public TimeTable(TimeTableId id, Grade grade, Subject subject) {
+    public TimeTable(TimeTableId id) {
         this.id = id;
-        this.grade = grade;
-        this.subject = subject;
     }
-    public TimeTable(TimeTableId id, Grade grade, Subject subject, String room, Set<Score> scores) {
+    public TimeTable(TimeTableId id, String room) {
        this.id = id;
-       this.grade = grade;
-       this.subject = subject;
        this.room = room;
-       this.scores = scores;
     }
    
      @EmbeddedId
@@ -62,26 +48,6 @@ public class TimeTable  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="grade", nullable=false, insertable=false, updatable=false)
-    public Grade getGrade() {
-        return this.grade;
-    }
-    
-    public void setGrade(Grade grade) {
-        this.grade = grade;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="subject_code", nullable=false, insertable=false, updatable=false)
-    public Subject getSubject() {
-        return this.subject;
-    }
-    
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
     
     @Column(name="room", length=8)
     public String getRoom() {
@@ -90,15 +56,6 @@ public class TimeTable  implements java.io.Serializable {
     
     public void setRoom(String room) {
         this.room = room;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="timeTable")
-    public Set<Score> getScores() {
-        return this.scores;
-    }
-    
-    public void setScores(Set<Score> scores) {
-        this.scores = scores;
     }
 
 

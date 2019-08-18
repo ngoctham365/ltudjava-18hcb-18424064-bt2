@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 16, 2019 10:26:50 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Aug 18, 2019 10:56:05 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="ltudjava.hcb.bt2.dto.Subject" table="subject" catalog="scoremanagement" optimistic-lock="version">
         <id name="code" type="string">
@@ -11,11 +11,5 @@
         <property name="name" type="string">
             <column name="name" length="64" not-null="true" />
         </property>
-        <set name="timeTables" table="time_table" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="subject_code" length="8" not-null="true" />
-            </key>
-            <one-to-many class="ltudjava.hcb.bt2.dto.TimeTable" />
-        </set>
     </class>
 </hibernate-mapping>

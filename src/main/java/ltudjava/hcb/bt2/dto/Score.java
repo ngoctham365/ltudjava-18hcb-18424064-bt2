@@ -1,17 +1,12 @@
 package ltudjava.hcb.bt2.dto;
-// Generated Aug 16, 2019 10:26:47 PM by Hibernate Tools 4.3.1
+// Generated Aug 18, 2019 10:56:04 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,30 +22,31 @@ public class Score  implements java.io.Serializable {
 
 
      private Integer id;
-     private Student student;
-     private TimeTable timeTable;
+     private String studentId;
+     private String subjectId;
+     private int gradeId;
      private Float scodeHaft;
      private Float scoreFull;
      private Float scoreAnother;
      private Float scoreSummary;
-     private Remarking remarking;
 
     public Score() {
     }
 
 	
-    public Score(Student student, TimeTable timeTable) {
-        this.student = student;
-        this.timeTable = timeTable;
+    public Score(String studentId, String subjectId, int gradeId) {
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+        this.gradeId = gradeId;
     }
-    public Score(Student student, TimeTable timeTable, Float scodeHaft, Float scoreFull, Float scoreAnother, Float scoreSummary, Remarking remarking) {
-       this.student = student;
-       this.timeTable = timeTable;
+    public Score(String studentId, String subjectId, int gradeId, Float scodeHaft, Float scoreFull, Float scoreAnother, Float scoreSummary) {
+       this.studentId = studentId;
+       this.subjectId = subjectId;
+       this.gradeId = gradeId;
        this.scodeHaft = scodeHaft;
        this.scoreFull = scoreFull;
        this.scoreAnother = scoreAnother;
        this.scoreSummary = scoreSummary;
-       this.remarking = remarking;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -65,26 +61,34 @@ public class Score  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="student_id", nullable=false)
-    public Student getStudent() {
-        return this.student;
+    
+    @Column(name="student_id", nullable=false, length=8)
+    public String getStudentId() {
+        return this.studentId;
     }
     
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumns( { 
-        @JoinColumn(name="grade_id", referencedColumnName="subject_code", nullable=false), 
-        @JoinColumn(name="subject_id", referencedColumnName="grade", nullable=false) } )
-    public TimeTable getTimeTable() {
-        return this.timeTable;
+    
+    @Column(name="subject_id", nullable=false, length=8)
+    public String getSubjectId() {
+        return this.subjectId;
     }
     
-    public void setTimeTable(TimeTable timeTable) {
-        this.timeTable = timeTable;
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    
+    @Column(name="grade_id", nullable=false)
+    public int getGradeId() {
+        return this.gradeId;
+    }
+    
+    public void setGradeId(int gradeId) {
+        this.gradeId = gradeId;
     }
 
     
@@ -125,15 +129,6 @@ public class Score  implements java.io.Serializable {
     
     public void setScoreSummary(Float scoreSummary) {
         this.scoreSummary = scoreSummary;
-    }
-
-@OneToOne(fetch=FetchType.LAZY, mappedBy="score")
-    public Remarking getRemarking() {
-        return this.remarking;
-    }
-    
-    public void setRemarking(Remarking remarking) {
-        this.remarking = remarking;
     }
 
 
