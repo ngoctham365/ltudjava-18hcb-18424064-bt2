@@ -14,25 +14,26 @@ import org.hibernate.Transaction;
 
 /**
  *
- * @author 
+ * @author
  */
 public class TimeTableDAO {
-    private  Session session=null;
-        private Transaction tst=null;
-        private List<TimeTable> list;
-        
-    public TimeTableId insert(TimeTable p){
-        TimeTableId result=null;
+
+    private Session session = null;
+    private Transaction tst = null;
+    private List<TimeTable> list;
+    
+    public TimeTableId insert(TimeTable p) {
+        TimeTableId result = null;
         
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
+            tst = session.beginTransaction();
             
-            result=(TimeTableId)session.save(p);
+            result = (TimeTableId) session.save(p);
             
             tst.commit();
         } catch (Exception e) {
-            if (tst!=null) {
+            if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
@@ -40,20 +41,20 @@ public class TimeTableDAO {
         return result;
     }
     
-    public boolean update(TimeTable p){
-        Boolean result=false;
+    public boolean update(TimeTable p) {
+        Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
             
-            TimeTable q=(TimeTable) session.get(TimeTable.class, p.getId());
+            TimeTable q = (TimeTable) session.get(TimeTable.class, p.getId());
             
             q.setRoom(p.getRoom());
             
             session.update(q);
             tst.commit();
             
-            result=true;
+            result = true;
         } catch (Exception e) {
             if (tst != null) {
                 tst.rollback();
@@ -64,10 +65,10 @@ public class TimeTableDAO {
         return result;
     }
     
-    public boolean delete(int id){
+    public boolean delete(int id) {
         Boolean result = false;
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
             TimeTable q = (TimeTable) session.get(TimeTable.class, id);
             session.delete(q);
@@ -82,20 +83,20 @@ public class TimeTableDAO {
         return result;
     }
     
-    private String getTable(String where){
+    private String getTable(String where) {
         return "select distinct tt "
                 + "from TimeTable as tt "
                 + where;
     }
     
-    public List<TimeTable> getAll(){
-        list=new ArrayList<>();
+    public List<TimeTable> getAll() {
+        list = new ArrayList<>();
         try {
-            session=HibernateUtil.getSessionFactory().getCurrentSession();
-            tst=session.beginTransaction();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
             
-            Query q=session.createQuery(getTable(""));
-            list = (List<TimeTable>)q.list();
+            Query q = session.createQuery(getTable(""));
+            list = (List<TimeTable>) q.list();
             
             tst.commit();
         } catch (Exception e) {
@@ -106,5 +107,28 @@ public class TimeTableDAO {
         }
         
         return list;
+    }
+    
+    public TimeTable getByGradeAndSubject(Integer gradeId, String subjectCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+            
+            Query q = session.createQuery(getTable("where tt.id.grade = :gra"
+                    + "and tt.id.subjectCode = :sub "));
+            q.setParameter("gra", gradeId);
+            q.setParameter("sub", subjectCode);
+            list = (List<TimeTable>) q.list();
+            
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        return list.size() == 0 ? null : list.get(0);
     }
 }
