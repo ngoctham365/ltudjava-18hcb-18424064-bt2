@@ -130,4 +130,26 @@ public class SubjectDAO {
 
         return list.size() == 0 ? null : list.get(0);
     }
+
+    public List<Subject> getbyName(String subjectName) {
+        
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("where s.name = :key"));
+            q.setParameter("key", subjectName);
+            list = (List<Subject>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }

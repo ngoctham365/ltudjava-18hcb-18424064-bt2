@@ -129,6 +129,27 @@ public class TimeTableDAO {
             e.printStackTrace();
         }
         
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    public List<TimeTable> getByGrade(Integer gradeId) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+            
+            Query q = session.createQuery(getTable("where tt.id.grade = :gra"));
+            q.setParameter("gra", gradeId);
+            list = (List<TimeTable>) q.list();
+            
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        return list;
     }
 }

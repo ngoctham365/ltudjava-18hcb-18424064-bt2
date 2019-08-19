@@ -5,6 +5,13 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.SubjectBUS;
+import ltudjava.hcb.bt2.dao.GradeDAO;
+import ltudjava.hcb.bt2.dao.SubjectDAO;
+import ltudjava.hcb.bt2.dto.Grade;
+import ltudjava.hcb.bt2.dto.Subject;
+
 /**
  *
  * @author Jossion
@@ -88,10 +95,25 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         jLabel11.setText("XÓA MÔN HỌC");
 
         btnAdd.setText("TẠO");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnReplate.setText("SỬA");
+        btnReplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReplateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("XÓA");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nhập mã môn học:");
 
@@ -182,6 +204,32 @@ public class SubjectMngFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtAddCode.getText().trim().isEmpty() || txtAddName.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hãy nhập đủ thông tin.");
+        }else{
+            if(null!=SubjectBUS.getByCode(txtAddCode.getText().trim())){
+                JOptionPane.showMessageDialog(this, "Mã môn học đã tồn tại trong hệ thống.");
+            }else if(0<SubjectBUS.getByName(txtAddName.getText().trim()).size() && 
+                    JOptionPane.OK_OPTION==JOptionPane.showConfirmDialog(this, "Tên môn học đã tồn tại.\nCó muốn tiếp tục?") && 
+                    !txtAddCode.getText().trim().equals(SubjectBUS.create(new Subject(txtAddCode.getText().trim(), txtAddName.getText().trim())))){
+                JOptionPane.showMessageDialog(this, "Thêm môn học thất bại.");
+            }else if(!txtAddCode.getText().trim().equals(SubjectBUS.create(new Subject(txtAddCode.getText().trim(), txtAddName.getText().trim())))){
+                JOptionPane.showMessageDialog(this, "Thêm môn học thất bại.");
+            }else{
+                JOptionPane.showMessageDialog(this, "Thêm môn học thành công.");
+            }
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReplateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

@@ -37,4 +37,16 @@ public class SubjectBUS {
         return new SubjectDAO().getById(subjectId);
     }
 
+    public static Subject getByCode(String subjectCode) {
+        return new SubjectDAO().getById(subjectCode);
+    }
+
+    public static List<Subject> getByName(String subjectName) {
+        return new SubjectDAO().getbyName(subjectName);
+    }
+
+    public static Object create(Subject subject) {
+        return new SubjectDAO().insert(subject);
+    }
+
 }

@@ -58,4 +58,9 @@ public class StudentBUS {
         return new StudentDAO().update(s);
     }
 
+    public static List<Student> getByGrade(String gradeName) {
+        Integer gradeId=new GradeDAO().getByName(gradeName).getId();
+        return new StudentDAO().getByGrade(gradeId);
+    }
+
 }

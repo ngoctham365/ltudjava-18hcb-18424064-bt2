@@ -64,4 +64,9 @@ public class TimeTableBUS {
         return countStudentAdded;
     }
 
+    public static List<TimeTable> getbyGrade(String gradeName) {
+        Integer gradeId=new GradeDAO().getByName(gradeName).getId();
+        return new TimeTableDAO().getByGrade(gradeId);
+    }
+
 }
