@@ -5,10 +5,9 @@
  */
 package ltudjava.hcb.bt2.gui;
 
-import javax.swing.JFrame;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import ltudjava.hcb.bt2.bus.HelperBUS;
-import ltudjava.hcb.bt2.bus.StudentBUS;
+import ltudjava.hcb.bt2.bus.*;
 
 /**
  *
@@ -23,6 +22,16 @@ public class StudentMngFrame extends javax.swing.JFrame {
      */
     public StudentMngFrame() {
         initComponents();
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(""));
+
+        DefaultListModel grades = GradeBUS.getListName();
+        cbbAddGrade.removeAll();
+        cbbViewGrade.removeAll();
+        cbbViewGrade.addItem("Tất cả");
+        for (int i = 0; i < grades.size(); i++) {
+            cbbAddGrade.addItem(grades.get(i));
+            cbbViewGrade.addItem(grades.get(i));
+        }
     }
 
     /**
@@ -90,6 +99,11 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel3.setText("XEM DANH SÁCH LỚP");
 
         btnView.setText("XEM");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -108,6 +122,11 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel8.setText("Chọn lớp:");
 
         btnAdd.setText("THÊM");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -118,6 +137,11 @@ public class StudentMngFrame extends javax.swing.JFrame {
         lblInfo.setText("thông tin chung");
 
         btnDelete.setText("XÓA");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnImport.setText("IMPORT .CSV");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
@@ -244,11 +268,41 @@ public class StudentMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-      Integer countAdded=  StudentBUS.saveInfoListStudentFromFileCSV(this);
-      if(countAdded!=-1){
-          JOptionPane.showMessageDialog(this, "Đã thêm "+countAdded+" sinh viên vào danh sách.");
-      }
+        Integer countAdded = StudentBUS.saveInfoListStudentFromFileCSV(this);
+        if (countAdded != -1) {
+            JOptionPane.showMessageDialog(this, "Đã thêm " + countAdded + " sinh viên vào danh sách.");
+        }
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtCode.getText().trim().isEmpty()
+                && txtFullName.getText().trim().isEmpty()
+                && txtPersonCode.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin.");
+        } else if (StudentBUS.getByCode(txtCode.getText().trim()) != null) {
+            JOptionPane.showMessageDialog(this, "Trùng mã số sinh viên. Hãy kiểm tra lại.");
+        } else if (StudentBUS.add(txtCode.getText().trim(), txtFullName.getText().trim(), txtPersonCode.getText().trim(), cbbAddGrade.getSelectedItem().toString().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thành công. Lưu ý mật khẩu để đăng nhập là chứng minh thư của sinh viên.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thất bại.");
+        }
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (-1 == table.getSelectedRow()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn sinh viên.");
+        } else if (StudentBUS.remove(table.getModel().getValueAt(table.getSelectedRow(), 0).toString())) {
+            JOptionPane.showMessageDialog(this, "Xóa SV thành công.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa SV thất bại.");
+        }
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments

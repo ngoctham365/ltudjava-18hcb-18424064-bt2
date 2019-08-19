@@ -7,6 +7,8 @@ package ltudjava.hcb.bt2.bus;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import ltudjava.hcb.bt2.dao.*;
 import ltudjava.hcb.bt2.dto.*;
 
@@ -59,8 +61,49 @@ public class StudentBUS {
     }
 
     public static List<Student> getByGrade(String gradeName) {
-        Integer gradeId=new GradeDAO().getByName(gradeName).getId();
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
         return new StudentDAO().getByGrade(gradeId);
+    }
+
+    public static TableModel getToGuiAccordingToGrade(String gradeName) {
+        List<Student> students;
+        if (gradeName.isEmpty()) {
+            students = new StudentDAO().getAll();
+        } else {
+            students = new StudentDAO().getByGrade(GradeBUS.getByName(gradeName).getId());
+        }
+
+        String[][] data = new String[students.size()][5];
+
+        for (int i = 0; i < students.size(); i++) {
+            String[] strings = new String[5];
+
+            strings[0] = students.get(i).getStudentCode();
+            strings[1] = students.get(i).getFullname();
+            strings[2] = students.get(i).getSex();
+            strings[3] = students.get(i).getPersonCode();
+            strings[4] = new GradeDAO().getById(students.get(i).getGrade()).getName();
+
+            data[i] = strings;
+        }
+
+        return new DefaultTableModel(data, new String[]{"MSSV", "Họ tên", "Giới tính", "CMND", "Lớp"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 4;
+            }
+
+        };
+    }
+
+    public static boolean add(String code, String fullName, String personCode, String gradeName) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        return code.equals(new StudentDAO().insert(new Student(code, fullName, "Nam", personCode, gradeId)));
+    }
+
+    public static boolean remove(String code) {
+        return new StudentDAO().delete(code);
     }
 
 }
