@@ -5,8 +5,11 @@
  */
 package ltudjava.hcb.bt2.bus;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import ltudjava.hcb.bt2.dao.*;
 import ltudjava.hcb.bt2.dto.*;
 
@@ -16,6 +19,7 @@ import ltudjava.hcb.bt2.dto.*;
  */
 public class TimeTableBUS {
 
+    @SuppressWarnings({"null", "CallToPrintStackTrace"})
     public static Integer saveInfoListTimeTableFromFileCSV(javax.swing.JFrame frame) {
         Integer countStudentAdded = 0;
         List<String> strings = HelperBUS.openFileToGetContent(frame);
@@ -53,7 +57,7 @@ public class TimeTableBUS {
 
                         if (null != new TimeTableDAO().insert(new TimeTable(new TimeTableId(subject.getCode(), g.getId()), ses[3].trim()))) {
                             countStudentAdded++;
-                            ScoreBUS.addAllStudentInGradeToTimeTable(subject,g);
+                            ScoreBUS.addAllStudentInGradeToTimeTable(subject, g);
                         }
                     }
                 } catch (Exception e) {
@@ -65,8 +69,83 @@ public class TimeTableBUS {
     }
 
     public static List<TimeTable> getbyGrade(String gradeName) {
-        Integer gradeId=new GradeDAO().getByName(gradeName).getId();
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
         return new TimeTableDAO().getByGrade(gradeId);
+    }
+
+    public static TableModel getListToGUI(String studentCode) {
+        List<TimeTable> timeTables = new ArrayList<>();
+        if (studentCode.isEmpty()) {
+            timeTables = new TimeTableDAO().getAll();
+        } else {
+            List<Score> scores = new ScoreDAO().getByStudent(studentCode);
+            for (Score score : scores) {
+                timeTables.add(new TimeTableDAO().getByScoreId(score.getSubjectId()));
+            }
+        }
+        String[][] data = new String[timeTables.size()][3];
+        for (int i = 0; i < timeTables.size(); i++) {
+            TimeTable get = timeTables.get(i);
+            String[] ses = new String[3];
+
+            ses[0] = GradeBUS.getGrade(String.valueOf(timeTables.get(i).getId().getGrade())).getName();
+            ses[1] = SubjectBUS.getByCode(timeTables.get(i).getId().getSubjectCode()).getName();
+            ses[2] = timeTables.get(i).getRoom();
+
+            data[i] = ses;
+        }
+        return new DefaultTableModel(data, new String[]{"Lớp", "Môn học", "Phòng học"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        };
+    }
+
+    public static TimeTable getByGradeSubject(String gradeName, String subjectName) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+        return new TimeTableDAO().getByGradeAndSubject(gradeId, subjectCode);
+    }
+
+    public static boolean add(String gradeName, String subjectName, String room) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+
+        if (new TimeTableDAO().insert(new TimeTable(new TimeTableId(subjectCode, gradeId), room)) != null) {
+            List<Student> students = StudentBUS.getByGrade(gradeName);
+            if (!students.stream().noneMatch((student) -> (new ScoreDAO().insert(new Score(student.getStudentCode(), subjectCode, gradeId, null, null, null, null)) != -1))) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean relateRoom(String gradeName, String subjectName, String room) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+
+        return new TimeTableDAO().update(new TimeTable(new TimeTableId(subjectCode, gradeId), room));
+    }
+
+    public static boolean delete(String gradeName, String subjectName, String room) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+        List<Score> scores = new ScoreDAO().getByGradeSubject(gradeId, subjectName);
+        if (!scores.stream().noneMatch((score) -> (!score.getScodeHaft().isNaN()
+                || !score.getScoreFull().isNaN()
+                || !score.getScoreAnother().isNaN()
+                || !score.getScoreSummary().isNaN()))) {
+            return false;
+        }
+        scores.stream().forEach((score) -> {
+            new ScoreDAO().delete(score.getId());
+        });
+        return new TimeTableDAO().delete(new TimeTableId(subjectCode, gradeId));
     }
 
 }

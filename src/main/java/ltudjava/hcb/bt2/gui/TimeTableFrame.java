@@ -5,8 +5,13 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.GradeBUS;
+import ltudjava.hcb.bt2.bus.SubjectBUS;
 import ltudjava.hcb.bt2.bus.TimeTableBUS;
+import ltudjava.hcb.bt2.dto.Subject;
 
 /**
  *
@@ -22,11 +27,32 @@ public class TimeTableFrame extends javax.swing.JFrame {
      */
     public TimeTableFrame() {
         initComponents();
+        initialTable();
+
+        cbbAddGrade.removeAllItems();
+        cbbAddSubject.removeAllItems();
+
+        DefaultListModel dlm = GradeBUS.getListName();
+        List<Subject> subjects = SubjectBUS.getAll();
+
+        for (int i = 0; i < dlm.getSize(); i++) {
+            cbbAddGrade.addItem(dlm.getElementAt(i).toString());
+        }
+        for (Subject subject : subjects) {
+            cbbAddSubject.addItem(subject.getName());
+        }
     }
 
     TimeTableFrame(String name) {
-        initComponents();
         this.studentName = name;
+
+        initComponents();
+        initialTable();
+
+        this.btnAdd.setEnabled(false);
+        this.btnDelete.setEnabled(false);
+        this.btnImport.setEnabled(false);
+        this.btnReplate.setEnabled(false);
     }
 
     /**
@@ -80,6 +106,11 @@ public class TimeTableFrame extends javax.swing.JFrame {
 
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -110,6 +141,11 @@ public class TimeTableFrame extends javax.swing.JFrame {
         jLabel4.setText("Nhập phòng:");
 
         btnAdd.setText("THÊM");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         txtSubject.setEditable(false);
 
@@ -128,8 +164,18 @@ public class TimeTableFrame extends javax.swing.JFrame {
         jLabel8.setText("Lưu ý: Chỉ đổi phòng học");
 
         btnReplate.setText("ĐỔI PHÒNG");
+        btnReplate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReplateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("XÓA");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnImport.setText("IMPORT .CSV");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +307,48 @@ public class TimeTableFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImportActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (txtAddRoom.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập phòng học.");
+        } else if (TimeTableBUS.getByGradeSubject(cbbAddGrade.getSelectedItem().toString().trim(), cbbAddSubject.getSelectedItem().toString().trim()) != null) {
+            JOptionPane.showMessageDialog(this, "Đã tồn tại môn " + cbbAddSubject.getSelectedItem().toString().trim() + " thuộc lớp " + cbbAddGrade.getSelectedItem().toString().trim());
+        } else if (TimeTableBUS.add(cbbAddGrade.getSelectedItem().toString().trim(), cbbAddSubject.getSelectedItem().toString().trim(), txtAddRoom.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã thêm.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
+        if (txtReplateRoom.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hãy nhập phòng muốn chuyển.");
+        } else if (TimeTableBUS.relateRoom(txtGrade.getText().trim(), txtSubject.getText().trim(), txtAddRoom.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Đổi phòng thành công.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+    }//GEN-LAST:event_btnReplateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn lịch muốn xóa.");
+        } else if (TimeTableBUS.delete(table.getModel().getValueAt(table.getSelectedRow(), 0).toString().trim(),
+                table.getModel().getValueAt(table.getSelectedRow(), 1).toString().trim(),
+                table.getModel().getValueAt(table.getSelectedRow(), 2).toString().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã xóa.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        if (table.getSelectedRow() != -1) {
+            txtGrade.setText(table.getModel().getValueAt(table.getSelectedRow(), 0).toString().trim());
+            txtSubject.setText(table.getModel().getValueAt(table.getSelectedRow(), 1).toString().trim());
+            txtReplateRoom.setText(table.getModel().getValueAt(table.getSelectedRow(), 2).toString().trim());
+        }
+    }//GEN-LAST:event_tableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -321,4 +409,9 @@ public class TimeTableFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtReplateRoom;
     private javax.swing.JTextField txtSubject;
     // End of variables declaration//GEN-END:variables
+
+    private void initialTable() {
+        table.setModel(TimeTableBUS.getListToGUI(studentName));
+    }
+
 }

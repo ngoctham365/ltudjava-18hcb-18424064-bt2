@@ -65,7 +65,7 @@ public class TimeTableDAO {
         return result;
     }
     
-    public boolean delete(int id) {
+    public boolean delete(TimeTableId id) {
         Boolean result = false;
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -151,5 +151,26 @@ public class TimeTableDAO {
         }
         
         return list;
+    }
+
+    public TimeTable getByScoreId(String subjectCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+            
+            Query q = session.createQuery(getTable("where tt.id.subjectCode = :sub"));
+            q.setParameter("sub", subjectCode);
+            list = (List<TimeTable>) q.list();
+            
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+        
+        return list.isEmpty()?null:list.get(0);
     }
 }
