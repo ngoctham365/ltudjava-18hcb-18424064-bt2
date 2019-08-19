@@ -7,6 +7,7 @@ package ltudjava.hcb.bt2.bus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import ltudjava.hcb.bt2.dto.*;
 import ltudjava.hcb.bt2.dao.*;
 
@@ -47,6 +48,23 @@ public class SubjectBUS {
 
     public static Object create(Subject subject) {
         return new SubjectDAO().insert(subject);
+    }
+
+    public static DefaultListModel getAllToGUI() {
+        DefaultListModel listModel=new DefaultListModel();
+        List<Subject> grades=getAll();
+        for (Subject grade : grades) {
+            listModel.addElement(HelperBUS.concatWithIconMoveRight(grade.getCode(), grade.getName()));
+        }
+        return listModel;
+    }
+
+    public static boolean update(String code, String name) {
+        return new SubjectDAO().update(new Subject(code, name));
+    }
+
+    public static boolean delete(String code) {
+        return new SubjectDAO().delete(code);
     }
 
 }

@@ -6,6 +6,7 @@
 package ltudjava.hcb.bt2.gui;
 
 import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.HelperBUS;
 import ltudjava.hcb.bt2.bus.SubjectBUS;
 import ltudjava.hcb.bt2.dao.GradeDAO;
 import ltudjava.hcb.bt2.dao.SubjectDAO;
@@ -25,6 +26,7 @@ public class SubjectMngFrame extends javax.swing.JFrame {
      */
     public SubjectMngFrame() {
         initComponents();
+        initialListSubject();
     }
 
     /**
@@ -41,7 +43,7 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         btnView = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        list = new javax.swing.JList();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -75,12 +77,18 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        list.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        list.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(list);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -224,12 +232,36 @@ public class SubjectMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
-        // TODO add your handling code here:
+        if (list.getSelectedIndex()==-1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn môn học muốn đổi tên.");
+        }
+        else if (txtReplateName.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên môn học mới.");
+        }else if(SubjectBUS.update(txtCode.getText().trim(),txtReplateName.getText().trim())){
+            JOptionPane.showMessageDialog(this, "Đổi tên môn học thành công.");
+            initialListSubject();
+        }else{
+            JOptionPane.showMessageDialog(this, "Đổi tên môn học thất bại.");
+        }
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        if (list.getSelectedIndex()==-1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn môn học muốn xóa.");
+        }
+        else if (SubjectBUS.delete(HelperBUS.concatWithIconMoveRight(list.getSelectedValue().toString().trim())[0])) {
+            JOptionPane.showMessageDialog(this, "Xóa môn học thành công.");
+            initialListSubject();
+        }else{
+            JOptionPane.showMessageDialog(this, "Xóa tên môn học thất bại.");
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listValueChanged
+        String[] strings=HelperBUS.concatWithIconMoveRight(list.getSelectedValue().toString());
+        txtReplateName.setText(strings[1]);
+        txtCode.setText(strings[0]);
+    }//GEN-LAST:event_listValueChanged
 
     /**
      * @param args the command line arguments
@@ -279,11 +311,15 @@ public class SubjectMngFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList list;
     private javax.swing.JTextField txtAddCode;
     private javax.swing.JTextField txtAddName;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtReplateName;
     // End of variables declaration//GEN-END:variables
+
+    private void initialListSubject() {
+        list.setModel(SubjectBUS.getAllToGUI());
+    }
 }

@@ -66,12 +66,12 @@ public class SubjectDAO {
         return result;
     }
 
-    public boolean delete(int id) {
+    public boolean delete(String code) {
         Boolean result = false;
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
-            Subject q = (Subject) session.get(Subject.class, id);
+            Subject q = (Subject) session.get(Subject.class, code);
             session.delete(q);
             tst.commit();
             result = true;
