@@ -21,7 +21,7 @@ import ltudjava.hcb.bt2.dto.*;
 public class RemarkingMntFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
-    private String studentCode = null;
+    private String studentCode = "";
 
     /**
      * Creates new form RemarkingFrame
@@ -31,7 +31,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         initialDataComboBox(SubjectBUS.getAll());
 
-        table.setModel(RemarkingBUS.getData());
+        table.setModel(RemarkingBUS.getData(""));
 
         addComboBoxToChangeStatus();
     }
@@ -226,13 +226,35 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        Student s = StudentBUS.getByCode(txtCode.getText());
-        if (null != s) {
-            if (s.getFullname().equals(txtFullName.getText()) && JOptionPane.showConfirmDialog(rootPane, "Sai thông tin họ tên của sinh viên. \n Đúng tên của SV là: " + s.getFullname() + "\nCó muốn tiếp tục?") == JOptionPane.YES_OPTION) {
-                
-            }
-        }else  
-            JOptionPane.showMessageDialog(rootPane, "Không tồn tại sinh viên có mã "+txtCode.getText());
+        if (txtCode.getText().trim().isEmpty()
+                || txtFullName.getText().trim().isEmpty()
+                || txtReason.getText().trim().isEmpty()
+                || txtScoreWish.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Yêu cầu nhập đầy đủ thông tin.");
+        } else if (!HelperBUS.isFloat(txtScoreWish.getText().trim())
+                || Float.parseFloat(txtScoreWish.getText().trim()) < 0
+                || Float.parseFloat(txtScoreWish.getText().trim()) > 10) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng điểm số");
+        } else if (!StudentBUS.hasByCode(txtCode.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Không tồn tại mã SV này.");
+        } else if (ScoreBUS.hasRegisterStudy(txtCode.getText().trim(), cbbSubject.getSelectedItem().toString().trim())) {
+            JOptionPane.showMessageDialog(this, "SV không học môn yêu cầu phúc khảo.");
+        } else if (RemarkingBUS.had(txtCode.getText().trim(), cbbSubject.getSelectedItem().toString().trim(), cbbTypeScore.getSelectedItem().toString().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã đăng ký phúc khảo rồi.");
+        } else if (RemarkingBUS.create(txtCode.getText().trim(),
+                cbbSubject.getSelectedItem().toString().trim(),
+                cbbTypeScore.getSelectedItem().toString().trim(),
+                txtScoreWish.getText().trim(),
+                txtReason.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã đăng ký phúc khảo thành công");
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+
+        if (studentCode == null) {
+            table.setModel(RemarkingBUS.getData(studentCode));
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     /**

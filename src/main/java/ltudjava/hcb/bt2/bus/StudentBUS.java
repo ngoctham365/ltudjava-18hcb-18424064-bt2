@@ -135,4 +135,8 @@ public class StudentBUS {
         };
     }
 
+    public static boolean hasByCode(String studentCode) {
+        return getByCode(studentCode) != null;
+    }
+
 }

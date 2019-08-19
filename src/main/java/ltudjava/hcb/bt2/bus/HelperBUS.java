@@ -120,4 +120,13 @@ public class HelperBUS {
         }
         return null;
     }
+
+    public static boolean isFloat(String input) {
+        try {
+            Float f=Float.parseFloat(input);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

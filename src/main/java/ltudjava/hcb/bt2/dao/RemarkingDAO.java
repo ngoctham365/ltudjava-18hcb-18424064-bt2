@@ -148,4 +148,24 @@ public class RemarkingDAO {
         return list;
     }
 
+    public Remarking getByScoreAndScoreType(Integer scoreId, String scoreType) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+            Query q = session.createQuery(getTable("where r.id.scoreType = :name "
+                    + "and r.id.scoreId = :id "));
+            q.setParameter("name", scoreType);
+            q.setParameter("id", scoreId);
+            list = (List<Remarking>) q.list();
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+        return list.isEmpty()?null:list.get(0);
+    }
+
 }

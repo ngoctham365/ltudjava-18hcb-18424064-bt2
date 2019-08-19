@@ -168,4 +168,14 @@ public class ScoreBUS {
         return new ScoreDAO().delete(s.getId());
     }
 
+    public static boolean hasRegisterStudy(String studentCode, String subjectName) {
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+
+        return new ScoreDAO().getByStudentSubject(studentCode, subjectCode) != null;
+    }
+
+    static Score getByStudentSubject(String studentCode, String subjectCode) {
+        return new ScoreDAO().getByStudentSubject(studentCode, subjectCode);
+    }
+
 }
