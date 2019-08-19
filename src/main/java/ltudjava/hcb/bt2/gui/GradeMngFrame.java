@@ -8,6 +8,8 @@ package ltudjava.hcb.bt2.gui;
 import java.util.List;
 import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.bus.GradeBUS;
+import ltudjava.hcb.bt2.bus.StudentBUS;
+import ltudjava.hcb.bt2.bus.TimeTableBUS;
 import ltudjava.hcb.bt2.dto.Grade;
 
 /**
@@ -209,9 +211,15 @@ public class GradeMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if (list.getSelectedIndex()!=-1 && GradeBUS.remove(list.getSelectedValue().toString().trim())) {
-            
+        if (list.getSelectedIndex()!=-1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn lớp cần xóa.");
+        }else if ( 0==StudentBUS.getByGrade(list.getSelectedValue().toString().trim()).size() && 0==TimeTableBUS.getbyGrade(list.getSelectedValue().toString().trim()).size()) {
+            JOptionPane.showMessageDialog(this, "Lớp đã có sinh viên hoặc đã có trong thời khóa biểu nên không thể xóa.");
+        } else if (GradeBUS.remove(list.getSelectedValue().toString().trim())) {
+            JOptionPane.showMessageDialog(this, "Đã xóa thành công.");
             initialListGrade();
+        }else {
+            JOptionPane.showMessageDialog(this, "Xóa thất bại.");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
