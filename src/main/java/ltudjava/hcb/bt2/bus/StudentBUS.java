@@ -106,4 +106,33 @@ public class StudentBUS {
         return new StudentDAO().delete(code);
     }
 
+    public static DefaultTableModel getToGuiAccordingToGradeSubject(String gradeName, String subjectName) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCodee = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+
+        List<Score> scores = new ScoreDAO().getByGradeSubject(gradeId, subjectCodee);
+        String[][] data = new String[scores.size()][4];
+        Student student;
+        for (int i = 0; i < scores.size(); i++) {
+            String[] ses = new String[4];
+
+            student = new StudentDAO().getByCode(scores.get(i).getStudentId());
+            ses[0] = student.getStudentCode();
+            ses[1] = student.getFullname();
+            ses[2] = student.getSex();
+            ses[3] = student.getPersonCode();
+
+            data[i] = ses;
+        }
+
+        return new DefaultTableModel(data, new String[]{"MSSV", "Họ tên", "Giới tính", "CMND"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        };
+    }
+
 }

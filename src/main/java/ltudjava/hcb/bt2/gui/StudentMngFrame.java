@@ -276,6 +276,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        lblInfo.setText("Có "+table.getRowCount()+" SV.");
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -291,6 +292,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thất bại.");
         }
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        lblInfo.setText("Có "+table.getRowCount()+" SV.");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -302,6 +304,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Xóa SV thất bại.");
         }
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        lblInfo.setText("Có "+table.getRowCount()+" SV.");
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**

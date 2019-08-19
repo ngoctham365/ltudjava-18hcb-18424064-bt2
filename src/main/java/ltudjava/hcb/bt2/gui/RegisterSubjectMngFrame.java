@@ -5,6 +5,15 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.GradeBUS;
+import ltudjava.hcb.bt2.bus.ScoreBUS;
+import ltudjava.hcb.bt2.bus.StudentBUS;
+import ltudjava.hcb.bt2.bus.SubjectBUS;
+import ltudjava.hcb.bt2.dto.Subject;
+
 /**
  *
  * @author Jossion
@@ -13,12 +22,16 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
     private String studentCode;
+    private String gradeSeeing;
+    private String subjectSeeing;
 
     /**
      * Creates new form StudentAccordingToSubjectMngFrame
      */
     public RegisterSubjectMngFrame() {
         initComponents();
+
+        initialComboBox();
     }
 
     RegisterSubjectMngFrame(String name) {
@@ -26,14 +39,19 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         initComponents();
         btnDelete.setEnabled(false);
         btnImport.setEnabled(false);
-        btnRegister.setEnabled(false);
+        // btnRegister.setEnabled(false);
 
-        cbbRegisterGrade.setEnabled(false);
-        cbbRegisterSubject.setEnabled(false);
+        // cbbRegisterGrade.setEnabled(false);
+        // cbbRegisterSubject.setEnabled(false);
         txtStudentCode.setEnabled(false);
+        txtStudentCode.setText(name);
 
         cbbSeeGrade.setEnabled(false);
         cbbSeeSubject.setEnabled(false);
+
+        table.setEnabled(false);
+
+        initialComboBox();
     }
 
     /**
@@ -56,7 +74,7 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         cbbSeeSubject = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSee = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         cbbRegisterGrade = new javax.swing.JComboBox();
         cbbRegisterSubject = new javax.swing.JComboBox();
@@ -82,15 +100,20 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         lblInfo.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
@@ -115,7 +138,12 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Chọn môn học:");
 
-        jButton1.setText("XEM");
+        btnSee.setText("XEM");
+        btnSee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeeActionPerformed(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Chọn lớp:");
@@ -124,11 +152,21 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         jLabel9.setText("Chọn môn học:");
 
         btnRegister.setText("ĐĂNG KÝ");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Nhập MSSV:");
 
         btnDelete.setText("HỦY");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnImport.setText("IMPORT .CSV");
 
@@ -143,7 +181,7 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(89, 89, 89)
-                                .addComponent(jButton1))
+                                .addComponent(btnSee))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(81, 81, 81)
                                 .addComponent(btnRegister))
@@ -209,7 +247,7 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
                             .addComponent(cbbSeeSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnSee)
                         .addGap(69, 69, 69)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -241,6 +279,49 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnSeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeActionPerformed
+        this.gradeSeeing = cbbSeeGrade.getSelectedItem().toString().trim();
+        this.subjectSeeing = cbbSeeSubject.getSelectedItem().toString().trim();
+        table.setModel(StudentBUS.getToGuiAccordingToGradeSubject(gradeSeeing, subjectSeeing));
+        lblInfo.setText("Có "+table.getRowCount()+" SV học môn "+subjectSeeing+"  của lớp "+gradeSeeing);
+    }//GEN-LAST:event_btnSeeActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        if (txtStudentCode.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Phải có SV đăng ký môn học");
+        } else if (StudentBUS.getByCode(txtStudentCode.getText().trim()) == null) {
+            JOptionPane.showMessageDialog(this, "MSSV không tồn tại.");
+        } else if (ScoreBUS.getAccordingToStudentSubjectGrade(txtStudentCode.getText().trim(),
+                cbbRegisterSubject.getSelectedItem().toString().trim(),
+                cbbRegisterGrade.getSelectedItem().toString().trim()) != null) {
+            JOptionPane.showMessageDialog(this, "SV đã đăng ký môn từ trước.");
+        } else if (ScoreBUS.register(txtStudentCode.getText().trim(),
+                cbbRegisterSubject.getSelectedItem().toString().trim(),
+                cbbRegisterGrade.getSelectedItem().toString().trim())) {
+            JOptionPane.showMessageDialog(this, "Đăng ký thành công.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+        table.setModel(StudentBUS.getToGuiAccordingToGradeSubject(gradeSeeing, subjectSeeing));
+        lblInfo.setText("Có "+table.getRowCount()+" SV học môn "+subjectSeeing+"  của lớp "+gradeSeeing);
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (table.getSelectedRow()==-1) {
+            JOptionPane.showMessageDialog(this, "Chọn SV để xóa.");
+        }else if (ScoreBUS.delete(table.getModel().getValueAt(table.getSelectedRow(), 0).toString().trim(),this.subjectSeeing,this.gradeSeeing)) {
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+        }else{
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
+        }
+        table.setModel(StudentBUS.getToGuiAccordingToGradeSubject(gradeSeeing, subjectSeeing));
+        lblInfo.setText("Có "+table.getRowCount()+" SV học môn "+subjectSeeing+"  của lớp "+gradeSeeing);
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -282,11 +363,11 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnSee;
     private javax.swing.JComboBox cbbRegisterGrade;
     private javax.swing.JComboBox cbbRegisterSubject;
     private javax.swing.JComboBox cbbSeeGrade;
     private javax.swing.JComboBox cbbSeeSubject;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -301,4 +382,23 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
     private javax.swing.JTable table;
     private javax.swing.JTextField txtStudentCode;
     // End of variables declaration//GEN-END:variables
+
+    private void initialComboBox() {
+        cbbRegisterGrade.removeAllItems();
+        cbbRegisterSubject.removeAllItems();
+        cbbSeeGrade.removeAllItems();
+        cbbSeeSubject.removeAllItems();
+
+        DefaultListModel dlm = GradeBUS.getListName();
+        List<Subject> subjects = SubjectBUS.getAll();
+
+        for (int i = 0; i < dlm.getSize(); i++) {
+            cbbRegisterGrade.addItem(dlm.getElementAt(i).toString());
+            cbbSeeGrade.addItem(dlm.getElementAt(i).toString());
+        }
+        subjects.stream().forEach((subject) -> {
+            cbbRegisterSubject.addItem(subject.getName());
+            cbbSeeSubject.addItem(subject.getName());
+        });
+    }
 }

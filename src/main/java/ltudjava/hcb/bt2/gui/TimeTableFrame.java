@@ -38,9 +38,9 @@ public class TimeTableFrame extends javax.swing.JFrame {
         for (int i = 0; i < dlm.getSize(); i++) {
             cbbAddGrade.addItem(dlm.getElementAt(i).toString());
         }
-        for (Subject subject : subjects) {
+        subjects.stream().forEach((subject) -> {
             cbbAddSubject.addItem(subject.getName());
-        }
+        });
     }
 
     TimeTableFrame(String name) {

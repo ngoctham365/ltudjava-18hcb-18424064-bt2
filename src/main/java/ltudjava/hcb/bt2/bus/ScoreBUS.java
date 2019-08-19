@@ -24,9 +24,9 @@ public class ScoreBUS {
 
     static void addAllStudentInGradeToTimeTable(Subject subject, Grade grade) {
         List<Student> list = new StudentDAO().getByGrade(grade.getId());
-        for (Student l : list) {
+        list.stream().forEach((l) -> {
             new ScoreDAO().insert(new Score(l.getStudentCode(), subject.getCode(), grade.getId(), null, null, null, null));
-        }
+        });
     }
 
     public static Integer saveInfoListScoreFromFileCSV(javax.swing.JFrame frame) {
@@ -87,7 +87,7 @@ public class ScoreBUS {
 
         for (int i = 0; i < scores.size(); i++) {
             String[] strings = new String[6];
-            
+
             strings[0] = scores.get(i).getStudentId();
             strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
             strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
@@ -114,7 +114,7 @@ public class ScoreBUS {
 
         for (int i = 0; i < scores.size(); i++) {
             String[] strings = new String[6];
-            
+
             strings[0] = scores.get(i).getStudentId();
             strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
             strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
@@ -137,13 +137,35 @@ public class ScoreBUS {
 
     public static boolean update(String studentCode, String gradeName, String subjectName, Float scoreHaft, Float scoreFull, Float scoreAnother, Float scoreSummary) {
         Integer gradeId = GradeBUS.getByName(gradeName).getId();
-        String subjectCode=SubjectBUS.getByName(subjectName).get(0).getCode();
-        Score score=new ScoreDAO().getByGradeSubjectStudent(gradeId, subjectCode, studentCode);
-        score.setScodeHaft(scoreHaft!=null?scoreHaft:score.getScodeHaft());
-        score.setScoreFull(scoreFull!=null?scoreHaft:score.getScoreFull());
-        score.setScoreAnother(scoreAnother!=null?scoreAnother:score.getScoreAnother());
-        score.setScoreFull(scoreFull!=null?scoreFull:score.getScoreFull());
+        String subjectCode = SubjectBUS.getByName(subjectName).get(0).getCode();
+        Score score = new ScoreDAO().getByGradeSubjectStudent(gradeId, subjectCode, studentCode);
+        score.setScodeHaft(scoreHaft != null ? scoreHaft : score.getScodeHaft());
+        score.setScoreFull(scoreFull != null ? scoreHaft : score.getScoreFull());
+        score.setScoreAnother(scoreAnother != null ? scoreAnother : score.getScoreAnother());
+        score.setScoreFull(scoreFull != null ? scoreFull : score.getScoreFull());
         return new ScoreDAO().update(score);
+    }
+
+    public static Score getAccordingToStudentSubjectGrade(String studentCode, String subjectName, String gradeName) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+        String subjectCode = SubjectBUS.getByName(subjectName).get(0).getCode();
+
+        return new ScoreDAO().getByGradeSubjectStudent(gradeId, subjectCode, studentCode);
+    }
+
+    public static boolean register(String studentCode, String subjectName, String gradeName) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+        String subjectCode = SubjectBUS.getByName(subjectName).get(0).getCode();
+
+        return new ScoreDAO().insert(new Score(studentCode, subjectCode, gradeId)) > -1;
+    }
+
+    public static boolean delete(String studentCode, String subjectName, String gradeName) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+        String subjectCode = SubjectBUS.getByName(subjectName).get(0).getCode();
+
+        Score s = new ScoreDAO().getByGradeSubjectStudent(gradeId, subjectCode, studentCode);
+        return new ScoreDAO().delete(s.getId());
     }
 
 }
