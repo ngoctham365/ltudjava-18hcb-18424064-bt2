@@ -179,6 +179,29 @@ public class ScoreDAO {
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    public List<Score> getByGradeSubject(Integer gradeId, String subjectCode) {
+        list = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            tst = session.beginTransaction();
+
+            Query q = session.createQuery(getTable("and s.gradeId = :gra "
+                    + "and s.subjectId = :sub"));
+            q.setParameter("gra", gradeId);
+            q.setParameter("sub", subjectCode);
+            list = (List<Score>) q.list();
+
+            tst.commit();
+        } catch (Exception e) {
+            if (tst != null) {
+                tst.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

@@ -5,8 +5,12 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.bus.*;
+import ltudjava.hcb.bt2.dto.Grade;
+import ltudjava.hcb.bt2.dto.Subject;
 
 /**
  *
@@ -15,18 +19,37 @@ import ltudjava.hcb.bt2.bus.*;
 public class ScoreMngFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
-    private String studentCode = null;
+    private String gradeName;
+    private String subjectName;
 
     /**
      * Creates new form ScoreMngFrame
      */
     public ScoreMngFrame() {
         initComponents();
+
+        cbbGrade.removeAllItems();
+        cbbSubject.removeAllItems();
+
+        List<Subject> listSubject = SubjectBUS.getAll();
+        DefaultListModel listGrade = GradeBUS.getListName();
+
+        listSubject.stream().forEach((listSubject1) -> {
+            cbbSubject.addItem(listSubject1.getName());
+        });
+        for (int i = 0; i < listGrade.size(); i++) {
+            cbbGrade.addItem(listGrade.getElementAt(i).toString());
+        }
+
     }
 
-    ScoreMngFrame(String name) {
-        studentCode = name;
+    ScoreMngFrame(String studentCode) {
         initComponents();
+
+        btnImport.setEnabled(false);
+        btnInputScore.setEnabled(false);
+
+        table.setModel(ScoreBUS.getScoreTable(studentCode));
     }
 
     /**
@@ -40,7 +63,7 @@ public class ScoreMngFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         cbbGrade = new javax.swing.JComboBox();
         cbbSubject = new javax.swing.JComboBox();
@@ -61,7 +84,7 @@ public class ScoreMngFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -72,7 +95,12 @@ public class ScoreMngFrame extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        table.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tablePropertyChange(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Chọn lớp:");
@@ -81,6 +109,11 @@ public class ScoreMngFrame extends javax.swing.JFrame {
         jLabel3.setText("Chọn môn:");
 
         btnInputScore.setText("NHẬP ĐIỂM");
+        btnInputScore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInputScoreActionPerformed(evt);
+            }
+        });
 
         btnImport.setText("IMPORT .CSV");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
@@ -145,11 +178,65 @@ public class ScoreMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        Integer countAdded=ScoreBUS.saveInfoListScoreFromFileCSV(this);
-        if(countAdded!=-1){
-            JOptionPane.showMessageDialog(this, "Đã cập nhật điểm cho "+countAdded+" sinh viên.");
+        Integer countAdded = ScoreBUS.saveInfoListScoreFromFileCSV(this);
+        if (countAdded != -1) {
+            JOptionPane.showMessageDialog(this, "Đã cập nhật điểm cho " + countAdded + " sinh viên.");
+
+            table.setModel(ScoreBUS.getScoreTable(cbbGrade.getSelectedItem().toString().trim(), cbbSubject.getSelectedItem().toString().trim()));
         }
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnInputScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputScoreActionPerformed
+        this.gradeName = cbbGrade.getSelectedItem().toString().trim();
+        this.subjectName = cbbSubject.getSelectedItem().toString().trim();
+        table.setModel(ScoreBUS.getScoreTable(gradeName, subjectName));
+    }//GEN-LAST:event_btnInputScoreActionPerformed
+
+    Integer temp;
+    String value_old = "";
+    private void tablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablePropertyChange
+        String value = "";
+        if (table.getSelectedRow() != -1 || table.getSelectedColumn() != -1) {
+            value = table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()).toString();
+        }
+        if (this.temp == table.getSelectedRow() && -1 != table.getSelectedRow()) {
+            System.out.println(table.getSelectedRow() + "____" + table.getSelectedColumn() + "____" + value);
+            try {
+                if (!value.isEmpty() && !(Double.parseDouble(value) >= 0 && Double.parseDouble(value) <= 10D)) {
+                    JOptionPane.showMessageDialog(this, "Điểm không hợp lệ. Điểm phải từ 0 đến 10.", value, WIDTH);
+                    table.setValueAt(value_old, table.getSelectedRow(), table.getSelectedColumn());
+                    return;
+                }
+            } catch (Exception e) {
+                table.setValueAt(value_old, table.getSelectedRow(), table.getSelectedColumn());
+            }
+            String studentCode = table.getModel().getValueAt(temp, 0).toString();
+
+            Float scoreHaft = null, scoreFull = null, scoreAnother = null, scoreSummary = null;
+            try {
+                scoreHaft = Float.valueOf(table.getModel().getValueAt(temp, 2).toString());
+            } catch (NumberFormatException e) {
+            }
+            try {
+                scoreFull = Float.valueOf(table.getModel().getValueAt(temp, 3).toString());
+            } catch (NumberFormatException e) {
+            }
+            try {
+                scoreAnother = Float.valueOf(table.getModel().getValueAt(temp, 4).toString());
+            } catch (NumberFormatException e) {
+            }
+            try {
+                scoreSummary = Float.valueOf(table.getModel().getValueAt(temp, 5).toString());
+            } catch (NumberFormatException e) {
+            }
+            if (!ScoreBUS.update(studentCode,gradeName,subjectName,scoreHaft,scoreFull,scoreAnother,scoreSummary)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật điểm thất bại.");
+            }
+        }
+        temp = table.getSelectedRow();
+
+        value_old = value;
+    }//GEN-LAST:event_tablePropertyChange
 
     /**
      * @param args the command line arguments
@@ -195,6 +282,6 @@ public class ScoreMngFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

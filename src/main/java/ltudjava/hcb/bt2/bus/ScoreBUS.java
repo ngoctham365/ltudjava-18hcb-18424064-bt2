@@ -7,6 +7,8 @@ package ltudjava.hcb.bt2.bus;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import ltudjava.hcb.bt2.dao.*;
 import ltudjava.hcb.bt2.dto.*;
 
@@ -70,10 +72,78 @@ public class ScoreBUS {
                         countStudentAdded++;
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
         return countStudentAdded;
+    }
+
+    public static TableModel getScoreTable(String gradeName, String subjectName) {
+        Integer gradeId = new GradeDAO().getByName(gradeName).getId();
+        String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
+        List<Score> scores = new ScoreDAO().getByGradeSubject(gradeId, subjectCode);
+        String[][] data = new String[scores.size()][6];
+
+        for (int i = 0; i < scores.size(); i++) {
+            String[] strings = new String[6];
+            
+            strings[0] = scores.get(i).getStudentId();
+            strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
+            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+
+            data[i] = strings;
+        }
+
+        return new DefaultTableModel(data, new String[]{"MSSV", "Họ tên", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm tổng"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column > 1;
+            }
+
+        };
+    }
+
+    public static TableModel getScoreTable(String studentCode) {
+        List<Score> scores = new ScoreDAO().getByStudent(studentCode);
+        String[][] data = new String[scores.size()][6];
+
+        for (int i = 0; i < scores.size(); i++) {
+            String[] strings = new String[6];
+            
+            strings[0] = scores.get(i).getStudentId();
+            strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
+            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+
+            data[i] = strings;
+        }
+
+        return new DefaultTableModel(data, new String[]{"MSSV", "Họ tên", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm tổng"}) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        };
+    }
+
+    public static boolean update(String studentCode, String gradeName, String subjectName, Float scoreHaft, Float scoreFull, Float scoreAnother, Float scoreSummary) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+        String subjectCode=SubjectBUS.getByName(subjectName).get(0).getCode();
+        Score score=new ScoreDAO().getByGradeSubjectStudent(gradeId, subjectCode, studentCode);
+        score.setScodeHaft(scoreHaft!=null?scoreHaft:score.getScodeHaft());
+        score.setScoreFull(scoreFull!=null?scoreHaft:score.getScoreFull());
+        score.setScoreAnother(scoreAnother!=null?scoreAnother:score.getScoreAnother());
+        score.setScoreFull(scoreFull!=null?scoreFull:score.getScoreFull());
+        return new ScoreDAO().update(score);
     }
 
 }
