@@ -252,9 +252,10 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
         }
 
-        if (studentCode == null) {
+        if (studentCode != null) {
             table.setModel(RemarkingBUS.getData(studentCode));
-        }
+        }else 
+            table.setModel(RemarkingBUS.getData(""));
     }//GEN-LAST:event_btnCreateActionPerformed
 
     /**

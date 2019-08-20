@@ -305,6 +305,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
         if (countAdded != -1) {
             JOptionPane.showMessageDialog(this, "Đã thêm " + countAdded + " sinh viên vào danh sách.");
         }
+        table.setModel(TimeTableBUS.getListToGUI(studentName));
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -317,6 +318,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
         }
+        table.setModel(TimeTableBUS.getListToGUI(studentName));
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
@@ -327,6 +329,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
         }
+        table.setModel(TimeTableBUS.getListToGUI(studentName));
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -339,6 +342,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
         }
+        table.setModel(TimeTableBUS.getListToGUI(studentName));
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked

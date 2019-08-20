@@ -143,10 +143,12 @@ public class ReportFrame extends javax.swing.JFrame {
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         if (cbbGrade.getSelectedItem().toString().trim().isEmpty() || cbbSubject.getSelectedItem().toString().trim().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn đủ thông tin!");
+            return;
         }
         List<Map<String, ?>> dataSource = ScoreBUS.dataReportBySubject(cbbGrade.getSelectedItem().toString(), cbbSubject.getSelectedItem().toString());
         if (dataSource.isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Môn " + cbbSubject.getSelectedItem().toString() + " ở lớp " + cbbGrade.getSelectedItem().toString() + " hiện tại chưa có SV nào có điểm.");
+            return;
         }
         JRDataSource jrSource = new JRBeanCollectionDataSource(dataSource);
 

@@ -95,7 +95,7 @@ public class ScoreDAO {
 
     private String getTable(String where) {
         return "select distinct s "
-                + "from Score as s"
+                + "from Score as s "
                 + where;
     }
 
@@ -127,7 +127,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("s.id = :key"));
+            Query q = session.createQuery(getTable("where s.id = :key"));
             q.setParameter("key", scoreId);
             list = (List<Score>) q.list();
 
@@ -149,7 +149,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("s.studentId = :key"));
+            Query q = session.createQuery(getTable("where s.studentId = :key"));
             q.setParameter("key", studentCode);
             list = (List<Score>) q.list();
 
@@ -171,7 +171,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("s.studentId = :stu "
+            Query q = session.createQuery(getTable("where s.studentId = :stu "
                     + "and s.gradeId = :gra "
                     + "and s.subjectId = :sub"));
             q.setParameter("stu", studentCode);
@@ -197,7 +197,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("and s.gradeId = :gra "
+            Query q = session.createQuery(getTable("where s.gradeId = :gra "
                     + "and s.subjectId = :sub "));
             q.setParameter("gra", gradeId);
             q.setParameter("sub", subjectCode);
@@ -221,7 +221,7 @@ public class ScoreDAO {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            Query q = session.createQuery(getTable("s.studentId = :stu "
+            Query q = session.createQuery(getTable("where s.studentId = :stu "
                     + "and s.subjectId = :sub"));
             q.setParameter("stu", studentCode);
             q.setParameter("sub", subjectCode);
