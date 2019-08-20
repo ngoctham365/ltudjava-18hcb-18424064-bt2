@@ -82,7 +82,7 @@ public class StudentBUS {
             strings[1] = students.get(i).getFullname();
             strings[2] = students.get(i).getSex();
             strings[3] = students.get(i).getPersonCode();
-            strings[4] = new GradeDAO().getById(students.get(i).getGrade()).getName();
+            strings[4] = students.get(i).getGrade() != null ? new GradeDAO().getById(students.get(i).getGrade()).getName() : "";
 
             data[i] = strings;
         }
