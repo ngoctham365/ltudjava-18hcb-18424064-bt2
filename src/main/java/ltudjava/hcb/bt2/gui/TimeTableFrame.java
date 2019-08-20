@@ -324,7 +324,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
     private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
         if (txtReplateRoom.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hãy nhập phòng muốn chuyển.");
-        } else if (TimeTableBUS.relateRoom(txtGrade.getText().trim(), txtSubject.getText().trim(), txtAddRoom.getText().trim())) {
+        } else if (TimeTableBUS.relateRoom(txtGrade.getText().trim(), txtSubject.getText().trim(), txtReplateRoom.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Đổi phòng thành công.");
         } else {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
