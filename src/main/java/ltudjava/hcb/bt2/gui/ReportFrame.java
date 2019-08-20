@@ -5,6 +5,25 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import ltudjava.hcb.bt2.bus.GradeBUS;
+import ltudjava.hcb.bt2.bus.ScoreBUS;
+import ltudjava.hcb.bt2.bus.SubjectBUS;
+import ltudjava.hcb.bt2.dto.Subject;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author Jossion
@@ -18,6 +37,18 @@ public class ReportFrame extends javax.swing.JFrame {
      */
     public ReportFrame() {
         initComponents();
+
+        cbbGrade.removeAllItems();
+        cbbSubject.removeAllItems();
+
+        DefaultListModel grades = GradeBUS.getListName();
+        List<Subject> subjects = SubjectBUS.getAll();
+        for (int i = 0; i < grades.getSize(); i++) {
+            cbbGrade.addItem(grades.getElementAt(i).toString().trim());
+        }
+        for (int i = 0; i < subjects.size(); i++) {
+            cbbSubject.addItem(subjects.get(i).getName());
+        }
     }
 
     /**
@@ -37,6 +68,7 @@ public class ReportFrame extends javax.swing.JFrame {
         btnExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -56,6 +88,11 @@ public class ReportFrame extends javax.swing.JFrame {
         jLabel9.setText("Chọn môn học:");
 
         btnExport.setText("XUẤT");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,10 +111,10 @@ public class ReportFrame extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addComponent(cbbSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(94, 94, 94)
                 .addComponent(btnExport)
-                .addGap(85, 85, 85))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +128,9 @@ public class ReportFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExport)
-                .addContainerGap())
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,6 +139,36 @@ public class ReportFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         showed = false;
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        if (cbbGrade.getSelectedItem().toString().trim().isEmpty() || cbbSubject.getSelectedItem().toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng chọn đủ thông tin!");
+        }
+        List<Map<String, ?>> dataSource = ScoreBUS.dataReportBySubject(cbbGrade.getSelectedItem().toString(), cbbSubject.getSelectedItem().toString());
+        if (dataSource.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Môn " + cbbSubject.getSelectedItem().toString() + " ở lớp "+ cbbGrade.getSelectedItem().toString() + " hiện tại chưa có SV nào có điểm.");
+        }
+        JRDataSource jrSource = new JRBeanCollectionDataSource(dataSource);
+
+        HashMap param = new HashMap();
+        param.put("subjectName", cbbSubject.getSelectedItem().toString());
+        param.put("gradeName", cbbGrade.getSelectedItem().toString());
+        int countStudent=0;
+        for (int i = 0; i < dataSource.size(); i++) {
+            if (dataSource.get(i)[]) {
+                
+            }
+        }
+
+        try {
+            JasperReport jR = JasperCompileManager.compileReport("src/main/java/ltudjava/hcb/bt2/gui/ScoreTable.jrxml");
+            JasperPrint jP = JasperFillManager.fillReport(jR, param, jrSource);
+            JasperExportManager.exportReportToPdf(jP);
+            JasperViewer.viewReport(jP, false);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
 
     /**
      * @param args the command line arguments
