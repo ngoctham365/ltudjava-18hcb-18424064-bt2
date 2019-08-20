@@ -146,20 +146,24 @@ public class ReportFrame extends javax.swing.JFrame {
         }
         List<Map<String, ?>> dataSource = ScoreBUS.dataReportBySubject(cbbGrade.getSelectedItem().toString(), cbbSubject.getSelectedItem().toString());
         if (dataSource.isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Môn " + cbbSubject.getSelectedItem().toString() + " ở lớp "+ cbbGrade.getSelectedItem().toString() + " hiện tại chưa có SV nào có điểm.");
+            JOptionPane.showMessageDialog(rootPane, "Môn " + cbbSubject.getSelectedItem().toString() + " ở lớp " + cbbGrade.getSelectedItem().toString() + " hiện tại chưa có SV nào có điểm.");
         }
         JRDataSource jrSource = new JRBeanCollectionDataSource(dataSource);
 
         HashMap param = new HashMap();
         param.put("subjectName", cbbSubject.getSelectedItem().toString());
         param.put("gradeName", cbbGrade.getSelectedItem().toString());
-        int countStudent=0;
+        int countStudent = 0;
         for (int i = 0; i < dataSource.size(); i++) {
-            if (dataSource.get(i)[]) {
-                
+            if (dataSource.get(i).get("result").equals("ĐÕ")) {
+                countStudent++;
             }
         }
-
+        param.put("numberOfSatisfactory", countStudent + " sinh viên");
+        param.put("numberOfUnsatisfactory", Integer.toUnsignedString(dataSource.size()-countStudent)+" sinh viên.");
+        param.put("radeSatisfactory",  Integer.toUnsignedString(countStudent*100/dataSource.size())+" sinh viên.");
+        param.put("radeUnsatisfactory",  Integer.toUnsignedString(100-countStudent*100/dataSource.size())+" sinh viên.");
+        
         try {
             JasperReport jR = JasperCompileManager.compileReport("src/main/java/ltudjava/hcb/bt2/gui/ScoreTable.jrxml");
             JasperPrint jP = JasperFillManager.fillReport(jR, param, jrSource);

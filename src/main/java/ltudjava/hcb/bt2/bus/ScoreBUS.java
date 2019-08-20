@@ -5,6 +5,7 @@
  */
 package ltudjava.hcb.bt2.bus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -179,12 +180,8 @@ public class ScoreBUS {
         return new ScoreDAO().getByStudentSubject(studentCode, subjectCode);
     }
 
-    public static List<Map<String, ?>> dataReportBySubject(String toString, String toString0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public static List<Map<String, ?>> dataReportBySubject(String toString, String toString0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static List<Map<String, ?>> dataReportBySubject(String gradeName, String subjectName) {
+        return new ArrayList<>();
     }
 
 }
