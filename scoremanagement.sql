@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 20, 2019 at 07:42 AM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Generation Time: Aug 20, 2019 at 01:26 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -104,14 +104,14 @@ CREATE TABLE IF NOT EXISTS `student` (
 --
 
 INSERT INTO `student` (`student_code`, `fullname`, `sex`, `person_code`, `grade`) VALUES
-('giaovu', 'Giáo vụ', 'Nữ', 'giaovu', NULL);
+('giaovu', 'Giáo vụ nef', 'Nam', 'giaovu', NULL);
 
 --
 -- Triggers `student`
 --
 DROP TRIGGER IF EXISTS `addStudent`;
 DELIMITER $$
-CREATE TRIGGER `addStudent` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO `user`(`name`, `pass`, `nameshow`, `role`) VALUES (new.student_code,MD5(SHA1(new.person_code)),new.student_code,"SINHVIEN")
+CREATE TRIGGER `addStudent` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO `user`(`name`, `pass`, `nameshow`, `role`) VALUES (new.student_code,MD5(SHA1(new.student_code)),new.student_code,"SINHVIEN")
 $$
 DELIMITER ;
 
@@ -152,6 +152,13 @@ CREATE TABLE IF NOT EXISTS `time_table` (
   PRIMARY KEY (`subject_code`,`grade`),
   KEY `grade` (`grade`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `time_table`
+--
+
+INSERT INTO `time_table` (`subject_code`, `grade`, `room`) VALUES
+('CTT001', 1, 'C33');
 
 -- --------------------------------------------------------
 
