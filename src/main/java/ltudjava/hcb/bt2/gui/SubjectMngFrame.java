@@ -229,6 +229,7 @@ public class SubjectMngFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Thêm môn học thành công.");
             }
         }
+        initialListSubject();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
@@ -243,6 +244,7 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Đổi tên môn học thất bại.");
         }
+        initialListSubject();
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -255,6 +257,7 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Xóa tên môn học thất bại.");
         }
+        initialListSubject();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listValueChanged

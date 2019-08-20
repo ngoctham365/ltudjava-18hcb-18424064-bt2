@@ -272,6 +272,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         if (countAdded != -1) {
             JOptionPane.showMessageDialog(this, "Đã thêm " + countAdded + " sinh viên vào danh sách.");
         }
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(""));
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed

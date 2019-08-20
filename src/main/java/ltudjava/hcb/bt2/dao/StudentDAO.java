@@ -89,8 +89,9 @@ public class StudentDAO {
 
     private String getTable(String where) {
         return "select distinct s "
-                + "from Student as s "
-                + where;
+                + "from Student as s, User as u  "
+                + where
+                + (where.isEmpty() ? " where " : "") + " u.name=s.studentCode and u.role != 'GIAOVU'";
     }
 
     public List<Student> getAll() {

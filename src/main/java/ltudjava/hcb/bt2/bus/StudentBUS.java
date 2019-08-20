@@ -46,10 +46,11 @@ public class StudentBUS {
             for (int idx = 2; idx < strings.size(); idx++) {
                 try {
                     String[] ses = strings.get(idx).split(",");
-                    if (ses.length == 5 && ses[1].equals(new StudentDAO().insert(new Student(ses[1].trim(), ses[2].trim(), ses[3].trim(), ses[4].trim(), g.getId())))) {
+                    if (ses.length == 5 && !hasByCode(ses[1].trim()) && ses[1].trim().equals(new StudentDAO().insert(new Student(ses[1].trim(), ses[2].trim(), ses[3].trim(), ses[4].trim(), g.getId())))) {
                         countStudentAdded++;
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

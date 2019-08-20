@@ -91,7 +91,7 @@ public class ScoreDAO {
 
     private String getTable(String where) {
         return "select distinct s "
-                + "from Score as s "
+                + "from Score as s"
                 + where;
     }
 
@@ -189,7 +189,7 @@ public class ScoreDAO {
             tst = session.beginTransaction();
 
             Query q = session.createQuery(getTable("and s.gradeId = :gra "
-                    + "and s.subjectId = :sub"));
+                    + "and s.subjectId = :sub "));
             q.setParameter("gra", gradeId);
             q.setParameter("sub", subjectCode);
             list = (List<Score>) q.list();
