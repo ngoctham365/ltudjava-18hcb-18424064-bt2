@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,6 +23,7 @@ public class RemarkingDAO {
     private Transaction tst = null;
     private List<Remarking> list;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Integer insert(Remarking p) {
         Integer result = -1;
 
@@ -32,7 +34,7 @@ public class RemarkingDAO {
             result = (Integer) session.save(p);
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -41,6 +43,7 @@ public class RemarkingDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(Remarking p) {
         Boolean result = false;
         try {
@@ -58,7 +61,7 @@ public class RemarkingDAO {
             tst.commit();
 
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -68,6 +71,7 @@ public class RemarkingDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(int id) {
         Boolean result = false;
         try {
@@ -77,7 +81,7 @@ public class RemarkingDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -92,6 +96,7 @@ public class RemarkingDAO {
                 + where;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Remarking> getAll() {
         list = new ArrayList<>();
         try {
@@ -102,7 +107,7 @@ public class RemarkingDAO {
             list = (List<Remarking>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -112,6 +117,7 @@ public class RemarkingDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Remarking getById(int id) {
         Remarking n = null;
         try {
@@ -121,7 +127,7 @@ public class RemarkingDAO {
             q.setParameter("id", id);
             n = (Remarking) q.uniqueResult();
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -130,6 +136,7 @@ public class RemarkingDAO {
         return n;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Remarking> getByScoreType(String scoreType) {
         list = new ArrayList<>();
         try {
@@ -139,7 +146,7 @@ public class RemarkingDAO {
             q.setParameter("name", scoreType);
             list = (List<Remarking>) q.list();
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -148,6 +155,7 @@ public class RemarkingDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Remarking getByScoreAndScoreType(Integer scoreId, String scoreType) {
         list = new ArrayList<>();
         try {
@@ -159,7 +167,7 @@ public class RemarkingDAO {
             q.setParameter("id", scoreId);
             list = (List<Remarking>) q.list();
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }

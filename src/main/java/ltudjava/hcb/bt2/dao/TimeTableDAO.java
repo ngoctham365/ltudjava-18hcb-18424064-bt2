@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,6 +23,7 @@ public class TimeTableDAO {
     private Transaction tst = null;
     private List<TimeTable> list;
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public TimeTableId insert(TimeTable p) {
         TimeTableId result = null;
         
@@ -32,7 +34,7 @@ public class TimeTableDAO {
             result = (TimeTableId) session.save(p);
             
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -41,6 +43,7 @@ public class TimeTableDAO {
         return result;
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(TimeTable p) {
         Boolean result = false;
         try {
@@ -55,7 +58,7 @@ public class TimeTableDAO {
             tst.commit();
             
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -65,6 +68,7 @@ public class TimeTableDAO {
         return result;
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(TimeTableId id) {
         Boolean result = false;
         try {
@@ -74,7 +78,7 @@ public class TimeTableDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -89,6 +93,7 @@ public class TimeTableDAO {
                 + where;
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<TimeTable> getAll() {
         list = new ArrayList<>();
         try {
@@ -99,7 +104,7 @@ public class TimeTableDAO {
             list = (List<TimeTable>) q.list();
             
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -109,6 +114,7 @@ public class TimeTableDAO {
         return list;
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public TimeTable getByGradeAndSubject(Integer gradeId, String subjectCode) {
         list = new ArrayList<>();
         try {
@@ -122,7 +128,7 @@ public class TimeTableDAO {
             list = (List<TimeTable>) q.list();
             
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -132,6 +138,7 @@ public class TimeTableDAO {
         return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<TimeTable> getByGrade(Integer gradeId) {
         list = new ArrayList<>();
         try {
@@ -143,7 +150,7 @@ public class TimeTableDAO {
             list = (List<TimeTable>) q.list();
             
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -153,6 +160,7 @@ public class TimeTableDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public TimeTable getByScoreId(String subjectCode) {
         list = new ArrayList<>();
         try {
@@ -164,7 +172,7 @@ public class TimeTableDAO {
             list = (List<TimeTable>) q.list();
             
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
