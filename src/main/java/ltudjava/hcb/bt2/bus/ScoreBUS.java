@@ -6,6 +6,7 @@
 package ltudjava.hcb.bt2.bus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -181,7 +182,25 @@ public class ScoreBUS {
     }
 
     public static List<Map<String, ?>> dataReportBySubject(String gradeName, String subjectName) {
-        return new ArrayList<>();
+        List<Map<String, ?>> maps = new ArrayList<>();
+
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+        String subjectCode = SubjectBUS.getByName(subjectName).get(0).getCode();
+        List<Score> scores = new ScoreDAO().getByGradeSubject(gradeId, subjectCode);
+        for (int i = 0; i < scores.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("studentCode", scores.get(i).getStudentId());
+            map.put("studentName", StudentBUS.getFullNameByCode(scores.get(i).getStudentId()));
+            map.put("scoreHaft", scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString());
+            map.put("scoreFull", scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString());
+            map.put("scoreAnother", scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString());
+            map.put("scoreSummary", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString());
+            map.put("result", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary() >= 5 ? "ĐỖ" : "HỎNG");
+
+            maps.add(map);
+        }
+        return maps;
     }
 
 }

@@ -153,17 +153,19 @@ public class ReportFrame extends javax.swing.JFrame {
         HashMap param = new HashMap();
         param.put("subjectName", cbbSubject.getSelectedItem().toString());
         param.put("gradeName", cbbGrade.getSelectedItem().toString());
-        int countStudent = 0;
+        int countStudentSatisfactory = 0, countStudentUnsatisfactory = 0;
         for (int i = 0; i < dataSource.size(); i++) {
             if (dataSource.get(i).get("result").equals("ĐÕ")) {
-                countStudent++;
+                countStudentSatisfactory++;
+            } else if (dataSource.get(i).get("result").equals("HỎNG")) {
+                countStudentUnsatisfactory++;
             }
         }
-        param.put("numberOfSatisfactory", countStudent + " sinh viên");
-        param.put("numberOfUnsatisfactory", Integer.toUnsignedString(dataSource.size()-countStudent)+" sinh viên.");
-        param.put("radeSatisfactory",  Integer.toUnsignedString(countStudent*100/dataSource.size())+" sinh viên.");
-        param.put("radeUnsatisfactory",  Integer.toUnsignedString(100-countStudent*100/dataSource.size())+" sinh viên.");
-        
+        param.put("numberOfSatisfactory", countStudentSatisfactory + " sinh viên");
+        param.put("numberOfUnsatisfactory", countStudentUnsatisfactory + " sinh viên.");
+        param.put("radeSatisfactory", Integer.toUnsignedString(countStudentSatisfactory * 100 / dataSource.size()) + " sinh viên.");
+        param.put("radeUnsatisfactory", Integer.toUnsignedString(countStudentUnsatisfactory * 100 / dataSource.size()) + " sinh viên.");
+
         try {
             JasperReport jR = JasperCompileManager.compileReport("src/main/java/ltudjava/hcb/bt2/gui/ScoreTable.jrxml");
             JasperPrint jP = JasperFillManager.fillReport(jR, param, jrSource);
