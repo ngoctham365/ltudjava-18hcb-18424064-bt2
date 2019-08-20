@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,7 +23,9 @@ public class StudentDAO {
     private Transaction tst = null;
     private List<Student> list;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public String insert(Student p) {
+        @SuppressWarnings("UnusedAssignment")
         String result = null;
 
         try {
@@ -32,7 +35,7 @@ public class StudentDAO {
             result = (String) session.save(p);
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -42,6 +45,7 @@ public class StudentDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(Student p) {
         Boolean result = false;
         try {
@@ -59,7 +63,7 @@ public class StudentDAO {
             tst.commit();
 
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -69,6 +73,7 @@ public class StudentDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(String studentCode) {
         Boolean result = false;
         try {
@@ -78,7 +83,7 @@ public class StudentDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -94,6 +99,7 @@ public class StudentDAO {
                 + (where.isEmpty() ? " where " : "") + " u.name=s.studentCode and u.role != 'GIAOVU'";
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Student> getAll() {
         list = new ArrayList<>();
         try {
@@ -104,7 +110,7 @@ public class StudentDAO {
             list = (List<Student>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -114,6 +120,7 @@ public class StudentDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Student getByCode(String studentCode) {
         list = new ArrayList<>();
         try {
@@ -125,16 +132,17 @@ public class StudentDAO {
             list = (List<Student>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Student> getByGrade(Integer gradeId) {
         list = new ArrayList<>();
         try {
@@ -146,7 +154,7 @@ public class StudentDAO {
             list = (List<Student>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }

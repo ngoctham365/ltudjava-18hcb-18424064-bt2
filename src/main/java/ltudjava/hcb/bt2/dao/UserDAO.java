@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,7 +23,9 @@ public class UserDAO {
     private Transaction tst = null;
     private List<User> list;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public String insert(User p) {
+        @SuppressWarnings("UnusedAssignment")
         String result = null;
 
         try {
@@ -32,7 +35,7 @@ public class UserDAO {
             result = (String) session.save(p);
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -42,6 +45,7 @@ public class UserDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(User p) {
         Boolean result = false;
         try {
@@ -58,7 +62,7 @@ public class UserDAO {
             tst.commit();
 
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -68,6 +72,7 @@ public class UserDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(String name) {
         Boolean result = false;
         try {
@@ -77,7 +82,7 @@ public class UserDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -92,6 +97,7 @@ public class UserDAO {
                 + where;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<User> getAll() {
         list = new ArrayList<>();
         try {
@@ -102,7 +108,7 @@ public class UserDAO {
             list = (List<User>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -112,6 +118,7 @@ public class UserDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public User getByNameAndPassword(String userName, String passWord) {
         list = new ArrayList<>();
         try {
@@ -126,16 +133,17 @@ public class UserDAO {
             list = (List<User>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public User getByStudentCode(String studentCode) {
         list = new ArrayList<>();
         try {
@@ -148,13 +156,13 @@ public class UserDAO {
             list = (List<User>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 }

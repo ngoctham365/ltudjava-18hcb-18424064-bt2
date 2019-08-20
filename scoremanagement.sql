@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 18, 2019 at 03:57 AM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Generation Time: Aug 20, 2019 at 07:42 AM
+-- Server version: 5.7.26
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,7 +34,15 @@ CREATE TABLE IF NOT EXISTS `grade` (
   `name` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `grade`
+--
+
+INSERT INTO `grade` (`id`, `name`) VALUES
+(1, '17HCB'),
+(2, '18HCB');
 
 -- --------------------------------------------------------
 
@@ -96,16 +104,14 @@ CREATE TABLE IF NOT EXISTS `student` (
 --
 
 INSERT INTO `student` (`student_code`, `fullname`, `sex`, `person_code`, `grade`) VALUES
-('172041', 'Trần Ngọc', 'nam', '34165987', NULL),
-('1760041', 'Nguyen Kim Khánh', 'Nữ', '7145698', NULL),
-('giaovu', 'Giáo vụ', 'Nữ', '12345798', NULL);
+('giaovu', 'Giáo vụ', 'Nữ', 'giaovu', NULL);
 
 --
 -- Triggers `student`
 --
 DROP TRIGGER IF EXISTS `addStudent`;
 DELIMITER $$
-CREATE TRIGGER `addStudent` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO `user`(`name`, `pass`, `nameshow`, `role`) VALUES (new.student_code,MD5(SHA1(new.student_code)),new.student_code,"SINHVIEN")
+CREATE TRIGGER `addStudent` AFTER INSERT ON `student` FOR EACH ROW INSERT INTO `user`(`name`, `pass`, `nameshow`, `role`) VALUES (new.student_code,MD5(SHA1(new.person_code)),new.student_code,"SINHVIEN")
 $$
 DELIMITER ;
 
@@ -121,6 +127,16 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`code`, `name`) VALUES
+('CTT001', 'Lập trình ứng dụng Java'),
+('CTT002', 'Mạng máy tính'),
+('CTT011', 'Thiết kế giao diện'),
+('CTT012', 'Kiểm chứng phần mềm');
 
 -- --------------------------------------------------------
 
@@ -157,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`name`, `pass`, `nameshow`, `role`) VALUES
-('1760041', '49c22d5d130a1957540a31eb857d443e', '1760041', 'SINHVIEN');
+('giaovu', 'b2945411f75ee6c8745d2020fe420a75', 'giaovu', 'GIAOVU');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

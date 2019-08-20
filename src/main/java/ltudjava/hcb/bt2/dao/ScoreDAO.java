@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,6 +23,7 @@ public class ScoreDAO {
     private Transaction tst = null;
     private List<Score> list;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Integer insert(Score p) {
         Integer result = -1;
 
@@ -32,7 +34,7 @@ public class ScoreDAO {
             result = (Integer) session.save(p);
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -41,6 +43,7 @@ public class ScoreDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(Score p) {
         Boolean result = false;
         try {
@@ -61,7 +64,7 @@ public class ScoreDAO {
             tst.commit();
 
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -71,6 +74,7 @@ public class ScoreDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(int id) {
         Boolean result = false;
         try {
@@ -80,7 +84,7 @@ public class ScoreDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -95,6 +99,7 @@ public class ScoreDAO {
                 + where;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Score> getAll() {
         list = new ArrayList<>();
         try {
@@ -105,7 +110,7 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -115,6 +120,7 @@ public class ScoreDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Score getById(int scoreId) {
         list = new ArrayList<>();
         try {
@@ -126,16 +132,17 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Score> getByStudent(String studentCode) {
         list = new ArrayList<>();
         try {
@@ -147,7 +154,7 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -157,6 +164,7 @@ public class ScoreDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Score getByGradeSubjectStudent(Integer gradeId, String subjectCode, String studentCode) {
         list = new ArrayList<>();
         try {
@@ -172,7 +180,7 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -182,6 +190,7 @@ public class ScoreDAO {
         return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Score> getByGradeSubject(Integer gradeId, String subjectCode) {
         list = new ArrayList<>();
         try {
@@ -195,7 +204,7 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -205,6 +214,7 @@ public class ScoreDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Score getByStudentSubject(String studentCode, String subjectCode) {
         list = new ArrayList<>();
         try {
@@ -218,7 +228,7 @@ public class ScoreDAO {
             list = (List<Score>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }

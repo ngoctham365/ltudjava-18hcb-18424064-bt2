@@ -203,4 +203,15 @@ public class ScoreBUS {
         return maps;
     }
 
+    static boolean delete(String studentCode) {
+        List<Score> scores = new ScoreDAO().getByStudent(studentCode);
+        for (Score score : scores) {
+            if (!new ScoreDAO().delete(score.getId())) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
 }

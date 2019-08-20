@@ -104,7 +104,7 @@ public class StudentBUS {
     }
 
     public static boolean remove(String code) {
-        return new StudentDAO().delete(code);
+        return new UserDAO().delete(code) && new StudentDAO().delete(code) && ScoreBUS.delete(code);
     }
 
     public static DefaultTableModel getToGuiAccordingToGradeSubject(String gradeName, String subjectName) {

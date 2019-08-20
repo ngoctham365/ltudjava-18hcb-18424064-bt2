@@ -299,7 +299,10 @@ public class StudentMngFrame extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (-1 == table.getSelectedRow()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sinh viên.");
-        } else if (StudentBUS.remove(table.getModel().getValueAt(table.getSelectedRow(), 0).toString())) {
+        }else if (ScoreBUS.getScoreTable(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()).getRowCount()>0 && 
+                JOptionPane.OK_OPTION!=JOptionPane.showConfirmDialog(this, "Sinh viên đang học. Chắc chắn muốn xóa?")) {
+            
+        }  else if (StudentBUS.remove(table.getModel().getValueAt(table.getSelectedRow(), 0).toString())) {
             JOptionPane.showMessageDialog(this, "Xóa SV thành công.");
         } else {
             JOptionPane.showMessageDialog(this, "Xóa SV thất bại.");
