@@ -100,6 +100,12 @@ public class StudentMngFrame extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Chọn lớp:");
 
+        cbbViewGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbViewGradeActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("XEM DANH SÁCH LỚP");
@@ -332,6 +338,10 @@ public class StudentMngFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tablePropertyChange
+
+    private void cbbViewGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViewGradeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbViewGradeActionPerformed
 
     /**
      * @param args the command line arguments

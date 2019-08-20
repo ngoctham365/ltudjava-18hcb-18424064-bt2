@@ -37,6 +37,7 @@ public class LogInFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtMatKhau = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
+        chboxMatkhau = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng nhập");
@@ -57,6 +58,14 @@ public class LogInFrame extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Đăng nhập");
 
+        chboxMatkhau.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chboxMatkhau.setText("Hiển thị mật khẩu");
+        chboxMatkhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chboxMatkhauActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,15 +82,16 @@ public class LogInFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnDangNhap)
-                                .addGap(0, 82, Short.MAX_VALUE))
+                                .addGap(0, 196, Short.MAX_VALUE))
                             .addComponent(txtTenTaiKhoan)
-                            .addComponent(txtMatKhau))))
+                            .addComponent(txtMatKhau)
+                            .addComponent(chboxMatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -92,8 +102,10 @@ public class LogInFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chboxMatkhau)
+                .addGap(2, 2, 2)
                 .addComponent(btnDangNhap)
-                .addGap(43, 43, 43))
+                .addContainerGap())
         );
 
         pack();
@@ -122,6 +134,15 @@ public class LogInFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nhập tên tài khoản, mật khẩu");
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void chboxMatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chboxMatkhauActionPerformed
+        // TODO add your handling code here:
+        if(chboxMatkhau.isSelected()){
+            txtMatKhau.setEchoChar((char)0);
+        }else{
+            txtMatKhau.setEchoChar('*');
+        }
+    }//GEN-LAST:event_chboxMatkhauActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +186,7 @@ public class LogInFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
+    private javax.swing.JCheckBox chboxMatkhau;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
