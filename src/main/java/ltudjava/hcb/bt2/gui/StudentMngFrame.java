@@ -294,7 +294,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         } else if (StudentBUS.getByCode(txtCode.getText().trim()) != null) {
             JOptionPane.showMessageDialog(this, "Trùng mã số sinh viên. Hãy kiểm tra lại.");
         } else if (StudentBUS.add(txtCode.getText().trim(), txtFullName.getText().trim(), txtPersonCode.getText().trim(), cbbAddGrade.getSelectedItem().toString().trim())) {
-            JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thành công. Lưu ý mật khẩu để đăng nhập là chứng minh thư của sinh viên.");
+            JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thành công. Lưu ý mật khẩu để đăng nhập là mã sinh viên.");
         } else {
             JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thất bại.");
         }

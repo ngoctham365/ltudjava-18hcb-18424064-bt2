@@ -22,17 +22,19 @@ public class TimeTableDAO {
     private Session session = null;
     private Transaction tst = null;
     private List<TimeTable> list;
-    
+
     @SuppressWarnings("CallToPrintStackTrace")
     public TimeTableId insert(TimeTable p) {
         TimeTableId result = null;
-        
+
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
+
             result = (TimeTableId) session.save(p);
-            
+
             tst.commit();
         } catch (HibernateException e) {
             if (tst != null) {
@@ -42,21 +44,23 @@ public class TimeTableDAO {
         }
         return result;
     }
-    
+
     @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(TimeTable p) {
         Boolean result = false;
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
+
             TimeTable q = (TimeTable) session.get(TimeTable.class, p.getId());
-            
+
             q.setRoom(p.getRoom());
-            
+
             session.update(q);
             tst.commit();
-            
+
             result = true;
         } catch (HibernateException e) {
             if (tst != null) {
@@ -64,15 +68,17 @@ public class TimeTableDAO {
             }
             e.printStackTrace();
         }
-        
+
         return result;
     }
-    
+
     @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(TimeTableId id) {
         Boolean result = false;
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
             TimeTable q = (TimeTable) session.get(TimeTable.class, id);
             session.delete(q);
@@ -86,23 +92,26 @@ public class TimeTableDAO {
         }
         return result;
     }
-    
+
     private String getTable(String where) {
         return "select distinct tt "
                 + "from TimeTable as tt "
+                + "left join fetch tt.id i  "
                 + where;
     }
-    
+
     @SuppressWarnings("CallToPrintStackTrace")
     public List<TimeTable> getAll() {
         list = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
+
             Query q = session.createQuery(getTable(""));
             list = (List<TimeTable>) q.list();
-            
+
             tst.commit();
         } catch (HibernateException e) {
             if (tst != null) {
@@ -110,23 +119,25 @@ public class TimeTableDAO {
             }
             e.printStackTrace();
         }
-        
+
         return list;
     }
-    
+
     @SuppressWarnings("CallToPrintStackTrace")
     public TimeTable getByGradeAndSubject(Integer gradeId, String subjectCode) {
         list = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
-            Query q = session.createQuery(getTable("where tt.id.grade = :gra"
+
+            Query q = session.createQuery(getTable("where i.grade = :gra "
                     + "and tt.id.subjectCode = :sub "));
             q.setParameter("gra", gradeId);
             q.setParameter("sub", subjectCode);
             list = (List<TimeTable>) q.list();
-            
+
             tst.commit();
         } catch (HibernateException e) {
             if (tst != null) {
@@ -134,7 +145,7 @@ public class TimeTableDAO {
             }
             e.printStackTrace();
         }
-        
+
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -142,13 +153,15 @@ public class TimeTableDAO {
     public List<TimeTable> getByGrade(Integer gradeId) {
         list = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
-            Query q = session.createQuery(getTable("where tt.id.grade = :gra"));
+
+            Query q = session.createQuery(getTable("where i.grade = :gra"));
             q.setParameter("gra", gradeId);
             list = (List<TimeTable>) q.list();
-            
+
             tst.commit();
         } catch (HibernateException e) {
             if (tst != null) {
@@ -156,7 +169,7 @@ public class TimeTableDAO {
             }
             e.printStackTrace();
         }
-        
+
         return list;
     }
 
@@ -164,13 +177,15 @@ public class TimeTableDAO {
     public TimeTable getByScoreId(String subjectCode) {
         list = new ArrayList<>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            if (session == null) {
+                session = HibernateUtil.getSessionFactory().getCurrentSession();
+            }
             tst = session.beginTransaction();
-            
-            Query q = session.createQuery(getTable("where tt.id.subjectCode = :sub"));
+
+            Query q = session.createQuery(getTable("where i.subjectCode = :sub"));
             q.setParameter("sub", subjectCode);
             list = (List<TimeTable>) q.list();
-            
+
             tst.commit();
         } catch (HibernateException e) {
             if (tst != null) {
@@ -178,7 +193,7 @@ public class TimeTableDAO {
             }
             e.printStackTrace();
         }
-        
-        return list.isEmpty()?null:list.get(0);
+
+        return list.isEmpty() ? null : list.get(0);
     }
 }

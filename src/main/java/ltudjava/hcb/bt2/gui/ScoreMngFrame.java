@@ -192,10 +192,13 @@ public class ScoreMngFrame extends javax.swing.JFrame {
         table.setModel(ScoreBUS.getScoreTable(gradeName, subjectName));
     }//GEN-LAST:event_btnInputScoreActionPerformed
 
-    Integer temp;
+    Integer temp=-1;
     String value_old = "";
     private void tablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablePropertyChange
-        String value = "";
+        if (table.getRowCount()==0) {
+            return;
+        }
+                String value = "";
         if (table.getSelectedRow() != -1 || table.getSelectedColumn() != -1) {
             value = table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()).toString();
         }

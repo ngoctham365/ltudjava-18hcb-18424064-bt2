@@ -20,7 +20,7 @@ import ltudjava.hcb.bt2.dto.Subject;
 public class TimeTableFrame extends javax.swing.JFrame {
 
     static boolean showed = false;
-    private String studentName = null;
+    private String studentName = "";
 
     /**
      * Creates new form TimeTableFrame

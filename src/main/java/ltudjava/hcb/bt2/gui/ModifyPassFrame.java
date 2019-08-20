@@ -69,8 +69,8 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -231,10 +231,6 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModifyActionPerformed
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         s.setFullname(txtFullName.getText().trim().length() > 0 ? txtFullName.getText().trim() : s.getFullname());
 
@@ -250,6 +246,11 @@ public class ModifyPassFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lưu thông tin không thành công.");
         }
     }//GEN-LAST:event_btnChangeActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+        this.setVisible(false);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -315,7 +316,7 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         s = StudentBUS.getByCode(user.getName());
         txtFullName.setText(s.getFullname());
         txtShowName.setText(user.getNameshow());
-        txtGrade.setText(GradeBUS.getGrade(s.getGrade().toString()).getName());
+        txtGrade.setText(s.getGrade() != null ? GradeBUS.getGrade(s.getGrade().toString()).getName() : "");
         txtPersonCode.setText(s.getPersonCode());
         if (s.getSex().equals("Nam")) {
             rbMale.setSelected(true);

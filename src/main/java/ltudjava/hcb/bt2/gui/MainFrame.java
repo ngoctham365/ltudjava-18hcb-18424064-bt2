@@ -5,6 +5,7 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import javax.swing.JFrame;
 import ltudjava.hcb.bt2.dto.User;
 
 /**
@@ -212,6 +213,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (this.user != null && this.user.getRole().equals("GIAOVU")) {
             StudentMngFrame frame = new StudentMngFrame();
             StudentMngFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -222,13 +224,14 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnTimeTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimeTableActionPerformed
         if (this.user != null && !TimeTableFrame.showed) {
             TimeTableFrame frame;
-            if (user.getRole().equals("GIAO VU")) {
+            if (user.getRole().equals("GIAOVU")) {
                 frame = new TimeTableFrame();
             } else {
                 frame = new TimeTableFrame(user.getName());
             }
 
             TimeTableFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -246,6 +249,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             TimeTableFrame.showed = true;
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             // this.setVisible(false);
@@ -261,6 +265,7 @@ public class MainFrame extends javax.swing.JFrame {
                 frame = new RegisterSubjectMngFrame(user.getName());
             }
             RegisterSubjectMngFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -272,6 +277,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (this.user != null && !ModifyPassFrame.showed) {
             ModifyPassFrame frame = new ModifyPassFrame(user);
             ModifyPassFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -289,6 +295,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             ScoreMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             // this.setVisible(false);
@@ -300,6 +307,7 @@ public class MainFrame extends javax.swing.JFrame {
             GradeMngFrame frame = new GradeMngFrame();
             GradeMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             // this.setVisible(false);
@@ -311,6 +319,7 @@ public class MainFrame extends javax.swing.JFrame {
             SubjectMngFrame frame = new SubjectMngFrame();
             SubjectMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             // this.setVisible(false);
@@ -326,6 +335,7 @@ public class MainFrame extends javax.swing.JFrame {
                 frame = new RegisterSubjectMngFrame(user.getName());
             }
             TimeTableFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -337,6 +347,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (this.user != null && !ReportFrame.showed && user.getRole().equals("GIAOVU")) {
             ReportFrame frame = new ReportFrame();
             TimeTableFrame.showed = true;
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setResizable(false);
@@ -349,6 +360,7 @@ public class MainFrame extends javax.swing.JFrame {
             ScoreMngFrame frame = new ScoreMngFrame(user.getName());
             ScoreMngFrame.showed = true;
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             this.setVisible(false);

@@ -88,7 +88,7 @@ public class TimeTableBUS {
             TimeTable get = timeTables.get(i);
             String[] ses = new String[3];
 
-            ses[0] = GradeBUS.getGrade(String.valueOf(timeTables.get(i).getId().getGrade())).getName();
+            ses[0] = GradeBUS.getGrade(timeTables.get(i).getId().getGrade()).getName();
             ses[1] = SubjectBUS.getByCode(timeTables.get(i).getId().getSubjectCode()).getName();
             ses[2] = timeTables.get(i).getRoom();
 

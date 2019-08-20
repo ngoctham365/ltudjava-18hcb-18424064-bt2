@@ -16,8 +16,12 @@ import ltudjava.hcb.bt2.dto.*;
  */
 public class GradeBUS {
 
-    public static Grade getGrade(String gradeId) {
-        return new GradeDAO().getByName(gradeId);
+    public static Grade getGrade(String gradeName) {
+        return new GradeDAO().getByName(gradeName);
+    }
+    
+    public static Grade getGrade(Integer gradeId) {
+        return new GradeDAO().getById(gradeId);
     }
 
     public static int add(String trim) {
