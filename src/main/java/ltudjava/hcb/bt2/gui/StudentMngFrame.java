@@ -7,6 +7,7 @@ package ltudjava.hcb.bt2.gui;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import ltudjava.hcb.bt2.bus.*;
 
 /**
@@ -89,6 +90,11 @@ public class StudentMngFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tablePropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -277,7 +283,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
-        lblInfo.setText("Có "+table.getRowCount()+" SV.");
+        lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -293,23 +299,39 @@ public class StudentMngFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thất bại.");
         }
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
-        lblInfo.setText("Có "+table.getRowCount()+" SV.");
+        lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if (-1 == table.getSelectedRow()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sinh viên.");
-        }else if (ScoreBUS.getScoreTable(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()).getRowCount()>0 && 
-                JOptionPane.OK_OPTION!=JOptionPane.showConfirmDialog(this, "Sinh viên đang học. Chắc chắn muốn xóa?")) {
-            
-        }  else if (StudentBUS.remove(table.getModel().getValueAt(table.getSelectedRow(), 0).toString())) {
+        } else if (ScoreBUS.getScoreTable(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()).getRowCount() > 0
+                && JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(this, "Sinh viên đang học. Chắc chắn muốn xóa?")) {
+
+        } else if (StudentBUS.remove(table.getModel().getValueAt(table.getSelectedRow(), 0).toString())) {
             JOptionPane.showMessageDialog(this, "Xóa SV thành công.");
         } else {
             JOptionPane.showMessageDialog(this, "Xóa SV thất bại.");
         }
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
-        lblInfo.setText("Có "+table.getRowCount()+" SV.");
+        lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablePropertyChange
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model != null && model.getValueAt(i, 0) != null && ("giaovu").equals(model.getValueAt(i, 0).toString())) {
+                try {
+                    model.removeRow(i);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            } else {
+            }
+        }
+    }//GEN-LAST:event_tablePropertyChange
 
     /**
      * @param args the command line arguments

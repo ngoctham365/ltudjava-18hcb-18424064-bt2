@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.dao;
 import java.util.ArrayList;
 import java.util.List;
 import ltudjava.hcb.bt2.dto.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,7 +23,9 @@ public class SubjectDAO {
     private Transaction tst = null;
     private List<Subject> list;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public String insert(Subject p) {
+        @SuppressWarnings("UnusedAssignment")
         String result = "";
 
         try {
@@ -32,7 +35,7 @@ public class SubjectDAO {
             result = (String) session.save(p);
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -42,6 +45,7 @@ public class SubjectDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean update(Subject p) {
         Boolean result = false;
         try {
@@ -56,7 +60,7 @@ public class SubjectDAO {
             tst.commit();
 
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -66,6 +70,7 @@ public class SubjectDAO {
         return result;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean delete(String code) {
         Boolean result = false;
         try {
@@ -75,7 +80,7 @@ public class SubjectDAO {
             session.delete(q);
             tst.commit();
             result = true;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -90,6 +95,7 @@ public class SubjectDAO {
                 + where;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Subject> getAll() {
         list = new ArrayList<>();
         try {
@@ -100,7 +106,7 @@ public class SubjectDAO {
             list = (List<Subject>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
@@ -110,6 +116,7 @@ public class SubjectDAO {
         return list;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Subject getById(String subjectId) {
         list = new ArrayList<>();
         try {
@@ -121,16 +128,17 @@ public class SubjectDAO {
             list = (List<Subject>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
             e.printStackTrace();
         }
 
-        return list.size() == 0 ? null : list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public List<Subject> getbyName(String subjectName) {
         
         list = new ArrayList<>();
@@ -143,7 +151,7 @@ public class SubjectDAO {
             list = (List<Subject>) q.list();
 
             tst.commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (tst != null) {
                 tst.rollback();
             }
