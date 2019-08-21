@@ -316,7 +316,7 @@ public class ModifyPassFrame extends javax.swing.JFrame {
         s = StudentBUS.getByCode(user.getName());
         txtFullName.setText(s.getFullname());
         txtShowName.setText(user.getNameshow());
-        txtGrade.setText(s.getGrade() != null ? GradeBUS.getGrade(s.getGrade().toString()).getName() : "");
+        txtGrade.setText(s.getGrade() != null ? GradeBUS.getGrade(s.getGrade()).getName() : "");
         txtPersonCode.setText(s.getPersonCode());
         if (s.getSex().equals("Nam")) {
             rbMale.setSelected(true);

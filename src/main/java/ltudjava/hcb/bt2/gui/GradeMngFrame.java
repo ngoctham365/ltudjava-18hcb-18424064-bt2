@@ -179,6 +179,10 @@ public class GradeMngFrame extends javax.swing.JFrame {
         this.showed = false;
     }//GEN-LAST:event_formWindowClosed
 
+    private void clear(){
+        txtAdd.setText("");
+    }
+    
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         if (txtAdd.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Tên lớp không được bỏ trống.");
@@ -188,6 +192,7 @@ public class GradeMngFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Lớp " + txtAdd.getText().trim() + " đã thêm thành công.");
         }
         initialListGrade();
+        clear();
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listValueChanged
@@ -211,9 +216,10 @@ public class GradeMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if (list.getSelectedIndex()!=-1) {
+        if (list.getSelectedIndex()==-1) {
             JOptionPane.showMessageDialog(this, "Chưa chọn lớp cần xóa.");
-        }else if ( 0==StudentBUS.getByGrade(list.getSelectedValue().toString().trim()).size() && 0==TimeTableBUS.getbyGrade(list.getSelectedValue().toString().trim()).size()) {
+        }else if ( 0 < StudentBUS.getByGrade(list.getSelectedValue().toString().trim()).size() &&
+                0==TimeTableBUS.getbyGrade(list.getSelectedValue().toString().trim()).size()) {
             JOptionPane.showMessageDialog(this, "Lớp đã có sinh viên hoặc đã có trong thời khóa biểu nên không thể xóa.");
         } else if (GradeBUS.remove(list.getSelectedValue().toString().trim())) {
             JOptionPane.showMessageDialog(this, "Đã xóa thành công.");
