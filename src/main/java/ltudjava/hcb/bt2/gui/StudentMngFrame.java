@@ -7,6 +7,7 @@ package ltudjava.hcb.bt2.gui;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import ltudjava.hcb.bt2.bus.*;
 
@@ -23,7 +24,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
      */
     public StudentMngFrame() {
         initComponents();
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(""));
+        initialTable(1);
 
         DefaultListModel grades = GradeBUS.getListName();
         cbbAddGrade.removeAll();
@@ -264,9 +265,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         if (countAdded != -1) {
             JOptionPane.showMessageDialog(this, "Đã thêm " + countAdded + " sinh viên vào danh sách.");
         }
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(""));
-        //
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        initialTable(2);
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
 
     }//GEN-LAST:event_btnImportActionPerformed
@@ -283,7 +282,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Đã thêm sinh viên thất bại.");
         }
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        initialTable(2);
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -298,7 +297,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Xóa SV thất bại.");
         }
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        initialTable(2);
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -320,7 +319,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
     private void cbbViewGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViewGradeActionPerformed
         // TODO add your handling code here:
-        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        initialTable(2);
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_cbbViewGradeActionPerformed
 
@@ -385,4 +384,15 @@ public class StudentMngFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtPersonCode;
     // End of variables declaration//GEN-END:variables
+
+    private void initialTable(int mode) {
+        if (mode == 1) {
+            table.setModel(StudentBUS.getToGuiAccordingToGrade(""));
+        } else {
+            table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        }
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        table.getColumnModel().getColumn(1).setPreferredWidth(125);
+    }
 }

@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.gui;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import ltudjava.hcb.bt2.bus.GradeBUS;
 import ltudjava.hcb.bt2.bus.ScoreBUS;
 import ltudjava.hcb.bt2.bus.StudentBUS;
@@ -38,7 +39,7 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         studentCode = name;
         initComponents();
         btnDelete.setEnabled(false);
-        btnImport.setEnabled(false);
+        btnSee.setEnabled(false);
         // btnRegister.setEnabled(false);
 
         // cbbRegisterGrade.setEnabled(false);
@@ -83,7 +84,6 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         txtStudentCode = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
-        btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -171,8 +171,6 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
             }
         });
 
-        btnImport.setText("IMPORT .CSV");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,11 +188,8 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
                                 .addComponent(btnRegister))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(91, 91, 91)
-                                .addComponent(btnDelete))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(btnDelete)))
+                        .addGap(0, 76, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,9 +262,7 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegister)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnImport)
-                        .addGap(30, 30, 30)
+                        .addGap(64, 64, 64)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete)
@@ -287,6 +280,11 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         this.gradeSeeing = cbbSeeGrade.getSelectedItem().toString().trim();
         this.subjectSeeing = cbbSeeSubject.getSelectedItem().toString().trim();
         table.setModel(StudentBUS.getToGuiAccordingToGradeSubject(gradeSeeing, subjectSeeing));
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        table.getColumnModel().getColumn(1).setPreferredWidth(125);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        
         lblInfo.setText("Có "+table.getRowCount()+" SV học môn "+subjectSeeing+"  của lớp "+gradeSeeing);
     }//GEN-LAST:event_btnSeeActionPerformed
 
@@ -368,7 +366,6 @@ showed = false;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnImport;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnSee;
     private javax.swing.JComboBox cbbRegisterGrade;

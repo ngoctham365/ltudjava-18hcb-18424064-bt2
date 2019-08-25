@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.gui;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import ltudjava.hcb.bt2.bus.GradeBUS;
 import ltudjava.hcb.bt2.bus.SubjectBUS;
 import ltudjava.hcb.bt2.bus.TimeTableBUS;
@@ -421,6 +422,10 @@ public class TimeTableFrame extends javax.swing.JFrame {
 
     private void initialTable() {
         table.setModel(TimeTableBUS.getListToGUI(studentName));
+        
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        table.getColumnModel().getColumn(1).setPreferredWidth(175);
     }
 
 }

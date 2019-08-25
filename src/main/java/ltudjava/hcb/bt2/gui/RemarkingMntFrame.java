@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import ltudjava.hcb.bt2.bus.*;
 import ltudjava.hcb.bt2.dto.*;
 
@@ -31,7 +32,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         initialDataComboBox(SubjectBUS.getAll());
 
-        table.setModel(RemarkingBUS.getData(""));
+        initialTable();
 
         addComboBoxToChangeStatus();
     }
@@ -46,6 +47,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         txtFullName.setText(StudentBUS.getFullNameByCode(studentCode));
         txtFullName.setEditable(false);
 
+        initialTable();
         initialDataComboBox(SubjectBUS.getListAccordingToStudent(studentCode));
     }
 
@@ -248,11 +250,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Có lỗi xảy ra.");
         }
 
-        if (studentCode != null) {
-            table.setModel(RemarkingBUS.getData(studentCode));
-        } else {
-            table.setModel(RemarkingBUS.getData(""));
-        }
+        initialTable();
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -338,7 +336,6 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (table.getSelectedRow() != -1) {
-                    //"MSSV", "Họ tên SV", "Môn", "Cột điểm", "Điểm mong muốn", "Lý do", "Tình trạng"
 
                     Remarking remarking = RemarkingBUS.get(table.getModel().getValueAt(table.getSelectedRow(), 0).toString().trim(),
                             HelperBUS.concatWithIconMoveRight(table.getModel().getValueAt(table.getSelectedRow(), 2).toString().trim())[1],
@@ -354,4 +351,19 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         });
         table.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox));
     }
+
+    private void initialTable() {
+        table.setModel(RemarkingBUS.getData(studentCode));
+        table.getColumnModel().getColumn(0).setPreferredWidth(60);
+        table.getColumnModel().getColumn(1).setPreferredWidth(125);
+        table.getColumnModel().getColumn(2).setPreferredWidth(225);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(100);
+        table.getColumnModel().getColumn(6).setPreferredWidth(125);
+
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
 }
+
+        //this.jTableHocSinh.getColumnModel().getColumn(0).setPreferredWidth(50);  //MSHS
