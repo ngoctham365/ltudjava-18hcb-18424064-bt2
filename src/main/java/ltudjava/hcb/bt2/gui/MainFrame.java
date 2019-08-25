@@ -210,7 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        if (this.user != null && this.user.getRole().equals("GIAOVU")) {
+        if (this.user != null && this.user.getRole().equals("GIAOVU") && !StudentMngFrame.showed) {
             StudentMngFrame frame = new StudentMngFrame();
             StudentMngFrame.showed = true;
             frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

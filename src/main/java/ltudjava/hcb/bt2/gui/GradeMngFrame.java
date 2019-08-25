@@ -5,11 +5,8 @@
  */
 package ltudjava.hcb.bt2.gui;
 
-import java.util.List;
 import javax.swing.JOptionPane;
-import ltudjava.hcb.bt2.bus.GradeBUS;
-import ltudjava.hcb.bt2.bus.StudentBUS;
-import ltudjava.hcb.bt2.bus.TimeTableBUS;
+import ltudjava.hcb.bt2.bus.*;
 import ltudjava.hcb.bt2.dto.Grade;
 
 /**
@@ -53,8 +50,8 @@ public class GradeMngFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -175,14 +172,10 @@ public class GradeMngFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        this.showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
-    private void clear(){
+    private void clear() {
         txtAdd.setText("");
     }
-    
+
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         if (txtAdd.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Tên lớp không được bỏ trống.");
@@ -203,10 +196,10 @@ public class GradeMngFrame extends javax.swing.JFrame {
     private void btnReplateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplateActionPerformed
         if (txtReplate.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Tên lớp mới không được bỏ trống.");
-        } else if(list.getSelectedIndex()==-1){
+        } else if (list.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Hãy chọn lớp muốn sửa tên.");
-        }else{
-            Grade g=GradeBUS.getByName(list.getSelectedValue().toString());
+        } else {
+            Grade g = GradeBUS.getByName(list.getSelectedValue().toString());
             g.setName(txtReplate.getText().trim());
             if (!GradeBUS.replateName(g)) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi thay đổi tên lớp.");
@@ -216,18 +209,22 @@ public class GradeMngFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReplateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if (list.getSelectedIndex()==-1) {
+        if (list.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Chưa chọn lớp cần xóa.");
-        }else if ( 0 < StudentBUS.getByGrade(list.getSelectedValue().toString().trim()).size() &&
-                0==TimeTableBUS.getbyGrade(list.getSelectedValue().toString().trim()).size()) {
+        } else if (0 < StudentBUS.getByGrade(list.getSelectedValue().toString().trim()).size()
+                && 0 == TimeTableBUS.getbyGrade(list.getSelectedValue().toString().trim()).size()) {
             JOptionPane.showMessageDialog(this, "Lớp đã có sinh viên hoặc đã có trong thời khóa biểu nên không thể xóa.");
         } else if (GradeBUS.remove(list.getSelectedValue().toString().trim())) {
             JOptionPane.showMessageDialog(this, "Đã xóa thành công.");
             initialListGrade();
-        }else {
+        } else {
             JOptionPane.showMessageDialog(this, "Xóa thất bại.");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

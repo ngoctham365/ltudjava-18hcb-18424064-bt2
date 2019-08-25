@@ -67,8 +67,8 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -259,10 +259,6 @@ public class StudentMngFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         Integer countAdded = StudentBUS.saveInfoListStudentFromFileCSV(this);
         if (countAdded != -1) {
@@ -272,7 +268,7 @@ public class StudentMngFrame extends javax.swing.JFrame {
         //
         table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
-        
+
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -324,9 +320,13 @@ public class StudentMngFrame extends javax.swing.JFrame {
 
     private void cbbViewGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViewGradeActionPerformed
         // TODO add your handling code here:
-          table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
+        table.setModel(StudentBUS.getToGuiAccordingToGrade(cbbViewGrade.getSelectedIndex() == 0 ? "" : cbbViewGrade.getSelectedItem().toString()));
         lblInfo.setText("Có " + table.getRowCount() + " SV.");
     }//GEN-LAST:event_cbbViewGradeActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -249,7 +249,6 @@ public class ModifyPassFrame extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         showed = false;
-        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
 
     /**
