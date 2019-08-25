@@ -71,8 +71,9 @@ public class ScoreBUS {
                             if (new ScoreDAO().update(score)) {
                                 countStudentAdded++;
                             }
+                        } else if (-1 < ScoreBUS.createDetail(strings.get(0).trim(), strings.get(1).trim(), ses[1].trim(), HelperBUS.convertFloat(ses[3].trim()), HelperBUS.convertFloat(ses[4].trim()), HelperBUS.convertFloat(ses[5].trim()), HelperBUS.convertFloat(ses[3].trim()))) {
+                            countStudentAdded++;
                         }
-                        countStudentAdded++;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -91,8 +92,8 @@ public class ScoreBUS {
         for (int i = 0; i < scores.size(); i++) {
             String[] strings = new String[6];
 
-            strings[0] = scores.get(i).getStudentId();
-            strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
+            strings[0] = scores.get(i).getStudentId().trim();
+            strings[1] = new StudentDAO().getByCode(scores.get(i).getStudentId()).getFullname();
             strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
             strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
             strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
@@ -210,8 +211,14 @@ public class ScoreBUS {
                 return false;
             }
         }
-        
+
         return true;
+    }
+
+    private static int createDetail(String gradeName, String subjectCode, String studentCode, Float haft, Float full, Float another, Float summary) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+
+        return new ScoreDAO().insert(new Score(studentCode, subjectCode, gradeId, haft, full, another, summary));
     }
 
 }
