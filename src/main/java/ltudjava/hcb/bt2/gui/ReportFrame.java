@@ -145,20 +145,20 @@ public class ReportFrame extends javax.swing.JFrame {
         JRDataSource jrSource = new JRBeanCollectionDataSource(dataSource);
 
         HashMap param = new HashMap();
-        param.put("subjectName", cbbSubject.getSelectedItem().toString());
         param.put("gradeName", cbbGrade.getSelectedItem().toString());
+        param.put("subjectName", cbbSubject.getSelectedItem().toString());
         int countStudentSatisfactory = 0, countStudentUnsatisfactory = 0;
         for (int i = 0; i < dataSource.size(); i++) {
-            if (dataSource.get(i).get("result").equals("ĐÕ")) {
+            if (dataSource.get(i).get("result").equals("Đỗ")) {
                 countStudentSatisfactory++;
-            } else if (dataSource.get(i).get("result").equals("HỎNG")) {
+            } else if (dataSource.get(i).get("result").equals("Hỏng")) {
                 countStudentUnsatisfactory++;
             }
         }
+        param.put("rateSatisfactory", Integer.toUnsignedString(countStudentSatisfactory * 100 / dataSource.size()) + "%.");
+        param.put("rateUnsatisfactory", Integer.toUnsignedString(countStudentUnsatisfactory * 100 / dataSource.size()) + "%.");
         param.put("numberOfSatisfactory", countStudentSatisfactory + " sinh viên");
         param.put("numberOfUnsatisfactory", countStudentUnsatisfactory + " sinh viên.");
-        param.put("radeSatisfactory", Integer.toUnsignedString(countStudentSatisfactory * 100 / dataSource.size()) + " sinh viên.");
-        param.put("radeUnsatisfactory", Integer.toUnsignedString(countStudentUnsatisfactory * 100 / dataSource.size()) + " sinh viên.");
 
         try {
             JasperReport jR = JasperCompileManager.compileReport("src/main/java/ltudjava/hcb/bt2/gui/ScoreTable.jrxml");

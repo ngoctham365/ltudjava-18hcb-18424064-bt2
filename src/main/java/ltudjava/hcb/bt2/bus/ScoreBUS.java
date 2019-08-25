@@ -121,10 +121,10 @@ public class ScoreBUS {
 
             strings[0] = scores.get(i).getStudentId();
             strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
-            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
-            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
-            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
-            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+            strings[2] = scores.get(i).getScodeHaft()==null ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = scores.get(i).getScoreFull()==null ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = scores.get(i).getScoreAnother()==null ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary().toString();
 
             data[i] = strings;
         }
@@ -193,11 +193,11 @@ public class ScoreBUS {
 
             map.put("studentCode", scores.get(i).getStudentId());
             map.put("studentName", StudentBUS.getFullNameByCode(scores.get(i).getStudentId()));
-            map.put("scoreHaft", scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString());
-            map.put("scoreFull", scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString());
-            map.put("scoreAnother", scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString());
-            map.put("scoreSummary", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString());
-            map.put("result", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary() >= 5 ? "ĐỖ" : "HỎNG");
+            map.put("scoreHaft", scores.get(i).getScodeHaft()==null ? "" : scores.get(i).getScodeHaft().toString());
+            map.put("scoreFull", scores.get(i).getScoreFull()==null ? "" : scores.get(i).getScoreFull().toString());
+            map.put("scoreAnother", scores.get(i).getScoreAnother()==null ? "" : scores.get(i).getScoreAnother().toString());
+            map.put("scoreSummary", scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary().toString());
+            map.put("result", scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary() >= 5 ? "Đỗ" : "Hỏng");
 
             maps.add(map);
         }
