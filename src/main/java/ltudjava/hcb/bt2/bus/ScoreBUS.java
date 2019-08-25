@@ -71,8 +71,9 @@ public class ScoreBUS {
                             if (new ScoreDAO().update(score)) {
                                 countStudentAdded++;
                             }
+                        } else if (-1 < ScoreBUS.createDetail(strings.get(0).trim(), strings.get(1).trim(), ses[1].trim(), HelperBUS.convertFloat(ses[3].trim()), HelperBUS.convertFloat(ses[4].trim()), HelperBUS.convertFloat(ses[5].trim()), HelperBUS.convertFloat(ses[3].trim()))) {
+                            countStudentAdded++;
                         }
-                        countStudentAdded++;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -91,12 +92,12 @@ public class ScoreBUS {
         for (int i = 0; i < scores.size(); i++) {
             String[] strings = new String[6];
 
-            strings[0] = scores.get(i).getStudentId();
-            strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
-            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
-            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
-            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
-            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+            strings[0] = scores.get(i).getStudentId().trim();
+            strings[1] = new StudentDAO().getByCode(scores.get(i).getStudentId()).getFullname();
+            strings[2] = null == scores.get(i).getScodeHaft() ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = null == scores.get(i).getScoreFull() ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = null == scores.get(i).getScoreAnother() ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = null == scores.get(i).getScoreSummary() ? "" : scores.get(i).getScoreSummary().toString();
 
             data[i] = strings;
         }
@@ -120,10 +121,10 @@ public class ScoreBUS {
 
             strings[0] = scores.get(i).getStudentId();
             strings[1] = new StudentDAO().getByCode(strings[0]).getFullname();
-            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
-            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
-            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
-            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+            strings[2] = scores.get(i).getScodeHaft()==null ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = scores.get(i).getScoreFull()==null ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = scores.get(i).getScoreAnother()==null ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary().toString();
 
             data[i] = strings;
         }
@@ -192,11 +193,11 @@ public class ScoreBUS {
 
             map.put("studentCode", scores.get(i).getStudentId());
             map.put("studentName", StudentBUS.getFullNameByCode(scores.get(i).getStudentId()));
-            map.put("scoreHaft", scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString());
-            map.put("scoreFull", scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString());
-            map.put("scoreAnother", scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString());
-            map.put("scoreSummary", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString());
-            map.put("result", scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary() >= 5 ? "ĐỖ" : "HỎNG");
+            map.put("scoreHaft", scores.get(i).getScodeHaft()==null ? "" : scores.get(i).getScodeHaft().toString());
+            map.put("scoreFull", scores.get(i).getScoreFull()==null ? "" : scores.get(i).getScoreFull().toString());
+            map.put("scoreAnother", scores.get(i).getScoreAnother()==null ? "" : scores.get(i).getScoreAnother().toString());
+            map.put("scoreSummary", scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary().toString());
+            map.put("result", scores.get(i).getScoreSummary()==null ? "" : scores.get(i).getScoreSummary() >= 5 ? "Đỗ" : "Hỏng");
 
             maps.add(map);
         }
@@ -210,8 +211,14 @@ public class ScoreBUS {
                 return false;
             }
         }
-        
+
         return true;
+    }
+
+    private static int createDetail(String gradeName, String subjectCode, String studentCode, Float haft, Float full, Float another, Float summary) {
+        Integer gradeId = GradeBUS.getByName(gradeName).getId();
+
+        return new ScoreDAO().insert(new Score(studentCode, subjectCode, gradeId, haft, full, another, summary));
     }
 
 }

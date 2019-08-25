@@ -79,8 +79,8 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -96,13 +96,13 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(table);
@@ -221,10 +221,6 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         if (txtCode.getText().trim().isEmpty()
                 || txtFullName.getText().trim().isEmpty()
@@ -237,7 +233,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sai định dạng điểm số");
         } else if (!StudentBUS.hasByCode(txtCode.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Không tồn tại mã SV này.");
-        } else if (ScoreBUS.hasRegisterStudy(txtCode.getText().trim(), cbbSubject.getSelectedItem().toString().trim())) {
+        } else if (!ScoreBUS.hasRegisterStudy(txtCode.getText().trim(), cbbSubject.getSelectedItem().toString().trim())) {
             JOptionPane.showMessageDialog(this, "SV không học môn yêu cầu phúc khảo.");
         } else if (RemarkingBUS.had(txtCode.getText().trim(), cbbSubject.getSelectedItem().toString().trim(), cbbTypeScore.getSelectedItem().toString().trim())) {
             JOptionPane.showMessageDialog(this, "Đã đăng ký phúc khảo rồi.");
@@ -254,9 +250,14 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
         if (studentCode != null) {
             table.setModel(RemarkingBUS.getData(studentCode));
-        }else 
+        } else {
             table.setModel(RemarkingBUS.getData(""));
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -318,7 +319,7 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
     private void initialDataComboBox(List<Subject> listSubject) {
         cbbSubject.removeAllItems();
         for (Subject i : listSubject) {
-            cbbSubject.addItem(i.getCode() + HelperBUS.iconMoveRightHasSpace() + i.getName());
+            cbbSubject.addItem(i.getName());
         }
 
         cbbTypeScore.removeAllItems();
@@ -336,8 +337,19 @@ public class RemarkingMntFrame extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JComboBox comboBox = (JComboBox) e.getSource();
-                String s = comboBox.getSelectedItem().toString();
+                if (table.getSelectedRow() != -1) {
+                    //"MSSV", "Họ tên SV", "Môn", "Cột điểm", "Điểm mong muốn", "Lý do", "Tình trạng"
+
+                    Remarking remarking = RemarkingBUS.get(table.getModel().getValueAt(table.getSelectedRow(), 0).toString().trim(),
+                            HelperBUS.concatWithIconMoveRight(table.getModel().getValueAt(table.getSelectedRow(), 2).toString().trim())[1],
+                            table.getModel().getValueAt(table.getSelectedRow(), 3).toString().trim());
+
+                    remarking.setStatus(((JComboBox) e.getSource()).getSelectedItem().toString().trim());
+
+                    if (!RemarkingBUS.updateStatus(remarking)) {
+                        JOptionPane.showMessageDialog(null, "Lỗi khi lưu trạng thái mới.");
+                    }
+                }
             }
         });
         table.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(jComboBox));

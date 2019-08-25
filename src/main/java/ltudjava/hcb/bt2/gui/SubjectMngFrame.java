@@ -8,9 +8,6 @@ package ltudjava.hcb.bt2.gui;
 import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.bus.HelperBUS;
 import ltudjava.hcb.bt2.bus.SubjectBUS;
-import ltudjava.hcb.bt2.dao.GradeDAO;
-import ltudjava.hcb.bt2.dao.SubjectDAO;
-import ltudjava.hcb.bt2.dto.Grade;
 import ltudjava.hcb.bt2.dto.Subject;
 
 /**
@@ -66,8 +63,8 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -209,10 +206,6 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if (txtAddCode.getText().trim().isEmpty() || txtAddName.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Hãy nhập đủ thông tin.");
@@ -265,6 +258,10 @@ public class SubjectMngFrame extends javax.swing.JFrame {
         txtReplateName.setText(strings[1]);
         txtCode.setText(strings[0]);
     }//GEN-LAST:event_listValueChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

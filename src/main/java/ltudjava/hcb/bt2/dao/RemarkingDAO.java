@@ -24,14 +24,14 @@ public class RemarkingDAO {
     private List<Remarking> list;
 
     @SuppressWarnings("CallToPrintStackTrace")
-    public Integer insert(Remarking p) {
-        Integer result = -1;
+    public RemarkingId insert(Remarking p) {
+        RemarkingId result = null;
 
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             tst = session.beginTransaction();
 
-            result = (Integer) session.save(p);
+            result = (RemarkingId) session.save(p);
 
             tst.commit();
         } catch (HibernateException e) {

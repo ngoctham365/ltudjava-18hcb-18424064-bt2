@@ -35,22 +35,23 @@ public class RemarkingBUS {
             }
         }
         Object[][] data = new Object[listRemarking.size()][7];
-        for (Remarking iRemarking : listRemarking) {
+        for (int i = 0; i < listRemarking.size(); i++) {
             String[] ses = new String[7];
-            ScoreBUS.getByID(iRemarking.getId().getScoreId()).getStudentId();
-            ses[0] = ScoreBUS.getByID(iRemarking.getId().getScoreId()).getStudentId();
+            ScoreBUS.getByID(listRemarking.get(i).getId().getScoreId()).getStudentId();
+            ses[0] = ScoreBUS.getByID(listRemarking.get(i).getId().getScoreId()).getStudentId();
             ses[1] = StudentBUS.getFullNameByCode(ses[0]);
-            ses[2] = HelperBUS.concatWithIconMoveRight(ScoreBUS.getByID(iRemarking.getId().getScoreId()).getSubjectId(), SubjectBUS.getNameById(ScoreBUS.getByID(iRemarking.getId().getScoreId()).getSubjectId()));
-            ses[3] = iRemarking.getId().getScoreType();
-            ses[4] = iRemarking.getScoreDesired().toString();
-            ses[5] = iRemarking.getReason();
-            ses[6] = iRemarking.getStatus();
+            ses[2] = HelperBUS.concatWithIconMoveRight(ScoreBUS.getByID(listRemarking.get(i).getId().getScoreId()).getSubjectId(), SubjectBUS.getNameById(ScoreBUS.getByID(listRemarking.get(i).getId().getScoreId()).getSubjectId()));
+            ses[3] = listRemarking.get(i).getId().getScoreType();
+            ses[4] = listRemarking.get(i).getScoreDesired().toString();
+            ses[5] = listRemarking.get(i).getReason();
+            ses[6] = listRemarking.get(i).getStatus();
+            data[i] = ses;
         }
         return new DefaultTableModel(data, new Object[]{"MSSV", "Họ tên SV", "Môn", "Cột điểm", "Điểm mong muốn", "Lý do", "Tình trạng"}) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return (!studentCode.isEmpty() ? false : column == 6);
             }
 
         };
@@ -69,10 +70,18 @@ public class RemarkingBUS {
     }
 
     public static boolean had(String studentCode, String subjectName, String scoreType) {
+        return get(studentCode, subjectName, scoreType) != null;
+    }
+
+    public static Remarking get(String studentCode, String subjectName, String scoreType) {
         String subjectCode = new SubjectDAO().getbyName(subjectName).get(0).getCode();
         Score s = ScoreBUS.getByStudentSubject(studentCode, subjectCode);
 
-        return new RemarkingDAO().getByScoreAndScoreType(s.getId(),scoreType)!=null;
+        return new RemarkingDAO().getByScoreAndScoreType(s.getId(), scoreType);
+    }
+
+    public static boolean updateStatus(Remarking remarking) {
+        return new RemarkingDAO().update(remarking);
     }
 
 }

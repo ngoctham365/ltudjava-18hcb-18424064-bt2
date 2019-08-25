@@ -5,11 +5,11 @@
  */
 package ltudjava.hcb.bt2.gui;
 
+import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import ltudjava.hcb.bt2.bus.*;
-import ltudjava.hcb.bt2.dto.Grade;
 import ltudjava.hcb.bt2.dto.Subject;
 
 /**
@@ -73,8 +73,8 @@ public class ScoreMngFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -173,10 +173,6 @@ public class ScoreMngFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
-
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         Integer countAdded = ScoreBUS.saveInfoListScoreFromFileCSV(this);
         if (countAdded != -1) {
@@ -210,7 +206,7 @@ public class ScoreMngFrame extends javax.swing.JFrame {
                     table.setValueAt(value_old, table.getSelectedRow(), table.getSelectedColumn());
                     return;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException | HeadlessException e) {
                 table.setValueAt(value_old, table.getSelectedRow(), table.getSelectedColumn());
             }
             String studentCode = table.getModel().getValueAt(temp, 0).toString();
@@ -240,6 +236,10 @@ public class ScoreMngFrame extends javax.swing.JFrame {
 
         value_old = value;
     }//GEN-LAST:event_tablePropertyChange
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -53,6 +53,11 @@ public class TimeTableFrame extends javax.swing.JFrame {
         this.btnDelete.setEnabled(false);
         this.btnImport.setEnabled(false);
         this.btnReplate.setEnabled(false);
+        
+        this.txtAddRoom.setEditable(false);
+        this.txtGrade.setEditable(false);
+        this.txtReplateRoom.setEditable(false);
+        this.txtSubject.setEditable(false);
     }
 
     /**
@@ -90,8 +95,8 @@ public class TimeTableFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -248,7 +253,7 @@ public class TimeTableFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel9)
@@ -295,10 +300,6 @@ public class TimeTableFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        showed = false;
-    }//GEN-LAST:event_formWindowClosed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         Integer countAdded = TimeTableBUS.saveInfoListTimeTableFromFileCSV(this);
@@ -352,6 +353,10 @@ public class TimeTableFrame extends javax.swing.JFrame {
             txtReplateRoom.setText(table.getModel().getValueAt(table.getSelectedRow(), 2).toString().trim());
         }
     }//GEN-LAST:event_tableMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        showed = false;
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
