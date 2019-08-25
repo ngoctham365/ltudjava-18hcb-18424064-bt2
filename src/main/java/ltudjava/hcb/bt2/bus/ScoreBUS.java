@@ -94,10 +94,10 @@ public class ScoreBUS {
 
             strings[0] = scores.get(i).getStudentId().trim();
             strings[1] = new StudentDAO().getByCode(scores.get(i).getStudentId()).getFullname();
-            strings[2] = scores.get(i).getScodeHaft().isNaN() ? "" : scores.get(i).getScodeHaft().toString();
-            strings[3] = scores.get(i).getScoreFull().isNaN() ? "" : scores.get(i).getScoreFull().toString();
-            strings[4] = scores.get(i).getScoreAnother().isNaN() ? "" : scores.get(i).getScoreAnother().toString();
-            strings[5] = scores.get(i).getScoreSummary().isNaN() ? "" : scores.get(i).getScoreSummary().toString();
+            strings[2] = null == scores.get(i).getScodeHaft() ? "" : scores.get(i).getScodeHaft().toString();
+            strings[3] = null == scores.get(i).getScoreFull() ? "" : scores.get(i).getScoreFull().toString();
+            strings[4] = null == scores.get(i).getScoreAnother() ? "" : scores.get(i).getScoreAnother().toString();
+            strings[5] = null == scores.get(i).getScoreSummary() ? "" : scores.get(i).getScoreSummary().toString();
 
             data[i] = strings;
         }
