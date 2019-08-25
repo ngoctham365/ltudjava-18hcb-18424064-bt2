@@ -53,6 +53,11 @@ public class TimeTableFrame extends javax.swing.JFrame {
         this.btnDelete.setEnabled(false);
         this.btnImport.setEnabled(false);
         this.btnReplate.setEnabled(false);
+        
+        this.txtAddRoom.setEditable(false);
+        this.txtGrade.setEditable(false);
+        this.txtReplateRoom.setEditable(false);
+        this.txtSubject.setEditable(false);
     }
 
     /**
