@@ -8,6 +8,7 @@ package ltudjava.hcb.bt2.gui;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import ltudjava.hcb.bt2.bus.GradeBUS;
 import ltudjava.hcb.bt2.bus.ScoreBUS;
 import ltudjava.hcb.bt2.bus.StudentBUS;
@@ -38,7 +39,11 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         studentCode = name;
         initComponents();
         btnDelete.setEnabled(false);
+<<<<<<< HEAD
         //btnImport.setEnabled(false);
+=======
+        btnSee.setEnabled(false);
+>>>>>>> c85fe654841366442deb8098e7eeadea140ab450
         // btnRegister.setEnabled(false);
 
         // cbbRegisterGrade.setEnabled(false);
@@ -187,6 +192,21 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
+=======
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(89, 89, 89)
+                                .addComponent(btnSee))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(81, 81, 81)
+                                .addComponent(btnRegister))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(btnDelete)))
+                        .addGap(0, 76, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+>>>>>>> c85fe654841366442deb8098e7eeadea140ab450
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -270,9 +290,15 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtStudentCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
+<<<<<<< HEAD
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRegister)
                         .addGap(38, 38, 38)
+=======
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegister)
+                        .addGap(64, 64, 64)
+>>>>>>> c85fe654841366442deb8098e7eeadea140ab450
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete)))
@@ -290,6 +316,11 @@ public class RegisterSubjectMngFrame extends javax.swing.JFrame {
         this.gradeSeeing = cbbSeeGrade.getSelectedItem().toString().trim();
         this.subjectSeeing = cbbSeeSubject.getSelectedItem().toString().trim();
         table.setModel(StudentBUS.getToGuiAccordingToGradeSubject(gradeSeeing, subjectSeeing));
+        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        table.getColumnModel().getColumn(1).setPreferredWidth(125);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        
         lblInfo.setText("Có "+table.getRowCount()+" SV học môn "+subjectSeeing+"  của lớp "+gradeSeeing);
     }//GEN-LAST:event_btnSeeActionPerformed
 
