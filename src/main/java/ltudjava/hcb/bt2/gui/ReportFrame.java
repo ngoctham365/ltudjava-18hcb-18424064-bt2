@@ -79,6 +79,8 @@ public class ReportFrame extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Chọn môn học:");
 
+        btnExport.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExport.setForeground(new java.awt.Color(51, 0, 255));
         btnExport.setText("XUẤT");
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +92,7 @@ public class ReportFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +107,7 @@ public class ReportFrame extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(94, 94, 94)
-                .addComponent(btnExport)
+                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -122,7 +124,7 @@ public class ReportFrame extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExport)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -149,9 +151,9 @@ public class ReportFrame extends javax.swing.JFrame {
         param.put("subjectName", cbbSubject.getSelectedItem().toString());
         int countStudentSatisfactory = 0, countStudentUnsatisfactory = 0;
         for (int i = 0; i < dataSource.size(); i++) {
-            if (dataSource.get(i).get("result").equals("Đỗ")) {
+            if (dataSource.get(i).get("result").equals("Đậu")) {
                 countStudentSatisfactory++;
-            } else if (dataSource.get(i).get("result").equals("Hỏng")) {
+            } else if (dataSource.get(i).get("result").equals("Rớt")) {
                 countStudentUnsatisfactory++;
             }
         }

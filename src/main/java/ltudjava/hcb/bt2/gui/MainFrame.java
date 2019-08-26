@@ -71,6 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        btnModifyPass.setForeground(new java.awt.Color(51, 0, 204));
         btnModifyPass.setText("THÔNG TIN CÁ NHÂN");
         btnModifyPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnScore.setForeground(new java.awt.Color(51, 0, 204));
         btnScore.setText("QUẢN LÝ ĐIỂM");
         btnScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,6 +87,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnStudent.setForeground(new java.awt.Color(51, 0, 204));
         btnStudent.setText("QUẢN LÝ SINH VIÊN");
         btnStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,6 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnGrade.setForeground(new java.awt.Color(51, 0, 204));
         btnGrade.setText("QUẢN LÝ LỚP");
         btnGrade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnSubject.setForeground(new java.awt.Color(51, 0, 204));
         btnSubject.setText("QUẢN LÝ MÔN HỌC");
         btnSubject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnTimeTable.setForeground(new java.awt.Color(51, 0, 204));
         btnTimeTable.setText("THỜI KHÓA BIỂU");
         btnTimeTable.setToolTipText("");
         btnTimeTable.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnListGradeAccordingToSource.setForeground(new java.awt.Color(51, 0, 204));
         btnListGradeAccordingToSource.setText("DS LỚP THEO MÔN");
         btnListGradeAccordingToSource.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnReport.setForeground(new java.awt.Color(51, 0, 204));
         btnReport.setText("XUẤT BẢNG ĐIỂM");
         btnReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +136,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnRemarking.setForeground(new java.awt.Color(51, 0, 204));
         btnRemarking.setText("QUẢN LÝ PHÚC KHẢO");
         btnRemarking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +144,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnSeeScore.setForeground(new java.awt.Color(51, 0, 204));
         btnSeeScore.setText("XEM ĐIỂM");
         btnSeeScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnCourseRegister.setForeground(new java.awt.Color(51, 0, 204));
         btnCourseRegister.setText("ĐĂNG KÝ MÔN HỌC");
         btnCourseRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,17 +208,19 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(9, 9, 9)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModifyPass)
                     .addComponent(btnScore)
                     .addComponent(btnStudent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGrade)
-                    .addComponent(btnSubject)
-                    .addComponent(btnTimeTable))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGrade)
+                        .addComponent(btnSubject))
+                    .addComponent(btnTimeTable, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnListGradeAccordingToSource)
@@ -246,8 +259,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
 
             TimeTableFrame.showed = true;
-            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
             // this.setVisible(false);
